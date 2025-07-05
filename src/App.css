@@ -1,17 +1,40 @@
 .App {
   text-align: center;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Blinking Top Line */
+.blinking-line {
+  animation: blinkLine 1s infinite;
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@keyframes blinkLine {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
+
+/* Scrolling animation */
+@keyframes scrollLeftSlow {
+  0% { transform: translateX(100%); }
+  100% { transform: translateX(-100%); }
+}
+
+.animate-scroll-left-slow {
+  animation: scrollLeftSlow 15s linear infinite;
+}
+
+/* Blinking Text Fade Between White & Black */
+@keyframes blinkFadeWhiteBlack {
+  0% { opacity: 0; color: white; }
+  25% { opacity: 1; color: black; }
+  50% { opacity: 0; color: white; }
+  75% { opacity: 1; color: black; }
+  100% { opacity: 0; color: white; }
+}
+
+.blinking-text-fade {
+  animation: blinkFadeWhiteBlack 3s infinite;
+}
+
 
 .App-header {
   background-color: #282c34;
@@ -20,13 +43,51 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: calc(10px + 2min);
   color: white;
 }
 
 .App-link {
   color: #61dafb;
 }
+
+
+.blinking-line {
+  animation: colorCycle 2s infinite;
+}
+@keyframes colorCycle {
+  0%   { background-color: red; }
+  25%  { background-color: blue; }
+  50%  { background-color: yellow; }
+  75%  { background-color: green; }
+  50% { opacity: 0; color: white; }
+  75% { opacity: 1; color: black; }
+  100% { background-color: red; }
+}
+
+.blinking-line {
+  animation: colorCycle 2s infinite;
+}
+
+/* 🔔 Color-changing + fade in/out blinking text */
+@keyframes blinkFadeColor {
+  0% { opacity: 0; color: red; }
+  50% { opacity: 0; color: white; }
+  75% { opacity: 1; color: black; }
+  25% { opacity: 1; color: orange; }
+  50% { opacity: 0; color: white; }
+  75% { opacity: 1; color: blue; }
+  100% { opacity: 0; color: red; }
+}
+
+.blinking-text-fade {
+  animation: blinkFadeColor 3s infinite;
+}
+
+.blinking-text {
+  animation: textBlinkColor 1.5s infinite;
+}
+
 
 @keyframes App-logo-spin {
   from {
