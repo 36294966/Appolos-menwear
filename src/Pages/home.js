@@ -164,10 +164,12 @@ const Home = () => {
           <Navbar />
 
           {/* Welcome message */}
+          <div className="blinking-text-fade text-lg md:text-xl md:scale-75 md:transform md:origin-top md:transition-transform duration-500">
           <div className="fixed bottom-20 right-5 bg-white bg-opacity-90 p-4 rounded-lg shadow-lg z-50 max-w-sm text-center">
             <p className="text-lg font-semibold text-gray-800">
               Welcome to Sir Apollo's Collection and experience amazing offers
             </p>
+            </div>
           </div>
 
           {/* Header texts */}
@@ -192,16 +194,16 @@ const Home = () => {
                   {/* Image */}
                   <img src={src} alt={title} className="w-full h-full object-cover flex-1" />
                   {/* Label and Buy button styled as a button */}
-                  <div className=" bg-opacity-36  max-h-42 p-2 pt-4 pb-2 text-center flex flex-col justify-center relative -mt-28 ">
-                    <h3 className="text-white text-base md:text-lg font-semibold mb-2">{title}</h3>
-                    <p className="text-white font-bold text-lg mb-2">Price: {price}</p>
-                    {/* Longer "Purchase" button, slightly shifted upward */}
-                    <div
-                      className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto z-10 relative"
-                      onClick={() => alert('Buying suit!')}
-                    >
-                      Purchase
-                    </div>
+                  <div className="bg-opacity-36 max-h-42 p-2 pt-4 pb-2 text-center flex flex-col justify-center relative -mt-44">
+  <h3 className="text-white font-bold text-base md:text-lg mb-2">{title}</h3>
+  <p className="text-white font-bold text-lg mb-4">Price: {price}</p>
+  {/* Purchase button, visible under medium screens, centered */}
+  <div
+    className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto z-10 relative"
+    onClick={() => alert('Buying suit!')}
+  >
+    Purchase
+  </div>
                   </div>
                 </div>
               </div>

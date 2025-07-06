@@ -1,15 +1,16 @@
 .App {
   text-align: center;
 }
-/* Blinking Top Line */
-.blinking-line {
-  animation: blinkLine 1s infinite;
-  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-}
 
+/* Blinking Top Line - Gradient with blinking effect */
 @keyframes blinkLine {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+.blinking-line {
+  animation: blinkLine 1s infinite;
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
 }
 
 /* Scrolling animation */
@@ -35,45 +36,9 @@
   animation: blinkFadeWhiteBlack 3s infinite;
 }
 
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2min);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-
-.blinking-line {
-  animation: colorCycle 2s infinite;
-}
-@keyframes colorCycle {
-  0%   { background-color: red; }
-  25%  { background-color: blue; }
-  50%  { background-color: yellow; }
-  75%  { background-color: green; }
-  50% { opacity: 0; color: white; }
-  75% { opacity: 1; color: black; }
-  100% { background-color: red; }
-}
-
-.blinking-line {
-  animation: colorCycle 2s infinite;
-}
-
-/* 🔔 Color-changing + fade in/out blinking text */
+/* 💡 Additional blinking text with color change */
 @keyframes blinkFadeColor {
   0% { opacity: 0; color: red; }
-  50% { opacity: 0; color: white; }
-  75% { opacity: 1; color: black; }
   25% { opacity: 1; color: orange; }
   50% { opacity: 0; color: white; }
   75% { opacity: 1; color: blue; }
@@ -84,11 +49,32 @@
   animation: blinkFadeColor 3s infinite;
 }
 
+/* Optional: define the missing 'textBlinkColor' if used elsewhere */
+/* Blinking line with color cycle - fixed duplicate class */
+@keyframes colorCycle {
+  0%   { background-color: red; }
+  25%  { background-color: blue; }
+  50%  { background-color: yellow; }
+  75%  { background-color: green; }
+  100% { background-color: red; }
+}
+
+.blinking-line {
+  animation: colorCycle 2s infinite;
+}
+
+/* Additional blinking text with color change (if needed) */
+@keyframes textBlinkColor {
+  0% { opacity: 1; color: yellow; }
+  50% { opacity: 0; color: black; }
+  100% { opacity: 1; color: yellow; }
+}
+
 .blinking-text {
   animation: textBlinkColor 1.5s infinite;
 }
 
-
+/* Spin animation for logo */
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
