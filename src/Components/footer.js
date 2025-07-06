@@ -29,20 +29,19 @@ const Footer = () => {
       `}</style>
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-6">
-        
-        {/* Logo and Brand (Original Size Retained) */}
-        <div className="flex flex-col items-center md:items-start flex-shrink-0 pl-6 md:pl-12">
+        {/* Logo and Brand - Centered on small screens, left on md+ */}
+        <div className="flex flex-col md:flex-row justify-center md:justify-start items-center md:items-start flex-shrink-0 pl-6 md:pl-12">
           <img
             src={Logo}
             alt="Sir Apollo Logo"
             className="h-28 w-28 rounded-full object-cover"
           />
-          <p className="mt-3 blinking-text text-lg font-semibold underline text-center">
+          <p className="mt-3 md:mt-0 md:ml-4 blinking-text text-lg font-semibold underline text-center md:text-left">
             Sir Apollo's Menswear
           </p>
         </div>
 
-        {/* Location Info */}
+        {/* Location and Map Info */}
         <div className="text-center md:text-left space-y-2 max-w-md">
           <h3 className="font-semibold flex items-center justify-center md:justify-start gap-2 text-base">
             <MapPin className="w-4 h-4 text-blue-400" />
@@ -51,8 +50,10 @@ const Footer = () => {
           <p className="leading-snug text-gray-300">
             <strong className="whitespace-nowrap">
               Intermark Business Centre, 3rd Floor, Shop No. 83
-            </strong><br />
-            Behind Odeon, along Taveta Road,<br />
+            </strong>
+            <br />
+            Behind Odeon, along Taveta Road,
+            <br />
             Opposite Taveta Court, Nairobi CBD
           </p>
 
@@ -117,7 +118,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Contact Info (Original Size Retained) */}
+        {/* Contact Info - Size unchanged */}
         <div className="text-left space-y-4 pr-8 md:pr-16">
           <h3 className="text-xl font-semibold">Contact Us</h3>
           <p className="text-base text-gray-300">Call, Text or WhatsApp:</p>
@@ -137,7 +138,7 @@ const Footer = () => {
         </div>
       </div>
 
-      {/* Bottom Line */}
+      {/* Bottom line */}
       <div className="mt-10 border-t border-white/20 pt-4 pb-2 text-center">
         <p className="text-gray-400 text-xs">
           © 2025, Sir Apollo's Menswear — Created by Dr Erastus Coding Co-oporation

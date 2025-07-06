@@ -26,6 +26,7 @@ const Navbar = ({ onFilterSelect }) => {
     }
     setIsOpen(false);
 
+    // ... your existing handleFilter logic ...
     if (category === 'Suits') {
       if (value === '2 Piece Suits') {
         navigate('/suits/2piecesuits');
@@ -80,7 +81,7 @@ const Navbar = ({ onFilterSelect }) => {
       dropdown: {
         Type: ['Jeans']
       },
-      page: '/jeans' // new property for direct navigation
+      page: '/jeans'
     },
     {
       title: 'Accessories',
@@ -99,7 +100,10 @@ const Navbar = ({ onFilterSelect }) => {
   ];
 
   return (
+    // Fixed navbar at top with high z-index
     <nav className="fixed top-0 left-0 w-full bg-blue-600 text-white shadow-md z-50">
+      {/* Add padding-top to ensure content below is not hidden */}
+      {/* You can also add padding in your main layout container */}
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <img
@@ -153,7 +157,6 @@ const Navbar = ({ onFilterSelect }) => {
               <button
                 className="flex items-center space-x-1 hover:text-yellow-200 transition"
                 onClick={() => {
-                  // If the item has a page property, navigate directly
                   if (item.page) {
                     navigate(item.page);
                     setIsOpen(false);
@@ -218,13 +221,11 @@ const Navbar = ({ onFilterSelect }) => {
               <button
                 className="w-full flex justify-between items-center text-left"
                 onClick={() => {
-                  // if page exists, navigate directly
                   if (item.page) {
                     navigate(item.page);
                     setOpenDropdown(null);
                     setIsOpen(false);
                   } else {
-                    // toggle dropdown
                     setOpenDropdown(openDropdown === item.title ? null : item.title);
                   }
                 }}

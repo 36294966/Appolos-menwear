@@ -60,7 +60,6 @@ import Official4 from '../Assets/Official/official4.jpg';
 import Official5 from '../Assets/Official/official5.jpg';
 import Official6 from '../Assets/Official/official6.jpg';
 
-
 import Cassual1 from '../Assets/Cassual/cassual1.jpg';
 import Cassual2 from '../Assets/Cassual/cassual2.jpg';
 import Cassual3 from '../Assets/Cassual/cassual3.jpg';
@@ -107,9 +106,9 @@ const Home = () => {
     { id: 1, name: 'Formal White Shirt', image: Official1, price: 'Ksh 1,800' },
     { id: 2, name: 'Classic Blue Shirt', image: Official2, price: 'Ksh 1,800' },
     { id: 3, name: 'Striped Office Shirt', image: Official3, price: 'Ksh 1,800' },
-     { id: 4, name: 'Office Shirt', image: Official4, price: 'Ksh 1,800' },
-      { id: 5, name: 'Office Shirt', image: Official5, price: 'Ksh 1,800' },
-       { id: 6, name: 'Office Shirt', image: Official6, price: 'Ksh 1,800' },
+    { id: 4, name: 'Office Shirt', image: Official4, price: 'Ksh 1,800' },
+    { id: 5, name: 'Office Shirt', image: Official5, price: 'Ksh 1,800' },
+    { id: 6, name: 'Office Shirt', image: Official6, price: 'Ksh 1,800' },
   ];
 
   const casualShirts = [
@@ -151,7 +150,7 @@ const Home = () => {
   ];
 
   return (
-    <div className="scroll-smooth">
+    <div className="w-full overflow-x-hidden"> {/* Wrap main container */}
       <div
         className="min-h-screen bg-cover bg-center bg-no-repeat relative"
         style={{ backgroundImage: `url(${Background})` }}
@@ -197,12 +196,12 @@ const Home = () => {
                     <h3 className="text-white text-base md:text-lg font-semibold mb-2">{title}</h3>
                     <p className="text-white font-bold text-lg mb-2">Price: {price}</p>
                     {/* Longer "Purchase" button, slightly shifted upward */}
- <div
-  className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto z-10 relative"
-  onClick={() => alert('Buying suit!')}
->
-  Purchase
-</div>
+                    <div
+                      className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto z-10 relative"
+                      onClick={() => alert('Buying suit!')}
+                    >
+                      Purchase
+                    </div>
                   </div>
                 </div>
               </div>
@@ -223,7 +222,7 @@ const Home = () => {
 
           {/* 2 Piece Suits */}
           <section className="p-10 bg-gray-100">
-            <h2 className="text-4xl font-bold mb-10 text-center text-blue-800">2 Piece Suits</h2>
+            <h2 className="text-4xl mb-10 text-center font-bold text-blue-800">2 Piece Suits</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {twoPieceSuits.map((suit) => (
                 <div
@@ -253,7 +252,7 @@ const Home = () => {
 
           {/* Tuxedo & Dinner */}
           <section className="p-10 bg-gray-100">
-            <h2 className="text-4xl font-bold mb-10 text-center text-blue-800">Tuxedo & Dinner</h2>
+            <h2 className="text-4xl mb-10 text-center font-bold text-blue-800">Tuxedo & Dinner</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {tuxedoSuits.map((suit) => (
                 <div
@@ -283,7 +282,7 @@ const Home = () => {
 
           {/* Official Shirts */}
           <section className="p-10 bg-gray-100">
-            <h2 className="text-4xl font-bold mb-10 text-center text-blue-800">Official Shirts</h2>
+            <h2 className="text-4xl mb-10 text-center font-bold text-blue-800">Official Shirts</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {officialShirts.map((shirt) => (
                 <div
@@ -296,8 +295,8 @@ const Home = () => {
                   </div>
                   {/* Labels outside image */}
                   <div className="bg-black bg-opacity-60 p-2 max-h-26 overflow-hidden text-center flex flex-col justify-center mt-2">
-                    <h3 className="text-white font-bold text-lg   mb-1">{shirt.name}</h3>
-                    <p className="text-white font-bold text-lg  mb-1">{shirt.price}</p>
+                    <h3 className="text-white font-bold text-lg mb-1">{shirt.name}</h3>
+                    <p className="text-white font-bold text-lg mb-1">{shirt.price}</p>
                     {/* Buy styled as button */}
                     <div
                       className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg font-semibold py-2 px-2 rounded cursor-pointer mx-auto"
@@ -313,7 +312,7 @@ const Home = () => {
 
           {/* Casual Shirts */}
           <section className="p-10 bg-gray-100">
-            <h2 className="text-4xl font-bold mb-10 text-center text-blue-800">Casual Shirts</h2>
+            <h2 className="text-4xl mb-10 text-center font-bold text-blue-800">Casual Shirts</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {casualShirts.map((shirt) => (
                 <div
@@ -326,8 +325,8 @@ const Home = () => {
                   </div>
                   {/* Labels outside image */}
                   <div className="bg-black bg-opacity-60 p-2 max-h-26 overflow-hidden text-center flex flex-col justify-center mt-2">
-                    <h3 className="text-white font-bold text-lg   mb-1">{shirt.name}</h3>
-                    <p className="text-white font-bold text-lg   mb-1">{shirt.price}</p>
+                    <h3 className="text-white font-bold text-lg mb-1">{shirt.name}</h3>
+                    <p className="text-white font-bold text-lg mb-1">{shirt.price}</p>
                     {/* Buy styled as button */}
                     <div
                       className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto"
@@ -343,7 +342,7 @@ const Home = () => {
 
           {/* Leather Jackets */}
           <section className="p-10 bg-gray-100" id="leather-jackets">
-            <h2 className="text-4xl font-bold mb-10 text-center text-blue-800">Leather Jackets</h2>
+            <h2 className="text-4xl mb-10 text-center font-bold text-blue-800">Leather Jackets</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {leathers.map((leather) => (
                 <div
