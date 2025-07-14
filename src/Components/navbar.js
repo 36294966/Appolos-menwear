@@ -1,18 +1,24 @@
 import {
-  BadgePercent,
   ChevronDown,
-  Diamond,
-  LayoutGrid,
   Menu,
-  Shirt,
-  X,
-  Home
+  X
 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 import Logo from '../Assets/logo.jpg';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faUserTie,
+  faShirt,
+  faTshirt,
+  faGem,
+  faVest,
+  faHouse,
+  faUserNinja // ← Added for jeans icon (you can change it)
+} from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = ({ onFilterSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -26,7 +32,6 @@ const Navbar = ({ onFilterSelect }) => {
     }
     setIsOpen(false);
 
-    // ... your existing handleFilter logic ...
     if (category === 'Suits') {
       if (value === '2 Piece Suits') {
         navigate('/suits/2piecesuits');
@@ -63,21 +68,21 @@ const Navbar = ({ onFilterSelect }) => {
   const menuItems = [
     {
       title: 'Suits',
-      icon: <BadgePercent size={18} />,
+      icon: <FontAwesomeIcon icon={faUserTie} />,
       dropdown: {
         Style: ['2 Piece Suits', '3 Piece Suits', 'Tuxedo & Dinner']
       }
     },
     {
       title: 'Shirts',
-      icon: <Shirt size={18} />,
+      icon: <FontAwesomeIcon icon={faShirt} />,
       dropdown: {
         Style: ['Official Shirts', 'Cassual Shirts']
       }
     },
     {
       title: 'Jeans',
-      icon: <LocalMallIcon fontSize="small" />,
+      icon: <FontAwesomeIcon icon={faUserNinja} className="text-blue-300" />, // Custom jean-like icon
       dropdown: {
         Type: ['Jeans']
       },
@@ -85,14 +90,14 @@ const Navbar = ({ onFilterSelect }) => {
     },
     {
       title: 'Accessories',
-      icon: <Diamond size={18} />,
+      icon: <FontAwesomeIcon icon={faGem} />,
       dropdown: {
         Items: ['Socks', 'Ties', 'Belt']
       }
     },
     {
       title: 'Blazers & Jackets',
-      icon: <LayoutGrid size={18} />,
+      icon: <FontAwesomeIcon icon={faVest} />,
       dropdown: {
         Jackets: ['Leather Jacket']
       }
@@ -100,10 +105,7 @@ const Navbar = ({ onFilterSelect }) => {
   ];
 
   return (
-    // Fixed navbar at top with high z-index
     <nav className="fixed top-0 left-0 w-full bg-blue-600 text-white shadow-md z-50">
-      {/* Add padding-top to ensure content below is not hidden */}
-      {/* You can also add padding in your main layout container */}
       <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}
         <img
@@ -114,7 +116,7 @@ const Navbar = ({ onFilterSelect }) => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-8 font-bold text-lg">
-          {/* Home Button */}
+          {/* Home */}
           <div
             className="relative group flex items-center h-full"
             onMouseEnter={() => {
@@ -133,12 +135,12 @@ const Navbar = ({ onFilterSelect }) => {
               className="flex items-center gap-1 hover:text-yellow-200 transition h-10"
               aria-label="Go to Home"
             >
-              <Home size={18} />
+              <FontAwesomeIcon icon={faHouse} />
               <span className="leading-none">Home</span>
             </button>
           </div>
 
-          {/* Main menu items */}
+          {/* Menu Items */}
           {menuItems.map((item) => (
             <div
               key={item.title}
@@ -168,7 +170,7 @@ const Navbar = ({ onFilterSelect }) => {
                 {item.dropdown && <ChevronDown size={16} />}
               </button>
 
-              {/* Dropdown menu */}
+              {/* Dropdown */}
               {item.dropdown && openDropdown === item.title && (
                 <div className="absolute top-10 left-0 bg-white text-black shadow-xl rounded-md p-4 grid grid-cols-1 gap-4 w-[220px] z-50 animate-fade-in">
                   {Object.entries(item.dropdown).map(([section, values]) => (
@@ -191,7 +193,7 @@ const Navbar = ({ onFilterSelect }) => {
           ))}
         </div>
 
-        {/* Mobile menu toggle */}
+        {/* Mobile Toggle */}
         <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
@@ -199,10 +201,10 @@ const Navbar = ({ onFilterSelect }) => {
         </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden px-6 pb-4 flex flex-col space-y-6 font-medium bg-blue-600 text-white">
-          {/* Home Button */}
+          {/* Home */}
           <button
             onClick={() => {
               setIsOpen(false);
@@ -211,11 +213,11 @@ const Navbar = ({ onFilterSelect }) => {
             className="flex items-center space-x-2 px-3 py-2 rounded hover:bg-blue-700 transition"
             aria-label="Go to Home"
           >
-            <Home size={20} />
+            <FontAwesomeIcon icon={faHouse} />
             <span>Home</span>
           </button>
 
-          {/* Menu items for mobile */}
+          {/* Menu Items */}
           {menuItems.map((item) => (
             <div key={item.title}>
               <button
@@ -237,7 +239,7 @@ const Navbar = ({ onFilterSelect }) => {
                 {item.dropdown && <ChevronDown size={18} />}
               </button>
 
-              {/* Dropdown for mobile */}
+              {/* Dropdown */}
               {item.dropdown && openDropdown === item.title && (
                 <div className="mt-2 grid grid-cols-1 gap-4 text-sm w-[220px]">
                   {Object.entries(item.dropdown).map(([section, values]) => (
@@ -269,3 +271,5 @@ const Navbar = ({ onFilterSelect }) => {
 };
 
 export default Navbar;
+
+

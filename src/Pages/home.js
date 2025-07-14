@@ -103,12 +103,12 @@ const Home = () => {
   ];
 
   const officialShirts = [
-    { id: 1, name: 'Formal White Shirt', image: Official1, price: 'Ksh 1,800' },
-    { id: 2, name: 'Classic Blue Shirt', image: Official2, price: 'Ksh 1,800' },
-    { id: 3, name: 'Striped Office Shirt', image: Official3, price: 'Ksh 1,800' },
-    { id: 4, name: 'Office Shirt', image: Official4, price: 'Ksh 1,800' },
-    { id: 5, name: 'Office Shirt', image: Official5, price: 'Ksh 1,800' },
-    { id: 6, name: 'Office Shirt', image: Official6, price: 'Ksh 1,800' },
+    { id: 1, name: 'Official Shirt', image: Official1, price: 'Ksh 1,800' },
+    { id: 2, name: 'Official Shirt', image: Official2, price: 'Ksh 1,800' },
+    { id: 3, name: 'Official Shirt', image: Official3, price: 'Ksh 1,800' },
+    { id: 4, name: 'Official Shirt', image: Official4, price: 'Ksh 1,800' },
+    { id: 5, name: 'Official Shirt', image: Official5, price: 'Ksh 1,800' },
+    { id: 6, name: 'Official Shirt', image: Official6, price: 'Ksh 1,800' },
   ];
 
   const casualShirts = [
@@ -145,8 +145,8 @@ const Home = () => {
     { id: 2, name: 'Fit Jeans', image: Jean2, price: 'Ksh 2,000' },
     { id: 3, name: 'Slim Fit Jeans', image: Jean3, price: 'Ksh 2,000' },
     { id: 4, name: 'Relaxed Jeans', image: Jean4, price: 'Ksh 2,000' },
-    { id: 5, name: 'Stylish Jeans', image: Jean5, price: 'Ksh 2,500' },
-    { id: 6, name: 'Skinny Jeans', image: Jean6, price: 'Ksh 2,300' },
+    { id: 5, name: 'Stylish Jeans', image: Jean5, price: 'Ksh 2,000' },
+    { id: 6, name: 'Skinny Jeans', image: Jean6, price: 'Ksh 2,000' },
   ];
 
   return (
@@ -162,15 +162,15 @@ const Home = () => {
         {/* Content */}
         <div className="relative z-10">
           <Navbar />
-
-          {/* Welcome message */}
-          <div className="blinking-text-fade text-lg md:text-xl md:scale-75 md:transform md:origin-top md:transition-transform duration-500">
+{/* 
+          // {/* Welcome message */}
+         {/* <div className="blinking-text-fade text-lg md:text-xl md:scale-75 md:transform md:origin-top md:transition-transform duration-500">
           <div className="fixed bottom-20 right-5 bg-white bg-opacity-90 p-4 rounded-lg shadow-lg z-50 max-w-sm text-center">
-            <p className="text-lg font-semibold text-gray-800">
-              Welcome to Sir Apollo's Collection and experience amazing offers
+           <p className="text-lg font-semibold text-gray-800">
+          Welcome to Sir Apollo's Collection and experience amazing offers
             </p>
-            </div>
           </div>
+          </div> */}
 
           {/* Header texts */}
           <div className="text-center mt-10 px-4">
