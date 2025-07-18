@@ -223,7 +223,7 @@ const Home = () => {
     <div className="w-full overflow-x-hidden"> {/* Wrap main container */}
       <div
         className="min-h-screen bg-cover bg-center bg-no-repeat relative"
-        style={{ backgroundImage: `url(${Background})` }}
+        style={{ backgroundImage: `url(${Background})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
       >
         {/* Blinking line */}
         <div className="blinking-line fixed top-0 left-0 w-full h-1 bg-green-500 animate-blink z-50"></div>
@@ -260,7 +260,7 @@ const Home = () => {
                 {/* Flex container to position image and label at bottom */}
                 <div className="flex flex-col h-full justify-between">
                   {/* Image */}
-                  <img src={src} alt={title} className="w-full h-full object-cover flex-1" />
+                  <img src={src} alt={title} className="w-full h-full object-cover flex-1" loading="lazy" />
                   {/* Label and Buy button styled as a button */}
                   <div className="bg-opacity-36 max-h-42 p-2 pt-4 pb-2 text-center flex flex-col justify-center relative -mt-44">
                     <h3 className="text-white font-bold text-base md:text-lg mb-2">{title}</h3>
@@ -284,7 +284,7 @@ const Home = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
               {suits.map((suit, index) => (
                 <div key={index} className="rounded-xl overflow-hidden shadow-lg transform hover:scale-105 hover:shadow-xl transition duration-300 ease-in-out">
-                  <img src={suit.src} alt={`Suit ${index + 1}`} className="w-full h-[30rem] object-cover rounded-xl" />
+                  <img src={suit.src} alt={`Suit ${index + 1}`} className="w-full h-[30rem] object-cover rounded-xl" loading="lazy" />
                 </div>
               ))}
             </div>
@@ -300,7 +300,7 @@ const Home = () => {
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden relative"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
-                    <img src={suit.image} alt={suit.name} className="w-full h-full object-contain" />
+                    <img src={suit.image} alt={suit.name} className="w-full h-full object-contain" loading="lazy" />
                   </div>
                   {/* Labels outside image */}
                   <div className="bg-black bg-opacity-60 p-2 max-h-26 overflow-hidden text-center flex flex-col justify-center mt-2">
@@ -329,7 +329,7 @@ const Home = () => {
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden relative"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
-                    <img src={suit.image} alt={suit.name} className="w-full h-full object-contain" />
+                    <img src={suit.image} alt={suit.name} className="w-full h-full object-contain" loading="lazy" />
                   </div>
                   {/* Labels outside image */}
                   <div className="bg-black bg-opacity-60 p-2 max-h-26 overflow-hidden text-center flex flex-col justify-center mt-2">
@@ -358,7 +358,7 @@ const Home = () => {
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden relative"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
-                    <img src={shirt.image} alt={shirt.name} className="w-full h-full object-contain" />
+                    <img src={shirt.image} alt={shirt.name} className="w-full h-full object-contain" loading="lazy" />
                   </div>
                   {/* Labels outside image */}
                   <div className="bg-black bg-opacity-60 p-2 max-h-26 overflow-hidden text-center flex flex-col justify-center mt-2">
@@ -387,7 +387,7 @@ const Home = () => {
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden relative"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
-                    <img src={shirt.image} alt={shirt.name} className="w-full h-full object-contain" />
+                    <img src={shirt.image} alt={shirt.name} className="w-full h-full object-contain" loading="lazy" />
                   </div>
                   {/* Labels outside image */}
                   <div className="bg-black bg-opacity-60 p-2 max-h-26 overflow-hidden text-center flex flex-col justify-center mt-2">
@@ -420,6 +420,7 @@ const Home = () => {
                       src={leather.image}
                       alt={leather.name}
                       className="w-full h-full object-contain"
+                      loading="lazy"
                     />
                   </div>
                   {/* Labels outside image */}
@@ -449,7 +450,7 @@ const Home = () => {
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
-                    <img src={jean.image} alt={jean.name} className="w-full h-full object-contain" />
+                    <img src={jean.image} alt={jean.name} className="w-full h-full object-contain" loading="lazy" />
                   </div>
                   {/* Labels outside image */}
                   <div className="bg-black bg-opacity-60 p-2 max-h-26 overflow-hidden text-center flex flex-col justify-center mt-2">

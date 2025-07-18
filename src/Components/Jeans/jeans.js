@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+
+// Main jeans images
 import Jean1 from '../../Assets/Jeans/jean1.jpeg';
 import Jean2 from '../../Assets/Jeans/jean2.jpeg';
 import Jean3 from '../../Assets/Jeans/jean3.jpeg';
 import Jean4 from '../../Assets/Jeans/jean4.jpg';
 import Jean5 from '../../Assets/Jeans/jean5.jpg';
 import Jean6 from '../../Assets/Jeans/jean6.jpg';
+import Jean7 from '../../Assets/Jeans/jean7.jpg';
+import Jean8 from '../../Assets/Jeans/jean8.jpg';
+import Jean9 from '../../Assets/Jeans/jean9.jpg';
+import Jean10 from '../../Assets/Jeans/jean10.jpg';
+import Jean11 from '../../Assets/Jeans/jean11.jpg';
+import Jean12 from '../../Assets/Jeans/jean12.jpg';
 
-// Payment Popup Component
 const PaymentPopup = ({ onClose }) => {
   const paybillNumber = '542542';
   const accountNumber = '378179';
@@ -64,69 +71,49 @@ Amount: ${amount || '[Enter amount here]'}
 const Jeans = () => {
   const [showPayment, setShowPayment] = useState(false);
 
-  const jeansList = [
-    {
-      id: 1,
-      name: 'Classic Jeans',
-      image: Jean1,
-      price: 'Ksh 2,000',
-    },
-    {
-      id: 2,
-      name: 'Fit Jeans',
-      image: Jean2,
-      price: 'Ksh 2,000',
-    },
-    {
-      id: 3,
-      name: 'Slim Fit Jeans',
-      image: Jean3,
-      price: 'Ksh 2,000',
-    },
-    {
-      id: 4,
-      name: 'Relaxed Jeans',
-      image: Jean4,
-      price: 'Ksh 2,000',
-    },
-    {
-      id: 5,
-      name: 'Bootcut Jeans',
-      image: Jean5,
-      price: 'Ksh 2,000',
-    },
-    {
-      id: 6,
-      name: 'Skinny Jeans',
-      image: Jean6,
-      price: 'Ksh 2,000',
-    },
+  const jeansProducts = [
+    { id: 1, image: Jean1, price: 'Ksh 2,000' },
+    { id: 2, image: Jean2, price: 'Ksh 2,000' },
+    { id: 3, image: Jean3, price: 'Ksh 2,000' },
+    { id: 4, image: Jean4, price: 'Ksh 2,000' },
+    { id: 5, image: Jean5, price: 'Ksh 2,000' },
+    { id: 6, image: Jean6, price: 'Ksh 2,000' },
+    { id: 7, image: Jean7, price: 'Ksh 2,000' },
+    { id: 8, image: Jean8, price: 'Ksh 2,000' },
+    { id: 9, image: Jean9, price: 'Ksh 2,000' },
+    { id: 10, image: Jean10, price: 'Ksh 2,000' },
+    { id: 11, image: Jean11, price: 'Ksh 2,000' },
+    { id: 12, image: Jean12, price: 'Ksh 2,000' }
   ];
 
   return (
     <section className="p-10 bg-gray-100 min-h-screen relative">
       {showPayment && <PaymentPopup onClose={() => setShowPayment(false)} />}
 
-      <h2 className="text-4xl font-bold mb-10 text-center text-blue-800">Jeans</h2>
-      <div className="grid grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))] gap-8">
-        {jeansList.map((jean) => (
+      <h2 className="text-4xl font-bold mb-10 text-center text-blue-800">
+        Classic Jeans Collection
+      </h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {jeansProducts.map((jean) => (
           <div
             key={jean.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden"
+            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
           >
-            <div className="h-80 w-full flex items-center justify-center bg-gray-200">
+            <div className="h-80 p-4 flex items-center justify-center bg-gray-50">
               <img
                 src={jean.image}
-                alt={jean.name}
+                alt="Classic Jean"
                 className="w-full h-full object-contain"
+                loading="lazy"
               />
             </div>
-            <div className="p-4 flex flex-col items-center justify-center text-center">
-              <h3 className="text-lg font-bold mb-2 text-gray-900">{jean.name}</h3>
-              <p className="text-lg font-bold mb-4 text-gray-700">{jean.price}</p>
+            <div className="p-6 text-center space-y-4">
+              <h3 className="text-xl font-bold">Classic Jean</h3>
+              <p className="text-lg font-bold text-blue-600">{jean.price}</p>
               <button
                 onClick={() => setShowPayment(true)}
-                className="bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 px-6 rounded w-full"
+                className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors"
               >
                 Purchase
               </button>
