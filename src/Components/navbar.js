@@ -5,7 +5,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import { UserIcon } from '@heroicons/react/24/solid';
 
 import Logo from '../Assets/logo.jpg';
 
