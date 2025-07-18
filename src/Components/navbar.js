@@ -16,9 +16,10 @@ import {
   faTshirt,
   faGem,
   faVest,
-  faHouse,
-  faUserNinja // ← Added for jeans icon (you can change it)
+  faHouse
 } from '@fortawesome/free-solid-svg-icons';
+
+import CheckroomIcon from '@mui/icons-material/Checkroom'; // ✅ NEW import
 
 const Navbar = ({ onFilterSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -82,7 +83,7 @@ const Navbar = ({ onFilterSelect }) => {
     },
     {
       title: 'Jeans',
-      icon: <FontAwesomeIcon icon={faUserNinja} className="text-blue-300" />, // Custom jean-like icon
+      icon: <CheckroomIcon className="text-blue-300" fontSize="small" />, // ✅ UPDATED icon
       dropdown: {
         Type: ['Jeans']
       },
@@ -249,7 +250,7 @@ const Navbar = ({ onFilterSelect }) => {
                         <button
                           key={val}
                           onClick={() => {
-                            handleFilter(item.title, val);
+                            handleFilter(item.title,val);
                             setOpenDropdown(null);
                             setIsOpen(false);
                           }}
@@ -271,5 +272,3 @@ const Navbar = ({ onFilterSelect }) => {
 };
 
 export default Navbar;
-
-

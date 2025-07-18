@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../App.css';
 
@@ -69,6 +69,63 @@ import Leather1 from '../Assets/Jackets/jacket1.jpg';
 import Leather2 from '../Assets/Jackets/jacket2.jpg';
 import Leather3 from '../Assets/Jackets/jacket3.jpg';
 
+// Payment Popup Component
+const PaymentPopup = ({ onClose, itemName, itemPrice }) => {
+  const paybillNumber = '542542';
+  const accountNumber = '378179';
+  const [amount, setAmount] = useState('');
+
+  const handleDownload = () => {
+    const content = `
+Payment Details
+---------------
+Paybill Number: ${paybillNumber}
+Account Number: ${accountNumber}
+Amount: ${amount || '[Enter amount here]'}
+Item: ${itemName}
+Price: ${itemPrice}
+`;
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'payment_paybill.txt';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
+      <div className="bg-white p-6 rounded-xl shadow-xl w-80">
+        <h2 className="text-xl font-semibold mb-4">Payment Details</h2>
+        <p className="mb-2">Paybill Number: {paybillNumber}</p>
+        <p className="mb-2">Account Number: {accountNumber}</p>
+        <input
+          type="text"
+          placeholder="Enter amount"
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
+          className="w-full mb-4 p-2 border border-gray-300 rounded"
+        />
+        <button
+          onClick={handleDownload}
+          className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded mb-2"
+        >
+          Download Payment File
+        </button>
+        <button
+          onClick={onClose}
+          className="w-full bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const Home = () => {
   const navigate = useNavigate();
   const whatsappNumber = '254746311274';
@@ -78,7 +135,7 @@ const Home = () => {
 
   const homeImages = [
     { src: Photo1, title: 'Three Piece Men Suit', price: '13,000' },
-    { src: Photo2, title: 'Three piece Men Suit', price: '13,000' },
+    { src: Photo2, title: 'Three Piece Men Suit', price: '13,000' },
     { src: Photo3, title: 'Three Piece Men Suit', price: '13,000' },
     { src: Photo4, title: 'Three Piece Men Suit', price: '13,000' },
   ];
@@ -149,6 +206,19 @@ const Home = () => {
     { id: 6, name: 'Skinny Jeans', image: Jean6, price: 'Ksh 2,000' },
   ];
 
+  const [showPayment, setShowPayment] = useState(false);
+  const [currentItem, setCurrentItem] = useState({});
+
+  const handlePurchase = (item) => {
+    setCurrentItem(item);
+    setShowPayment(true);
+  };
+
+  const closePaymentPopup = () => {
+    setShowPayment(false);
+    setCurrentItem({}); // Reset current item when closing the popup
+  };
+
   return (
     <div className="w-full overflow-x-hidden"> {/* Wrap main container */}
       <div
@@ -162,15 +232,13 @@ const Home = () => {
         {/* Content */}
         <div className="relative z-10">
           <Navbar />
-{/* 
-          // {/* Welcome message */}
-         {/* <div className="blinking-text-fade text-lg md:text-xl md:scale-75 md:transform md:origin-top md:transition-transform duration-500">
-          <div className="fixed bottom-20 right-5 bg-white bg-opacity-90 p-4 rounded-lg shadow-lg z-50 max-w-sm text-center">
-           <p className="text-lg font-semibold text-gray-800">
-          Welcome to Sir Apollo's Collection and experience amazing offers
-            </p>
-          </div>
-          </div> */}
+          {showPayment && (
+            <PaymentPopup
+              onClose={closePaymentPopup}
+              itemName={currentItem.title || currentItem.name || ''}
+              itemPrice={currentItem.price || ''}
+            />
+          )}
 
           {/* Header texts */}
           <div className="text-center mt-10 px-4">
@@ -195,15 +263,15 @@ const Home = () => {
                   <img src={src} alt={title} className="w-full h-full object-cover flex-1" />
                   {/* Label and Buy button styled as a button */}
                   <div className="bg-opacity-36 max-h-42 p-2 pt-4 pb-2 text-center flex flex-col justify-center relative -mt-44">
-  <h3 className="text-white font-bold text-base md:text-lg mb-2">{title}</h3>
-  <p className="text-white font-bold text-lg mb-4">Price: {price}</p>
-  {/* Purchase button, visible under medium screens, centered */}
-  <div
-    className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto z-10 relative"
-    onClick={() => alert('Buying suit!')}
-  >
-    Purchase
-  </div>
+                    <h3 className="text-white font-bold text-base md:text-lg mb-2">{title}</h3>
+                    <p className="text-white font-bold text-lg mb-4">Price: {price}</p>
+                    {/* Purchase button, visible under medium screens, centered */}
+                    <div
+                      className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto z-10 relative"
+                      onClick={() => handlePurchase({ title, price })}
+                    >
+                      Purchase
+                    </div>
                   </div>
                 </div>
               </div>
@@ -229,7 +297,6 @@ const Home = () => {
               {twoPieceSuits.map((suit) => (
                 <div
                   key={suit.id}
-                  onClick={() => navigate(`/suits/${suit.id}`)}
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden relative"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
@@ -242,7 +309,7 @@ const Home = () => {
                     {/* Buy button */}
                     <div
                       className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded cursor-pointer mx-auto"
-                      onClick={() => alert('Buying suit!')}
+                      onClick={() => handlePurchase(suit)}
                     >
                       Purchase
                     </div>
@@ -259,7 +326,6 @@ const Home = () => {
               {tuxedoSuits.map((suit) => (
                 <div
                   key={suit.id}
-                  onClick={() => navigate(`/suits/${suit.id}`)}
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden relative"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
@@ -272,7 +338,7 @@ const Home = () => {
                     {/* Buy styled as a button */}
                     <div
                       className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto"
-                      onClick={() => alert('Buying suit!')}
+                      onClick={() => handlePurchase(suit)}
                     >
                       Purchase
                     </div>
@@ -289,7 +355,6 @@ const Home = () => {
               {officialShirts.map((shirt) => (
                 <div
                   key={shirt.id}
-                  onClick={() => navigate(`/shirts/${shirt.id}`)}
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden relative"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
@@ -302,7 +367,7 @@ const Home = () => {
                     {/* Buy styled as button */}
                     <div
                       className="mt-4 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg font-semibold py-2 px-2 rounded cursor-pointer mx-auto"
-                      onClick={() => alert('Buying shirt!')}
+                      onClick={() => handlePurchase(shirt)}
                     >
                       Purchase
                     </div>
@@ -319,7 +384,6 @@ const Home = () => {
               {casualShirts.map((shirt) => (
                 <div
                   key={shirt.id}
-                  onClick={() => navigate(`/shirts/${shirt.id}`)}
                   className="cursor-pointer bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden relative"
                 >
                   <div className="h-64 w-full flex items-center justify-center bg-gray-200">
@@ -332,7 +396,7 @@ const Home = () => {
                     {/* Buy styled as button */}
                     <div
                       className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto"
-                      onClick={() => alert('Buying shirt!')}
+                      onClick={() => handlePurchase(shirt)}
                     >
                       Purchase
                     </div>
@@ -365,7 +429,7 @@ const Home = () => {
                     {/* Buy button */}
                     <div
                       className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-lg py-2 px-4 rounded cursor-pointer mx-auto"
-                      onClick={() => alert('Buying leather!')}
+                      onClick={() => handlePurchase(leather)}
                     >
                       Purchase
                     </div>
@@ -394,7 +458,7 @@ const Home = () => {
                     {/* Buy styled as button */}
                     <div
                       className="mt-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded cursor-pointer mx-auto"
-                      onClick={() => alert('Buying jeans!')}
+                      onClick={() => handlePurchase(jean)}
                     >
                       Purchase
                     </div>
@@ -425,3 +489,4 @@ const Home = () => {
 };
 
 export default Home;
+
