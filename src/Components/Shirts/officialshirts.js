@@ -65,7 +65,7 @@ const PaymentPopup = ({ onClose }) => {
             onClick={generatePaymentFile}
             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold transition-all duration-200 transform hover:scale-[1.02]"
           >
-            Download Instructions
+            PAY NOW
           </button>
           <button
             onClick={onClose}

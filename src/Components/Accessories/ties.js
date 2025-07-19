@@ -62,7 +62,7 @@ const PaymentPopup = ({ onClose }) => {
             onClick={handlePaymentFile}
             className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold transition-all duration-200 transform hover:scale-[1.02]"
           >
-            Download Instructions
+            PAY NOW
           </button>
           <button
             onClick={onClose}
@@ -97,7 +97,7 @@ const Ties = () => {
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
           Premium Neckwear Collection
         </h1>
-        <p className="text-gray-600 text-lg">
+        <p className="text-blue-600 text-lg">
           Elevate your professional appearance with our curated ties
         </p>
       </header>

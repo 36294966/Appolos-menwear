@@ -131,14 +131,17 @@ const Navbar = ({ onFilterSelect }) => {
               setLeaveTimeout(timeout);
             }}
           >
-            <button
-              onClick={() => navigate('/')}
-              className="flex items-center gap-1 hover:text-yellow-200 transition h-10"
-              aria-label="Go to Home"
-            >
-              <FontAwesomeIcon icon={faHouse} />
-              <span className="leading-none">Home</span>
-            </button>
+  <button
+  onClick={() => navigate('/')}
+  className="inline-flex items-center hover:text-yellow-200 transition h-10 "
+  aria-label="Go to Home"
+>
+  <FontAwesomeIcon 
+    icon={faHouse} 
+    className="ml-[8px] transition-all duration-300 ease-in-out group-hover:translate-x-[-8px]" // ← Debug border
+  />
+  <span className="leading-none ml-12">Home</span>
+</button>
           </div>
 
           {/* Menu Items */}
