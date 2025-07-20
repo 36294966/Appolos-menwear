@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 // Main jeans images
 import Jean1 from '../../Assets/Jeans/jean1.jpeg';
@@ -18,6 +19,7 @@ const PaymentPopup = ({ onClose }) => {
   const paybillNumber = '542542';
   const accountNumber = '378179';
   const [amount, setAmount] = useState('');
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
 
   const handleDownload = () => {
     const content = `
@@ -36,33 +38,57 @@ Amount: ${amount || '[Enter amount here]'}
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+    setPaymentSuccess(true);
+    setTimeout(onClose, 1500);
   };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
       <div className="bg-white p-6 rounded-xl shadow-xl w-80">
-        <h2 className="text-xl font-semibold mb-4">Payment Details</h2>
-        <p className="mb-2">Paybill Number: {paybillNumber}</p>
-        <p className="mb-2">Account Number: {accountNumber}</p>
-        <input
-          type="text"
-          placeholder="Enter amount"
-          value={amount}
-          onChange={(e) => setAmount(e.target.value)}
-          className="w-full mb-4 p-2 border border-gray-300 rounded"
-        />
-        <button
-          onClick={handleDownload}
-          className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded mb-2"
-        >
-          PAY NOW
-        </button>
-        <button
-          onClick={onClose}
-          className="w-full bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded"
-        >
-          Close
-        </button>
+        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+          {paymentSuccess ? (
+            <>
+              <CheckCircle className="w-6 h-6 text-green-500" />
+              Payment Complete!
+            </>
+          ) : (
+            'Payment Details'
+          )}
+        </h2>
+
+        {!paymentSuccess ? (
+          <>
+            <p className="mb-2">Paybill Number: {paybillNumber}</p>
+            <p className="mb-2">Account Number: {accountNumber}</p>
+            <input
+              type="text"
+              placeholder="Enter amount"
+              value={amount}
+              onChange={(e) => setAmount(e.target.value)}
+              className="w-full mb-4 p-2 border border-gray-300 rounded"
+            />
+            <div className="space-y-2">
+              <button
+                onClick={handleDownload}
+                className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
+              >
+                <CheckCircle className="w-5 h-5" />
+                PAY NOW
+              </button>
+              <button
+                onClick={onClose}
+                className="w-full bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
+              >
+                <XCircle className="w-5 h-5" />
+                Close
+              </button>
+            </div>
+          </>
+        ) : (
+          <p className="text-center text-green-600 text-sm">
+            Receipt downloaded successfully
+          </p>
+        )}
       </div>
     </div>
   );
@@ -113,8 +139,9 @@ const Jeans = () => {
               <p className="text-lg font-bold text-blue-600">{jean.price}</p>
               <button
                 onClick={() => setShowPayment(true)}
-                className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors"
+                className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
+                <CheckCircle className="w-5 h-5" />
                 Purchase
               </button>
             </div>
