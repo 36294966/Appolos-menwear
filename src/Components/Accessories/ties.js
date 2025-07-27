@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import Tie1 from '../../Assets/Ties/tie1.jpg';
 import Tie2 from '../../Assets/Ties/tie2.jpg';
 import Tie3 from '../../Assets/Ties/tie3.jpg';
@@ -114,6 +114,7 @@ Standard Price: ${item?.price || 'Ksh 900'}
 const Ties = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedTie, setSelectedTie] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const tiesCollection = [
     { id: 1, image: Tie1, name: 'Premium Tie', price: 'Ksh 900' },
@@ -126,6 +127,11 @@ const Ties = () => {
     { id: 8, image: Tie8, name: 'Premium Tie', price: 'Ksh 900' },
     { id: 9, image: Tie9, name: 'Premium Tie', price: 'Ksh 900' }
   ];
+
+  const handleAddToCart = (item) => {
+    setCartItems(prev => [...prev, item]);
+    alert(`${item.name} added to cart`);
+  };
 
   return (
     <section className="p-6 sm:p-8 bg-gray-50 min-h-screen">
@@ -164,6 +170,13 @@ const Ties = () => {
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
+              </button>
+              <button
+                onClick={() => handleAddToCart(tie)}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-semibold transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
               </button>
             </div>
           </article>

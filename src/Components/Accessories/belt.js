@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
+
 import Belt1 from '../../Assets/Accessories/belt1.jpg';
 import Belt2 from '../../Assets/Accessories/belt2.jpg';
 import Belt3 from '../../Assets/Accessories/belt3.jpg';
@@ -7,8 +8,8 @@ import Belt4 from '../../Assets/Accessories/belt4.jpg';
 import Belt5 from '../../Assets/Accessories/belt5.jpg';
 import Belt6 from '../../Assets/Accessories/belt6.jpg';
 
-const PaymentPopup = ({ onClose }) => {
-  const [amount, setAmount] = useState('');
+const PaymentPopup = ({ onClose, item }) => {
+  const [amount, setAmount] = useState(item?.price?.replace('Ksh ', '') || '');
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const paymentDetails = {
     paybill: '542542',
@@ -16,8 +17,11 @@ const PaymentPopup = ({ onClose }) => {
   };
 
   const generatePaymentFile = () => {
-    const content = `Payment Instructions:\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount: ${amount || '________'}`;
-    
+    const content = `Payment Instructions:
+Item: ${item?.name}
+Paybill: ${paymentDetails.paybill}
+Account: ${paymentDetails.account}
+Amount: Ksh ${amount || '________'}`;
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -48,16 +52,15 @@ const PaymentPopup = ({ onClose }) => {
         {!paymentSuccess ? (
           <>
             <div className="space-y-4">
+              <p className="font-semibold text-lg text-center">{item?.name}</p>
               <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
                 <span className="font-medium">Paybill:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
               </div>
-              
               <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
                 <span className="font-medium">Account:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
               </div>
-              
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"
@@ -96,6 +99,8 @@ const PaymentPopup = ({ onClose }) => {
 
 const Belt = () => {
   const [showPayment, setShowPayment] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const belts = [
     { id: 1, image: Belt1, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
@@ -105,6 +110,16 @@ const Belt = () => {
     { id: 5, image: Belt5, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
     { id: 6, image: Belt6, name: 'Premium Leather Belt', price: 'Ksh 2,000' }
   ];
+
+  const handlePurchase = (item) => {
+    setSelectedItem(item);
+    setShowPayment(true);
+  };
+
+  const handleAddToCart = (item) => {
+    setCartItems((prev) => [...prev, item]);
+    alert(`${item.name} added to cart`);
+  };
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
@@ -119,7 +134,7 @@ const Belt = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {belts.map((belt) => (
-          <article 
+          <article
             key={belt.id}
             className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
           >
@@ -135,18 +150,33 @@ const Belt = () => {
               <h3 className="text-xl font-bold text-gray-900">{belt.name}</h3>
               <p className="text-blue-600 font-bold text-xl">{belt.price}</p>
               <button
-                onClick={() => setShowPayment(true)}
+                onClick={() => handlePurchase(belt)}
                 className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
+              </button>
+              <button
+                onClick={() => handleAddToCart(belt)}
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
               </button>
             </div>
           </article>
         ))}
       </div>
 
-      {showPayment && <PaymentPopup onClose={() => setShowPayment(false)} />}
+      {showPayment && selectedItem && (
+        <PaymentPopup
+          onClose={() => {
+            setShowPayment(false);
+            setSelectedItem(null);
+          }}
+          item={selectedItem}
+        />
+      )}
     </section>
   );
 };

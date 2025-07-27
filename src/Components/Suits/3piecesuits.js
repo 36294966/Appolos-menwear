@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import ThreePiece1 from '../../Assets/Suits/threepiece1.jpg';
 import ThreePiece2 from '../../Assets/Suits/threepiece2.jpg';
 import ThreePiece3 from '../../Assets/Suits/threepiece3.jpg';
@@ -102,6 +102,7 @@ const ThreePieceSuits = () => {
   const navigate = useNavigate();
   const [showPayment, setShowPayment] = useState(false);
   const [selectedSuit, setSelectedSuit] = useState(null);
+  const [cart, setCart] = useState([]);
 
   const threePieceSuits = [
     { id: 1, image: ThreePiece1, price: 'Ksh 13,000' },
@@ -120,6 +121,11 @@ const ThreePieceSuits = () => {
   const handlePurchase = (suit) => {
     setSelectedSuit(suit);
     setShowPayment(true);
+  };
+
+  const addToCart = (item) => {
+    setCart((prevCart) => [...prevCart, item]);
+    alert('Item added to cart');
   };
 
   return (
@@ -177,6 +183,13 @@ const ThreePieceSuits = () => {
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
+              </button>
+              <button
+                onClick={() => addToCart(suit)}
+                className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
               </button>
             </div>
           </div>

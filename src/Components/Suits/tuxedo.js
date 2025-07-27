@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import Tuxedo1 from '../../Assets/Suits/tuxedo1.jpg';
 import Tuxedo2 from '../../Assets/Suits/tuxedo2.jpg';
 import Tuxedo3 from '../../Assets/Suits/tuxedo3.jpg';
@@ -95,6 +95,7 @@ Standard Price: Ksh 12,000
 const Tuxedo = () => {
   const navigate = useNavigate();
   const [showPayment, setShowPayment] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   const tuxedoSuits = [
     { id: 1, image: Tuxedo1 },
@@ -103,6 +104,11 @@ const Tuxedo = () => {
   ];
 
   const photos = [Photo4, Photo5, Photo6];
+
+  const addToCart = (item) => {
+    setCartItems((prev) => [...prev, item]);
+    alert('Added to cart!');
+  };
 
   return (
     <section className="p-10 bg-gray-50 min-h-screen relative">
@@ -134,6 +140,13 @@ const Tuxedo = () => {
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
+              </button>
+              <button
+                onClick={() => addToCart(suit)}
+                className="mt-3 w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
               </button>
             </div>
           </div>

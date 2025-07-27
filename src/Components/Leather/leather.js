@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import Leather1 from '../../Assets/Jackets/jacket1.jpg';
 import Leather2 from '../../Assets/Jackets/jacket2.jpg';
 import Leather3 from '../../Assets/Jackets/jacket3.jpg';
@@ -85,7 +85,7 @@ Amount: Ksh ${amount || '[Enter amount here]'}
   );
 };
 
-const Leather = () => {
+const LeatherJackets = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -98,21 +98,32 @@ const Leather = () => {
     },
     {
       id: 2,
-      name: 'Leather Jacket - Classic',
+      name: 'Leather Jacket - Premium',
       image: Leather2,
-      price: 'Ksh 3,500',
+      price: 'Ksh 4,200',
     },
     {
       id: 3,
-      name: 'Leather Jacket - Classic',
+      name: 'Leather Jacket - Modern Fit',
       image: Leather3,
-      price: 'Ksh 3,500',
+      price: 'Ksh 3,800',
     },
   ];
 
   const handlePurchase = (item) => {
     setSelectedItem(item);
     setShowPayment(true);
+  };
+
+  const handleAddToCart = (item) => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const newCart = [...storedCart, { 
+      ...item, 
+      price: parseFloat(item.price.replace('Ksh ', '').replace(',', '')) 
+    }];
+    localStorage.setItem('cart', JSON.stringify(newCart));
+    window.dispatchEvent(new Event('storage'));
+    alert(`${item.name} added to cart`);
   };
 
   return (
@@ -146,10 +157,17 @@ const Leather = () => {
               <p className="text-lg font-semibold mb-4 text-gray-700">{leather.price}</p>
               <button
                 onClick={() => handlePurchase(leather)}
-                className="mt-4 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2"
+                className="w-full bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2 mb-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase
+              </button>
+              <button
+                onClick={() => handleAddToCart(leather)}
+                className="w-full bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
               </button>
             </div>
           </div>
@@ -159,4 +177,4 @@ const Leather = () => {
   );
 };
 
-export default Leather;
+export default LeatherJackets;

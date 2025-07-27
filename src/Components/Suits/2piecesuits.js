@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import TwoPiece1 from '../../Assets/Suits/twopiece1.jpg';
 import TwoPiece2 from '../../Assets/Suits/twopiece2.jpg';
 import TwoPiece3 from '../../Assets/Suits/twopiece3.jpg';
@@ -7,27 +7,20 @@ import Photo4 from '../../Assets/Appolo/photo4.jpg';
 import Photo5 from '../../Assets/Appolo/photo5.jpg';
 import Photo6 from '../../Assets/Appolo/photo6.jpg';
 
-const PaymentFileGenerator = ({ item, onClose }) => {
-  const paybillNumber = '542542';
-  const accountNumber = '378179';
+// Payment popup component
+const PaymentPopup = ({ item, onClose }) => {
   const [amount, setAmount] = useState('');
   const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const paybill = '542542';
+  const account = '378179';
 
-  const handleDownload = () => {
-    const content = `
-Payment Details
----------------
-Item: Two Piece Suit
-Paybill: ${paybillNumber}
-Account: ${accountNumber}
-Amount: ${amount || '[Enter amount here]'}
-Standard Price: ${item?.price || 'Ksh 11,000'}
-`;
+  const generatePaymentFile = () => {
+    const content = `TWO PIECE SUIT PURCHASE\n------------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nPaybill: ${paybill}\nAccount: ${account}\nAmount Paid: ${amount || '________'}\nStandard Price: ${item?.price}`;
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = 'two_piece_payment.txt';
+    link.download = `suit_payment_${item?.id}.txt`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -37,44 +30,57 @@ Standard Price: ${item?.price || 'Ksh 11,000'}
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
-      <div className="bg-white p-6 rounded-xl shadow-xl w-80">
-        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
           {paymentSuccess ? (
             <>
-              <CheckCircle className="w-6 h-6 text-green-500" />
+              <CheckCircle className="w-8 h-8 text-green-500" />
               Payment Verified!
             </>
           ) : (
-            'Two Piece Suit Purchase'
+            `${item?.name} Purchase`
           )}
         </h2>
 
         {!paymentSuccess ? (
           <>
-            <div className="mb-4 space-y-2">
-              <p className="text-sm font-medium">Paybill: {paybillNumber}</p>
-              <p className="text-sm font-medium">Account: {accountNumber}</p>
-              <p className="text-green-600 font-bold">Price: {item?.price || 'Ksh 11,000'}</p>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                <span className="font-medium">Paybill:</span>
+                <span className="font-mono text-blue-600 font-bold">{paybill}</span>
+              </div>
+              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                <span className="font-medium">Account:</span>
+                <span className="font-mono text-blue-600 font-bold">{account}</span>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Standard Price:</span>
+                  <span className="font-mono text-green-600 font-bold">{item?.price}</span>
+                </div>
+              </div>
+              <input
+                type="number"
+                placeholder="Enter amount (Ksh)"
+                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                min="11000"
+              />
             </div>
-            <input
-              type="text"
-              placeholder="Enter amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full mb-4 p-2 border border-gray-300 rounded focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
-            <div className="flex flex-col gap-2">
+
+            <div className="flex gap-4">
               <button
-                onClick={handleDownload}
-                className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded transition-colors flex items-center justify-center gap-2"
+                onClick={generatePaymentFile}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 Confirm Payment
               </button>
               <button
                 onClick={onClose}
-                className="w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded transition-colors flex items-center justify-center gap-2"
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
               >
                 <XCircle className="w-5 h-5" />
                 Cancel
@@ -82,31 +88,99 @@ Standard Price: ${item?.price || 'Ksh 11,000'}
             </div>
           </>
         ) : (
-          <p className="text-center text-green-600 text-sm font-medium">
-            Payment details downloaded successfully
-          </p>
+          <div className="text-center text-green-600">
+            <p>Transaction receipt downloaded successfully</p>
+            <p className="text-sm text-gray-500 mt-2">Closing automatically...</p>
+          </div>
         )}
       </div>
     </div>
   );
 };
 
+// Main TwoPieceSuits Component
 const TwoPieceSuits = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedSuit, setSelectedSuit] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const twoPieceSuits = [
-    { id: 1, image: TwoPiece1, price: 'Ksh 11,000' },
-    { id: 2, image: TwoPiece2, price: 'Ksh 11,000' },
-    { id: 3, image: TwoPiece3, price: 'Ksh 11,000' }
+    { id: 1, name: 'Classic Two Piece Suit', image: TwoPiece1, price: 'Ksh 11,000' },
+    { id: 2, name: 'Modern Two Piece Suit', image: TwoPiece2, price: 'Ksh 11,000' },
+    { id: 3, name: 'Slim Fit Two Piece Suit', image: TwoPiece3, price: 'Ksh 11,000' }
   ];
 
   const photos = [Photo4, Photo6, Photo5];
 
+  const handleAddToCart = (item) => {
+    setCartItems((prev) => [...prev, item]);
+    alert(`${item.name} added to cart`);
+  };
+
   return (
-    <section className="p-10 bg-gray-50 min-h-screen relative">
+    <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+      <header className="mb-12 text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-3">Premium Two Piece Suits</h1>
+        <p className="text-gray-600 text-lg">Stylish and elegant suits tailored for confidence</p>
+      </header>
+
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
+        {photos.map((photo, index) => (
+          <div
+            key={index}
+            className="relative overflow-hidden rounded-xl shadow-lg aspect-square group"
+          >
+            <img
+              src={photo}
+              alt="Style Inspiration"
+              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {twoPieceSuits.map((suit) => (
+          <article
+            key={suit.id}
+            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+          >
+            <div className="aspect-square bg-gray-100 p-5 flex items-center justify-center">
+              <img
+                src={suit.image}
+                alt={suit.name}
+                className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-5 text-center space-y-4">
+              <h3 className="text-xl font-bold text-gray-900">{suit.name}</h3>
+              <p className="text-blue-600 font-bold text-xl">{suit.price}</p>
+              <button
+                onClick={() => {
+                  setSelectedSuit(suit);
+                  setShowPayment(true);
+                }}
+                className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+              >
+                <CheckCircle className="w-5 h-5" />
+                Purchase Now
+              </button>
+              <button
+                onClick={() => handleAddToCart(suit)}
+                className="w-full bg-green-600 hover:bg-green-800 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
+              </button>
+            </div>
+          </article>
+        ))}
+      </div>
+
       {showPayment && (
-        <PaymentFileGenerator 
+        <PaymentPopup
           item={selectedSuit}
           onClose={() => {
             setShowPayment(false);
@@ -114,58 +188,6 @@ const TwoPieceSuits = () => {
           }}
         />
       )}
-
-      <h2 className="text-4xl font-bold mb-10 text-center text-blue-800">
-        Premium Two Piece Suits
-      </h2>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10">
-        {twoPieceSuits.map((suit) => (
-          <div
-            key={suit.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-2xl transform transition duration-300 hover:scale-105 overflow-hidden group"
-          >
-            <div className="h-64 w-full flex items-center justify-center bg-gray-100 p-4">
-              <img
-                src={suit.image}
-                alt="Two Piece Suit"
-                className="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-300"
-              />
-            </div>
-            <div className="p-5 flex flex-col items-center text-center">
-              <h3 className="text-xl font-bold mb-2 text-gray-900">Two Piece Suit</h3>
-              <p className="text-lg font-bold mb-4 text-blue-600">{suit.price}</p>
-              <button
-                onClick={() => {
-                  setSelectedSuit(suit);
-                  setShowPayment(true);
-                }}
-                className="mt-2 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-full transition-colors flex items-center gap-2"
-              >
-                <CheckCircle className="w-5 h-5" />
-                Purchase Now
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {photos.map((photo, index) => (
-          <div 
-            key={index}
-            className="bg-white rounded-xl shadow-lg overflow-hidden transform transition hover:scale-[1.02] duration-300"
-          >
-            <div className="h-64 w-full flex items-center justify-center bg-gray-100 p-2">
-              <img 
-                src={photo} 
-                alt="Style Inspiration" 
-                className="max-h-full max-w-full object-contain rounded-lg"
-              />
-            </div>
-          </div>
-        ))}
-      </div>
     </section>
   );
 };

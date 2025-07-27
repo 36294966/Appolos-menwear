@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import Socks1 from '../../Assets/Accessories/socks1.jpg';
 import Socks2 from '../../Assets/Accessories/socks2.jpg';
 import Socks3 from '../../Assets/Accessories/socks3.jpg';
@@ -93,6 +93,7 @@ Standard Price: ${item?.price || 'Ksh 300-400'}
 const Socks = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedSock, setSelectedSock] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const socksItems = [
     {
@@ -114,6 +115,11 @@ const Socks = () => {
       price: 'Ksh 300',
     },
   ];
+
+  const handleAddToCart = (item) => {
+    setCartItems((prev) => [...prev, item]);
+    alert(`${item.name} added to cart`);
+  };
 
   return (
     <section className="p-10 bg-gray-50 min-h-screen relative">
@@ -147,15 +153,24 @@ const Socks = () => {
             <div className="p-5 text-center flex flex-col items-center">
               <h3 className="text-xl font-bold mb-2 text-gray-900">{sock.name}</h3>
               <p className="text-lg font-bold mb-4 text-blue-600">{sock.price}</p>
+              
               <button
                 onClick={() => {
                   setSelectedSock(sock);
                   setShowPayment(true);
                 }}
-                className="bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-full transition-colors flex items-center justify-center gap-2"
+                className="w-full mb-2 bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-6 rounded-full transition-colors flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
+              </button>
+
+              <button
+                onClick={() => handleAddToCart(sock)}
+                className="w-full bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-6 rounded-full transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
               </button>
             </div>
           </div>

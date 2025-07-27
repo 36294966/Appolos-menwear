@@ -15,6 +15,10 @@ import Official from './Components/Shirts/officialshirts';
 
 import Leather from './Components/Leather/leather'; 
 import Jeans from './Components/Jeans/jeans';
+import Cart from './Components/cart';
+import Payment from './Components/Payment/payment';
+
+
 
 function App() {
   return (
@@ -32,6 +36,9 @@ function App() {
           <Route path="/shirts/official" element={<Official />} />
           <Route path="/jackets/leather" element={<Leather />}/>
           <Route path="/jeans" element={<Jeans />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="/payment" element={<Payment/>} />
+         
         </Routes>
       </Layout>
     </Router>
@@ -39,6 +46,7 @@ function App() {
 }
 
 export default App;
+
 
 
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Cassual1 from '../../Assets/Cassual/cassual1.jpg';
 import Cassual2 from '../../Assets/Cassual/cassual2.jpg';
 import Cassual3 from '../../Assets/Cassual/cassual3.jpg';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 
 const PaymentPopup = ({ item, onClose }) => {
   const [amount, setAmount] = useState('');
@@ -103,6 +103,7 @@ const PaymentPopup = ({ item, onClose }) => {
 const Cassual = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedShirt, setSelectedShirt] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const casualShirts = [
     {
@@ -124,6 +125,11 @@ const Cassual = () => {
       price: 'Ksh 1,700'
     }
   ];
+
+  const handleAddToCart = (shirt) => {
+    setCartItems((prev) => [...prev, shirt]);
+    alert(`${shirt.name} added to cart`);
+  };
 
   return (
     <section className="p-10 bg-gray-100 min-h-screen relative">
@@ -153,10 +159,17 @@ const Cassual = () => {
                   setSelectedShirt(shirt);
                   setShowPayment(true);
                 }}
-                className="mt-2 w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
+              </button>
+              <button
+                onClick={() => handleAddToCart(shirt)}
+                className="w-full bg-green-600 hover:bg-green-800 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
               </button>
             </div>
           </div>

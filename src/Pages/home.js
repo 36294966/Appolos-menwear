@@ -277,6 +277,7 @@ const Home = () => {
               </div>
             ))}
           </div>
+          
 
           {/* Suits Collection */}
           <section className="py-10 px-6 bg-blue-600" id="suits">

@@ -1,150 +1,127 @@
 import {
   ChevronDown,
   Menu,
-  X
+  X,
+  ShoppingCart
 } from 'lucide-react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { UserIcon } from '@heroicons/react/24/solid';
-
-import Logo from '../Assets/logo.jpg';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faUserTie,
   faShirt,
-  faTshirt,
   faGem,
   faVest,
   faHouse
 } from '@fortawesome/free-solid-svg-icons';
+import CheckroomIcon from '@mui/icons-material/Checkroom';
 
-import CheckroomIcon from '@mui/icons-material/Checkroom'; // ✅ NEW import
+import Logo from '../Assets/logo.jpg';
 
 const Navbar = ({ onFilterSelect }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const [leaveTimeout, setLeaveTimeout] = useState(null);
+  const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
-  const handleFilter = (category, value) => {
-    if (onFilterSelect) {
-      onFilterSelect(category, value);
-    }
-    setIsOpen(false);
+  // Sync cart count with localStorage
+  useEffect(() => {
+    const updateCartCount = () => {
+      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+      setCartCount(storedCart.length);
+    };
+    
+    updateCartCount();
+    window.addEventListener('storage', updateCartCount);
+    return () => window.removeEventListener('storage', updateCartCount);
+  }, []);
 
-    if (category === 'Suits') {
-      if (value === '2 Piece Suits') {
-        navigate('/suits/2piecesuits');
-      } else if (value === '3 Piece Suits') {
-        navigate('/suits/3piecesuits');
-      } else if (value === 'Tuxedo & Dinner') {
-        navigate('/suits/tuxedo');
+  const handleFilter = (category, value) => {
+    onFilterSelect?.(category, value);
+    setIsOpen(false);
+    setOpenDropdown(null);
+
+    const routeMap = {
+      Suits: {
+        '2 Piece Suits': '/suits/2piecesuits',
+        '3 Piece Suits': '/suits/3piecesuits',
+        'Tuxedo & Dinner': '/suits/tuxedo'
+      },
+      Accessories: {
+        'Belt': '/accessories/belt',
+        'Ties': '/accessories/ties',
+        'Socks': '/accessories/socks'
+      },
+      Shirts: {
+        'Official Shirts': '/shirts/official',
+        'Cassual Shirts': '/shirts/cassual'
+      },
+      'Blazers & Jackets': {
+        'Leather Jacket': '/jackets/leather'
+      },
+      Jeans: {
+        'Jeans': '/jeans'
       }
-    } else if (category === 'Accessories') {
-      if (value === 'Belt') {
-        navigate('/accessories/belt');
-      } else if (value === 'Ties') {
-        navigate('/accessories/ties');
-      } else if (value === 'Socks') {
-        navigate('/accessories/socks');
-      }
-    } else if (category === 'Shirts') {
-      if (value === 'Official Shirts') {
-        navigate('/shirts/official');
-      } else if (value === 'Cassual Shirts') {
-        navigate('/shirts/cassual');
-      }
-    } else if (category === 'Blazers & Jackets') {
-      if (value === 'Leather Jacket') {
-        navigate('/jackets/leather');
-      }
-    } else if (category === 'Jeans') {
-      if (value === 'Jeans') {
-        navigate('/jeans');
-      }
-    }
+    };
+
+    const path = routeMap[category]?.[value];
+    if (path) navigate(path);
   };
 
   const menuItems = [
     {
       title: 'Suits',
-      icon: <FontAwesomeIcon icon={faUserTie} />,
-      dropdown: {
-        Style: ['2 Piece Suits', '3 Piece Suits', 'Tuxedo & Dinner']
-      }
+      icon: <FontAwesomeIcon icon={faUserTie} className="text-xl" />,
+      dropdown: { Style: ['2 Piece Suits', '3 Piece Suits', 'Tuxedo & Dinner'] }
     },
     {
       title: 'Shirts',
-      icon: <FontAwesomeIcon icon={faShirt} />,
-      dropdown: {
-        Style: ['Official Shirts', 'Cassual Shirts']
-      }
+      icon: <FontAwesomeIcon icon={faShirt} className="text-xl" />,
+      dropdown: { Style: ['Official Shirts', 'Cassual Shirts'] }
     },
     {
       title: 'Jeans',
-      icon: <CheckroomIcon className="text-blue-300" fontSize="small" />, // ✅ UPDATED icon
-      dropdown: {
-        Type: ['Jeans']
-      },
+      icon: <CheckroomIcon className="text-white" fontSize="large" />,
+      dropdown: { Type: ['Jeans'] },
       page: '/jeans'
     },
     {
       title: 'Accessories',
-      icon: <FontAwesomeIcon icon={faGem} />,
-      dropdown: {
-        Items: ['Socks', 'Ties', 'Belt']
-      }
+      icon: <FontAwesomeIcon icon={faGem} className="text-xl" />,
+      dropdown: { Items: ['Socks', 'Ties', 'Belt'] }
     },
     {
       title: 'Blazers & Jackets',
-      icon: <FontAwesomeIcon icon={faVest} />,
-      dropdown: {
-        Jackets: ['Leather Jacket']
-      }
+      icon: <FontAwesomeIcon icon={faVest} className="text-xl" />,
+      dropdown: { Jackets: ['Leather Jacket'] }
     }
   ];
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-blue-600 text-white shadow-md z-50">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
         {/* Logo */}
         <img
           src={Logo}
           alt="Logo"
-          className="h-28 w-28 rounded-full object-cover shadow-lg cursor-pointer"
+          className="h-16 w-16 md:h-24 md:w-24 rounded-full object-cover shadow-lg cursor-pointer transition-transform hover:scale-105"
+          onClick={() => navigate('/')}
         />
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-8 font-bold text-lg">
-          {/* Home */}
-          <div
-            className="relative group flex items-center h-full"
-            onMouseEnter={() => {
-              clearTimeout(leaveTimeout);
-              setOpenDropdown(null);
-            }}
-            onMouseLeave={() => {
-              const timeout = setTimeout(() => {
-                setOpenDropdown(null);
-              }, 300);
-              setLeaveTimeout(timeout);
-            }}
+        <div className="hidden md:flex items-center space-x-6 font-semibold text-base">
+          {/* Home Button */}
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center group hover:text-yellow-200 transition"
           >
-  <button
-  onClick={() => navigate('/')}
-  className="inline-flex items-center hover:text-yellow-200 transition h-10 "
-  aria-label="Go to Home"
->
-  <FontAwesomeIcon 
-    icon={faHouse} 
-    className="ml-[8px] transition-all duration-300 ease-in-out group-hover:translate-x-[-8px]" // ← Debug border
-  />
-  <span className="leading-none ml-12">Home</span>
-</button>
-          </div>
+            <FontAwesomeIcon icon={faHouse} className="ml-1 group-hover:-translate-x-1 transition-all text-xl" />
+            <span className="ml-2 text-lg">Home</span>
+          </button>
 
-          {/* Menu Items */}
+          {/* Main Menu Items with Dropdowns */}
           {menuItems.map((item) => (
             <div
               key={item.title}
@@ -154,37 +131,29 @@ const Navbar = ({ onFilterSelect }) => {
                 setOpenDropdown(item.title);
               }}
               onMouseLeave={() => {
-                const timeout = setTimeout(() => {
-                  setOpenDropdown(null);
-                }, 300);
-                setLeaveTimeout(timeout);
+                setLeaveTimeout(setTimeout(() => setOpenDropdown(null), 200));
               }}
             >
               <button
                 className="flex items-center space-x-1 hover:text-yellow-200 transition"
-                onClick={() => {
-                  if (item.page) {
-                    navigate(item.page);
-                    setIsOpen(false);
-                  }
-                }}
+                onClick={() => item.page && navigate(item.page)}
               >
                 {item.icon}
-                <span>{item.title}</span>
+                <span className="text-lg">{item.title}</span>
                 {item.dropdown && <ChevronDown size={16} />}
               </button>
 
-              {/* Dropdown */}
+              {/* Dropdown Menu */}
               {item.dropdown && openDropdown === item.title && (
-                <div className="absolute top-10 left-0 bg-white text-black shadow-xl rounded-md p-4 grid grid-cols-1 gap-4 w-[220px] z-50 animate-fade-in">
+                <div className="absolute top-9 left-0 bg-white text-black shadow-xl rounded-md p-3 grid gap-1 w-52 z-50">
                   {Object.entries(item.dropdown).map(([section, values]) => (
                     <div key={section}>
-                      <p className="text-xl font-bold text-blue-700 mb-2">{section}</p>
+                      <p className="text-blue-700 font-bold text-lg mb-1">{section}</p>
                       {values.map((val) => (
                         <button
                           key={val}
                           onClick={() => handleFilter(item.title, val)}
-                          className="block w-full text-left px-3 py-2 mb-2 rounded hover:bg-blue-100 transition font-bold"
+                          className="w-full text-left px-2 py-1 text-base rounded hover:bg-blue-50"
                         >
                           {val}
                         </button>
@@ -195,41 +164,67 @@ const Navbar = ({ onFilterSelect }) => {
               )}
             </div>
           ))}
+
+          {/* Cart Icon with count */}
+          <div
+            className="flex items-center space-x-1 hover:text-yellow-200 cursor-pointer relative"
+            onClick={() => navigate('/cart')}
+          >
+            <ShoppingCart size={24} />
+            <span className="text-lg">Cart</span>
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                {cartCount}
+              </span>
+            )}
+          </div>
         </div>
 
-        {/* Mobile Toggle */}
-        <div className="md:hidden">
-          <button onClick={() => setIsOpen(!isOpen)} aria-label="Toggle Menu">
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
+        {/* Mobile Menu Button & Cart */}
+        <div className="md:hidden flex items-center space-x-4">
+          {/* Cart Icon for Mobile */}
+          <div
+            className="flex items-center space-x-1 hover:text-yellow-200 cursor-pointer relative"
+            onClick={() => navigate('/cart')}
+          >
+            <ShoppingCart size={24} />
+            {cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-4 h-4 flex items-center justify-center text-[10px]">
+                {cartCount}
+              </span>
+            )}
+          </div>
+
+          {/* Hamburger Menu Toggle */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="p-2 hover:bg-blue-700 rounded"
+          >
+            {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu Content */}
       {isOpen && (
-        <div className="md:hidden px-6 pb-4 flex flex-col space-y-6 font-medium bg-blue-600 text-white">
-          {/* Home */}
+        <div className="md:hidden px-4 pb-4 bg-blue-600 space-y-2 text-lg">
+          {/* Home Button */}
           <button
-            onClick={() => {
-              setIsOpen(false);
-              navigate('/');
-            }}
-            className="flex items-center space-x-2 px-3 py-2 rounded hover:bg-blue-700 transition"
-            aria-label="Go to Home"
+            onClick={() => navigate('/')}
+            className="flex items-center space-x-2 py-2 w-full hover:bg-blue-700 rounded"
           >
             <FontAwesomeIcon icon={faHouse} />
             <span>Home</span>
           </button>
 
-          {/* Menu Items */}
+          {/* Menu Items for Mobile */}
           {menuItems.map((item) => (
-            <div key={item.title}>
+            <div key={item.title} className="space-y-1">
               <button
-                className="w-full flex justify-between items-center text-left"
+                className="flex justify-between items-center w-full py-2 hover:bg-blue-700 rounded"
                 onClick={() => {
                   if (item.page) {
                     navigate(item.page);
-                    setOpenDropdown(null);
                     setIsOpen(false);
                   } else {
                     setOpenDropdown(openDropdown === item.title ? null : item.title);
@@ -240,24 +235,25 @@ const Navbar = ({ onFilterSelect }) => {
                   {item.icon}
                   <span>{item.title}</span>
                 </div>
-                {item.dropdown && <ChevronDown size={18} />}
+                {item.dropdown && (
+                  <ChevronDown size={18} className={openDropdown === item.title ? 'rotate-180' : ''} />
+                )}
               </button>
 
-              {/* Dropdown */}
+              {/* Dropdown for Mobile */}
               {item.dropdown && openDropdown === item.title && (
-                <div className="mt-2 grid grid-cols-1 gap-4 text-sm w-[220px]">
+                <div className="ml-4 space-y-1">
                   {Object.entries(item.dropdown).map(([section, values]) => (
                     <div key={section}>
-                      <p className="font-bold text-yellow-200 mb-2">{section}</p>
+                      <p className="text-yellow-200 font-bold text-lg">{section}</p>
                       {values.map((val) => (
                         <button
                           key={val}
                           onClick={() => {
-                            handleFilter(item.title,val);
-                            setOpenDropdown(null);
+                            handleFilter(item.title, val);
                             setIsOpen(false);
                           }}
-                          className="block w-full text-left hover:bg-blue-700 rounded px-3 py-2 mb-2 font-bold"
+                          className="w-full text-left px-2 py-1 hover:bg-blue-700 rounded"
                         >
                           {val}
                         </button>

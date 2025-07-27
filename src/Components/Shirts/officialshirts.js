@@ -11,7 +11,7 @@ import Official9 from '../../Assets/Official/official9.jpg';
 import Official10 from '../../Assets/Official/official10.jpg';
 import Official11 from '../../Assets/Official/official11.jpg';
 import Official12 from '../../Assets/Official/official12.jpg';
-import { CheckCircle, XCircle } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 
 const PaymentPopup = ({ item, onClose }) => {
   const [amount, setAmount] = useState('');
@@ -112,6 +112,7 @@ const PaymentPopup = ({ item, onClose }) => {
 const Official = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedShirt, setSelectedShirt] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
 
   const shirts = [
     { id: 1, image: Official1, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
@@ -127,6 +128,11 @@ const Official = () => {
     { id: 11, image: Official11, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
     { id: 12, image: Official12, name: 'Premium Official Shirt', price: 'Ksh 1,800' }
   ];
+
+  const handleAddToCart = (item) => {
+    setCartItems((prev) => [...prev, item]);
+    alert(`${item.name} added to cart`);
+  };
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
@@ -165,6 +171,13 @@ const Official = () => {
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
+              </button>
+              <button
+                onClick={() => handleAddToCart(shirt)}
+                className="w-full bg-green-600 hover:bg-green-800 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+              >
+                <ShoppingCart className="w-5 h-5" />
+                Add to Cart
               </button>
             </div>
           </article>
