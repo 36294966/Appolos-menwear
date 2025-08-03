@@ -26,13 +26,11 @@ const Navbar = ({ onFilterSelect }) => {
   const [cartCount, setCartCount] = useState(0);
   const navigate = useNavigate();
 
-  // Sync cart count with localStorage
   useEffect(() => {
     const updateCartCount = () => {
       const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
       setCartCount(storedCart.length);
     };
-    
     updateCartCount();
     window.addEventListener('storage', updateCartCount);
     return () => window.removeEventListener('storage', updateCartCount);
@@ -112,7 +110,6 @@ const Navbar = ({ onFilterSelect }) => {
 
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6 font-semibold text-base">
-          {/* Home Button */}
           <button
             onClick={() => navigate('/')}
             className="flex items-center group hover:text-yellow-200 transition"
@@ -121,7 +118,6 @@ const Navbar = ({ onFilterSelect }) => {
             <span className="ml-2 text-lg">Home</span>
           </button>
 
-          {/* Main Menu Items with Dropdowns */}
           {menuItems.map((item) => (
             <div
               key={item.title}
@@ -143,9 +139,8 @@ const Navbar = ({ onFilterSelect }) => {
                 {item.dropdown && <ChevronDown size={16} />}
               </button>
 
-              {/* Dropdown Menu */}
               {item.dropdown && openDropdown === item.title && (
-                <div className="absolute top-9 left-0 bg-white text-black shadow-xl rounded-md p-3 grid gap-1 w-52 z-50">
+                <div className="absolute top-10 left-0 bg-white text-black shadow-xl rounded-md p-3 grid gap-1 w-52 z-50">
                   {Object.entries(item.dropdown).map(([section, values]) => (
                     <div key={section}>
                       <p className="text-blue-700 font-bold text-lg mb-1">{section}</p>
@@ -165,7 +160,7 @@ const Navbar = ({ onFilterSelect }) => {
             </div>
           ))}
 
-          {/* Cart Icon with count */}
+          {/* Cart */}
           <div
             className="flex items-center space-x-1 hover:text-yellow-200 cursor-pointer relative"
             onClick={() => navigate('/cart')}
@@ -180,11 +175,10 @@ const Navbar = ({ onFilterSelect }) => {
           </div>
         </div>
 
-        {/* Mobile Menu Button & Cart */}
+        {/* Mobile Menu & Cart */}
         <div className="md:hidden flex items-center space-x-4">
-          {/* Cart Icon for Mobile */}
           <div
-            className="flex items-center space-x-1 hover:text-yellow-200 cursor-pointer relative"
+            className="relative cursor-pointer hover:text-yellow-200"
             onClick={() => navigate('/cart')}
           >
             <ShoppingCart size={24} />
@@ -195,7 +189,6 @@ const Navbar = ({ onFilterSelect }) => {
             )}
           </div>
 
-          {/* Hamburger Menu Toggle */}
           <button
             onClick={() => setIsOpen(!isOpen)}
             className="p-2 hover:bg-blue-700 rounded"
@@ -208,7 +201,6 @@ const Navbar = ({ onFilterSelect }) => {
       {/* Mobile Menu Content */}
       {isOpen && (
         <div className="md:hidden px-4 pb-4 bg-blue-600 space-y-2 text-lg">
-          {/* Home Button */}
           <button
             onClick={() => navigate('/')}
             className="flex items-center space-x-2 py-2 w-full hover:bg-blue-700 rounded"
@@ -217,7 +209,6 @@ const Navbar = ({ onFilterSelect }) => {
             <span>Home</span>
           </button>
 
-          {/* Menu Items for Mobile */}
           {menuItems.map((item) => (
             <div key={item.title} className="space-y-1">
               <button
@@ -236,11 +227,13 @@ const Navbar = ({ onFilterSelect }) => {
                   <span>{item.title}</span>
                 </div>
                 {item.dropdown && (
-                  <ChevronDown size={18} className={openDropdown === item.title ? 'rotate-180' : ''} />
+                  <ChevronDown
+                    size={18}
+                    className={`transition-transform ${openDropdown === item.title ? 'rotate-180' : ''}`}
+                  />
                 )}
               </button>
 
-              {/* Dropdown for Mobile */}
               {item.dropdown && openDropdown === item.title && (
                 <div className="ml-4 space-y-1">
                   {Object.entries(item.dropdown).map(([section, values]) => (
@@ -271,3 +264,4 @@ const Navbar = ({ onFilterSelect }) => {
 };
 
 export default Navbar;
+

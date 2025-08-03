@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
+
 import Leather1 from '../../Assets/Jackets/jacket1.jpg';
 import Leather2 from '../../Assets/Jackets/jacket2.jpg';
 import Leather3 from '../../Assets/Jackets/jacket3.jpg';
@@ -33,12 +34,12 @@ Amount: Ksh ${amount || '[Enter amount here]'}
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 z-50">
-      <div className="bg-white p-6 rounded-xl shadow-xl w-80">
-        <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2 mb-4">
           {paymentSuccess ? (
             <>
-              <CheckCircle className="w-6 h-6 text-green-500" />
+              <CheckCircle className="w-8 h-8 text-green-500" />
               Payment Verified!
             </>
           ) : (
@@ -48,27 +49,42 @@ Amount: Ksh ${amount || '[Enter amount here]'}
 
         {!paymentSuccess ? (
           <>
-            <p className="mb-2 font-semibold">Item: {item?.name}</p>
-            <p className="mb-2">Paybill Number: {paybillNumber}</p>
-            <p className="mb-2">Account Number: {accountNumber}</p>
-            <input
-              type="text"
-              placeholder="Enter amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="w-full mb-4 p-2 border border-gray-300 rounded"
-            />
-            <div className="space-y-2">
+            {/* Payment info styled similar to official.js */}
+            <div className="space-y-4">
+              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                <span className="font-medium">Paybill:</span>
+                <span className="font-mono text-blue-600 font-bold">{paybillNumber}</span>
+              </div>
+              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                <span className="font-medium">Account:</span>
+                <span className="font-mono text-blue-600 font-bold">{accountNumber}</span>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Price:</span>
+                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price.replace('Ksh ', '')}</span>
+                </div>
+              </div>
+              <input
+                type="number"
+                placeholder="Enter amount (Ksh)"
+                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </div>
+            {/* Buttons */}
+            <div className="flex gap-4 mt-4">
               <button
                 onClick={handleDownload}
-                className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded mb-2 flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 PAY NOW
               </button>
               <button
                 onClick={onClose}
-                className="w-full bg-gray-300 hover:bg-gray-400 text-black font-semibold py-2 px-4 rounded flex items-center justify-center gap-2"
+                className="flex-1 bg-gray-300 hover:bg-gray-400 text-black py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
               >
                 <XCircle className="w-5 h-5" />
                 Close
@@ -76,9 +92,10 @@ Amount: Ksh ${amount || '[Enter amount here]'}
             </div>
           </>
         ) : (
-          <p className="text-center text-green-600 text-sm">
-            Receipt downloaded successfully
-          </p>
+          <div className="text-center text-green-600">
+            <p>Receipt downloaded successfully</p>
+            <p className="text-sm mt-2">Closing automatically...</p>
+          </div>
         )}
       </div>
     </div>
@@ -100,13 +117,13 @@ const LeatherJackets = () => {
       id: 2,
       name: 'Leather Jacket - Premium',
       image: Leather2,
-      price: 'Ksh 4,200',
+      price: 'Ksh 3,500',
     },
     {
       id: 3,
       name: 'Leather Jacket - Modern Fit',
       image: Leather3,
-      price: 'Ksh 3,800',
+      price: 'Ksh 3,500',
     },
   ];
 
@@ -155,6 +172,7 @@ const LeatherJackets = () => {
             <div className="p-5 flex flex-col items-center justify-center text-center">
               <h3 className="text-xl font-bold mb-2 text-gray-900">{leather.name}</h3>
               <p className="text-lg font-semibold mb-4 text-gray-700">{leather.price}</p>
+              {/* Purchase Button */}
               <button
                 onClick={() => handlePurchase(leather)}
                 className="w-full bg-blue-600 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2 mb-2"
@@ -162,6 +180,7 @@ const LeatherJackets = () => {
                 <CheckCircle className="w-5 h-5" />
                 Purchase
               </button>
+              {/* Add to Cart Button */}
               <button
                 onClick={() => handleAddToCart(leather)}
                 className="w-full bg-green-600 hover:bg-green-800 text-white font-bold py-2 px-4 rounded flex items-center justify-center gap-2"

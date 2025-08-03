@@ -14,7 +14,7 @@ const Footer = () => {
   const smsShareLink = `sms:?body=Check%20out%20Sir%20Apollo's%20Menswear%20location:%20https://www.google.com/maps/place/${encodedAddress}`;
 
   return (
-    <footer className="bg-black text-white pt-10 pb-6 px-6 text-sm">
+    <footer className="bg-black text-white pt-12 pb-6 px-6 text-sm">
       <style>{`
         @keyframes colorBlink {
           0%, 100% { color: #60a5fa; }
@@ -138,7 +138,7 @@ const Footer = () => {
       </div>
 
       {/* Bottom Line */}
-      <div className="mt-10 border-t border-white/20 pt-4 pb-2 text-center">
+      <div className="mt-12 border-t border-white/20 pt-8 pb-2 text-center">
         <p className="text-gray-400 text-xs">
           © 2025, Sir Apollo's Menswear — Created by Dr Erastus Coding Co-oporation
         </p>

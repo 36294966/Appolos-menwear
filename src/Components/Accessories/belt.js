@@ -9,19 +9,20 @@ import Belt5 from '../../Assets/Accessories/belt5.jpg';
 import Belt6 from '../../Assets/Accessories/belt6.jpg';
 
 const PaymentPopup = ({ onClose, item }) => {
+  const paybillNumber = '542542';
+  const accountNumber = '378179';
   const [amount, setAmount] = useState(item?.price?.replace('Ksh ', '') || '');
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const paymentDetails = {
-    paybill: '542542',
-    account: '378179'
-  };
 
-  const generatePaymentFile = () => {
-    const content = `Payment Instructions:
+  const handleDownload = () => {
+    const content = `
+Payment Details
+---------------
 Item: ${item?.name}
-Paybill: ${paymentDetails.paybill}
-Account: ${paymentDetails.account}
-Amount: Ksh ${amount || '________'}`;
+Paybill Number: ${paybillNumber}
+Account Number: ${accountNumber}
+Amount: Ksh ${amount || '[Enter amount here]'}
+`;
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -38,49 +39,55 @@ Amount: Ksh ${amount || '________'}`;
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
       <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
-        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2 mb-4">
           {paymentSuccess ? (
             <>
               <CheckCircle className="w-8 h-8 text-green-500" />
-              Payment Confirmed!
+              Payment Verified!
             </>
           ) : (
-            'Complete Purchase'
+            'Payment Details'
           )}
         </h2>
 
         {!paymentSuccess ? (
           <>
+            {/* Payment info styled similar to official.js */}
             <div className="space-y-4">
-              <p className="font-semibold text-lg text-center">{item?.name}</p>
               <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
                 <span className="font-medium">Paybill:</span>
-                <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
+                <span className="font-mono text-blue-600 font-bold">{paybillNumber}</span>
               </div>
               <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
                 <span className="font-medium">Account:</span>
-                <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
+                <span className="font-mono text-blue-600 font-bold">{accountNumber}</span>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">Price:</span>
+                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price.replace('Ksh ', '')}</span>
+                </div>
               </div>
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"
-                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
             </div>
-
-            <div className="flex gap-4">
+            {/* Buttons */}
+            <div className="flex gap-4 mt-4">
               <button
-                onClick={generatePaymentFile}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-bold transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center gap-2"
+                onClick={handleDownload}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 PAY NOW
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-4 rounded-lg font-bold transition-all duration-200 transform hover:scale-[1.02] flex items-center justify-center gap-2"
+                className="flex-1 bg-gray-300 hover:bg-gray-400 text-black py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
               >
                 <XCircle className="w-5 h-5" />
                 Close
@@ -88,9 +95,10 @@ Amount: Ksh ${amount || '________'}`;
             </div>
           </>
         ) : (
-          <p className="text-center text-green-600 font-medium">
-            Payment instructions downloaded successfully
-          </p>
+          <div className="text-center text-green-600">
+            <p>Receipt downloaded successfully</p>
+            <p className="text-sm mt-2">Closing automatically...</p>
+          </div>
         )}
       </div>
     </div>
@@ -100,7 +108,6 @@ Amount: Ksh ${amount || '________'}`;
 const Belt = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
-  const [cartItems, setCartItems] = useState([]);
 
   const belts = [
     { id: 1, image: Belt1, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
@@ -108,7 +115,7 @@ const Belt = () => {
     { id: 3, image: Belt3, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
     { id: 4, image: Belt4, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
     { id: 5, image: Belt5, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
-    { id: 6, image: Belt6, name: 'Premium Leather Belt', price: 'Ksh 2,000' }
+    { id: 6, image: Belt6, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
   ];
 
   const handlePurchase = (item) => {
@@ -117,12 +124,28 @@ const Belt = () => {
   };
 
   const handleAddToCart = (item) => {
-    setCartItems((prev) => [...prev, item]);
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const newItem = {
+      ...item,
+      price: parseFloat(item.price.replace('Ksh ', '').replace(',', '')),
+    };
+    localStorage.setItem('cart', JSON.stringify([...storedCart, newItem]));
+    window.dispatchEvent(new Event('storage'));
     alert(`${item.name} added to cart`);
   };
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+      {showPayment && (
+        <PaymentPopup
+          onClose={() => {
+            setShowPayment(false);
+            setSelectedItem(null);
+          }}
+          item={selectedItem}
+        />
+      )}
+
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
           Professional Belts Collection
@@ -149,6 +172,7 @@ const Belt = () => {
             <div className="p-5 text-center space-y-4">
               <h3 className="text-xl font-bold text-gray-900">{belt.name}</h3>
               <p className="text-blue-600 font-bold text-xl">{belt.price}</p>
+              {/* Purchase Button */}
               <button
                 onClick={() => handlePurchase(belt)}
                 className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
@@ -156,6 +180,7 @@ const Belt = () => {
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
               </button>
+              {/* Add to Cart Button */}
               <button
                 onClick={() => handleAddToCart(belt)}
                 className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
@@ -167,16 +192,6 @@ const Belt = () => {
           </article>
         ))}
       </div>
-
-      {showPayment && selectedItem && (
-        <PaymentPopup
-          onClose={() => {
-            setShowPayment(false);
-            setSelectedItem(null);
-          }}
-          item={selectedItem}
-        />
-      )}
     </section>
   );
 };

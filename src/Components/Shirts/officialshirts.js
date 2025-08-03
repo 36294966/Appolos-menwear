@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import Official1 from '../../Assets/Official/official1.jpg';
 import Official2 from '../../Assets/Official/official2.jpg';
 import Official3 from '../../Assets/Official/official3.jpg';
@@ -11,7 +12,6 @@ import Official9 from '../../Assets/Official/official9.jpg';
 import Official10 from '../../Assets/Official/official10.jpg';
 import Official11 from '../../Assets/Official/official11.jpg';
 import Official12 from '../../Assets/Official/official12.jpg';
-import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 
 const PaymentPopup = ({ item, onClose }) => {
   const [amount, setAmount] = useState('');
@@ -22,7 +22,7 @@ const PaymentPopup = ({ item, onClose }) => {
   };
 
   const generatePaymentFile = () => {
-    const content = `OFFICIAL SHIRT PURCHASE\n---------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: ${amount || '________'}\nStandard Price: ${item?.price}`;
+    const content = `OFFICIAL SHIRT PURCHASE\n---------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${item?.price}`;
     
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -67,7 +67,7 @@ const PaymentPopup = ({ item, onClose }) => {
               <div className="bg-green-50 p-4 rounded-lg">
                 <div className="flex justify-between items-center">
                   <span className="font-medium">Standard Price:</span>
-                  <span className="font-mono text-green-600 font-bold">{item?.price}</span>
+                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price?.toLocaleString()}</span>
                 </div>
               </div>
               
@@ -112,30 +112,131 @@ const PaymentPopup = ({ item, onClose }) => {
 const Official = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedShirt, setSelectedShirt] = useState(null);
-  const [cartItems, setCartItems] = useState([]);
+  const [cartCount, setCartCount] = useState(0);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  // Cart synchronization
+  useEffect(() => {
+    const updateCart = () => {
+      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+      setCartCount(storedCart.length);
+    };
+    
+    updateCart();
+    window.addEventListener('storage', updateCart);
+    return () => window.removeEventListener('storage', updateCart);
+  }, []);
 
   const shirts = [
-    { id: 1, image: Official1, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 2, image: Official2, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 3, image: Official3, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 4, image: Official4, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 5, image: Official5, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 6, image: Official6, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 7, image: Official7, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 8, image: Official8, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 9, image: Official9, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 10, image: Official10, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 11, image: Official11, name: 'Premium Official Shirt', price: 'Ksh 1,800' },
-    { id: 12, image: Official12, name: 'Premium Official Shirt', price: 'Ksh 1,800' }
+    { id: 1, image: Official1, name: 'Executive White Shirt', price: 1800 },
+    { id: 2, image: Official2, name: 'Classic Blue Formal', price: 1800 },
+    { id: 3, image: Official3, name: 'Tailored Striped Shirt', price: 1800 },
+    { id: 4, image: Official4, name: 'Premium Cotton Blend', price: 1800 },
+    { id: 5, image: Official5, name: 'French Cuff Formal', price: 1800 },
+    { id: 6, image: Official6, name: 'Slim Fit Office Shirt', price: 1800 },
+    { id: 7, image: Official7, name: 'Double Cuff Business', price: 1800 },
+    { id: 8, image: Official8, name: 'Designer Collar Shirt', price: 1800 },
+    { id: 9, image: Official9, name: 'Executive Checkered', price: 1800 },
+    { id: 10, image: Official10, name: 'Silk Blend Formal', price: 1800 },
+    { id: 11, image: Official11, name: 'Premium Twill Shirt', price: 1800 },
+    { id: 12, image: Official12, name: 'Classic Spread Collar', price: 1800 }
   ];
 
   const handleAddToCart = (item) => {
-    setCartItems((prev) => [...prev, item]);
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const newItem = {
+      ...item,
+      addedAt: new Date().toISOString()
+    };
+    const updatedCart = [...storedCart, newItem];
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    window.dispatchEvent(new Event('storage'));
     alert(`${item.name} added to cart`);
+  };
+
+  const cartTotal = () => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    return storedCart.reduce((sum, item) => sum + item.price, 0);
   };
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+      {/* Cart Indicator */}
+      <div className="fixed top-4 right-4 z-40">
+        <button 
+          onClick={() => setIsCartOpen(true)}
+          className="relative bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition"
+        >
+          <ShoppingCart className="w-6 h-6 text-gray-700" />
+          {cartCount > 0 && (
+            <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
+              {cartCount}
+            </span>
+          )}
+        </button>
+      </div>
+
+      {/* Cart Modal */}
+      {isCartOpen && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
+          <div className="bg-white w-80 max-h-[80vh] overflow-y-auto p-4 rounded-lg shadow-lg relative">
+            <button
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+              onClick={() => setIsCartOpen(false)}
+            >
+              ✕
+            </button>
+            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
+              <ShoppingCart className="w-6 h-6" />
+              Your Cart ({cartCount})
+            </h3>
+            {cartCount === 0 ? (
+              <p className="text-gray-600">Your cart is empty</p>
+            ) : (
+              <>
+                <div className="space-y-4">
+                  {JSON.parse(localStorage.getItem('cart') || '[]').map((item, index) => (
+                    <div key={index} className="pb-2 border-b flex justify-between items-center">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-gray-100 rounded flex items-center justify-center">
+                          <img
+                            src={item.image}
+                            alt={item.name}
+                            className="max-w-full max-h-full object-contain"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-semibold text-sm">{item.name}</p>
+                          <p className="text-xs text-gray-500">
+                            Added: {new Date(item.addedAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                      <p className="text-sm font-bold">Ksh {item.price.toLocaleString()}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 pt-4 border-t">
+                  <div className="flex justify-between mb-2">
+                    <span className="font-semibold">Total:</span>
+                    <span className="font-bold">Ksh {(cartTotal() + 200).toLocaleString()}</span>
+                  </div>
+                  <button
+                    className="mt-4 w-full bg-blue-600 hover:bg-blue-800 text-white py-2 px-4 rounded transition"
+                    onClick={() => {
+                      alert('Proceed to checkout');
+                      setIsCartOpen(false);
+                    }}
+                  >
+                    Checkout
+                  </button>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
       <header className="mb-12 text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
           Professional Office Attire
@@ -149,36 +250,38 @@ const Official = () => {
         {shirts.map((shirt) => (
           <article 
             key={shirt.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
           >
             <div className="aspect-square bg-gray-100 p-5 flex items-center justify-center">
               <img
                 src={shirt.image}
                 alt={shirt.name}
-                className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
               />
             </div>
             <div className="p-5 text-center space-y-4">
               <h3 className="text-xl font-bold text-gray-900">{shirt.name}</h3>
-              <p className="text-blue-600 font-bold text-xl">{shirt.price}</p>
-              <button
-                onClick={() => {
-                  setSelectedShirt(shirt);
-                  setShowPayment(true);
-                }}
-                className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-              >
-                <CheckCircle className="w-5 h-5" />
-                Purchase Now
-              </button>
-              <button
-                onClick={() => handleAddToCart(shirt)}
-                className="w-full bg-green-600 hover:bg-green-800 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-              >
-                <ShoppingCart className="w-5 h-5" />
-                Add to Cart
-              </button>
+              <p className="text-blue-600 font-bold text-xl">Ksh {shirt.price.toLocaleString()}</p>
+              <div className="space-y-2">
+                <button
+                  onClick={() => {
+                    setSelectedShirt(shirt);
+                    setShowPayment(true);
+                  }}
+                  className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                >
+                  <CheckCircle className="w-5 h-5" />
+                  Purchase Now
+                </button>
+                <button
+                  onClick={() => handleAddToCart(shirt)}
+                  className="w-full bg-green-600 hover:bg-green-800 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                >
+                  <ShoppingCart className="w-5 h-5" />
+                  Add to Cart
+                </button>
+              </div>
             </div>
           </article>
         ))}
