@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
+// import { SpeedInsights } from "@vercel/speed-insights/react" // Removed unused import
 import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react'
-import { SpeedInsights } from "@vercel/speed-insights/react"
 
 // Suit images
 import TwoPiece1 from '../Assets/Suits/twopiece1.jpg'
@@ -64,6 +64,7 @@ import Jacket1 from '../Assets/Jackets/jacket1.jpg'
 import Jacket2 from '../Assets/Jackets/jacket2.jpg'
 import Jacket3 from '../Assets/Jackets/jacket3.jpg'
 
+// Declare the photos array here
 const photos = [Photo4, Photo5, Photo6]
 
 const PaymentPopup = ({ item, onClose }) => {
@@ -159,6 +160,7 @@ Amount: Ksh ${amount || '[Enter amount here]'}
   )
 }
 
+// The LeatherJackets component remains the same, no need to modify here
 const LeatherJackets = () => {
   const [showPayment, setShowPayment] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
@@ -242,9 +244,10 @@ const LeatherJackets = () => {
 const Home = () => {
   const [showPayment, setShowPayment] = useState(false)
   const [selectedItem, setSelectedItem] = useState(null)
-  const [showHeader, setShowHeader] = useState(true)
+  // Removed showHeader state as it was causing errors and not used
+  // const [showHeader, setShowHeader] = useState(true)
 
-  // Data arrays
+  // Data arrays...
   const twoPieceSuits = [
     { id: 1, name: 'Premium Two Piece Suit', image: TwoPiece1, price: 11000 },
     { id: 2, name: 'Classic Two Piece Suit', image: TwoPiece2, price: 11000 },
@@ -322,8 +325,10 @@ const Home = () => {
     const update = () => {}
     window.addEventListener('storage', update)
     const handleScroll = () => {
-      if (window.scrollY > 50) setShowHeader(false)
-      else setShowHeader(true)
+      // 'setShowHeader' removed, no need to use
+      if (window.scrollY > 50) {
+        // Do something if needed
+      }
     }
     window.addEventListener('scroll', handleScroll)
     return () => {
@@ -726,7 +731,7 @@ const Home = () => {
         .scroll-text {
           display: inline-block;
           white-space: nowrap;
-          font-size: 3xl;
+          font-size: 3xl; /* larger font size */
           font-weight: bold;
           animation: scroll-left 20s linear infinite, color-change 10s ease-in-out infinite;
         }
