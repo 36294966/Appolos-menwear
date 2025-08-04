@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom'; // Remove this line
 import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import ThreePiece1 from '../../Assets/Suits/threepiece1.jpg';
 import ThreePiece2 from '../../Assets/Suits/threepiece2.jpg';
@@ -109,7 +109,7 @@ const PaymentPopup = ({ item, onClose }) => {
 };
 
 const ThreePieceSuits = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate(); // Removed this line
   const [showPayment, setShowPayment] = useState(false);
   const [selectedSuit, setSelectedSuit] = useState(null);
   const [cartCount, setCartCount] = useState(0);

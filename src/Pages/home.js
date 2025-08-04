@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react'
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 // Suit images
 import TwoPiece1 from '../Assets/Suits/twopiece1.jpg'
