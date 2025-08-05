@@ -89,19 +89,21 @@ const Cart = () => {
             <h3 className="text-xl font-semibold mb-2">
               Total: KES {total.toLocaleString('en-KE', { minimumFractionDigits: 2 })}
             </h3>
-            <button
-              className="mt-4 bg-green-600 text-white px-6 py-2 rounded-xl hover:bg-green-700 transition mr-4"
-              onClick={handleContinueShopping}
-            >
-              Continue Shopping
-            </button>
-            {/* Make sure this navigates to your /payment route */}
-            <button
-              className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition"
-              onClick={handleProceedToPayment}
-            >
-              Proceed to Payment
-            </button>
+            {/* Responsive button container */}
+            <div className="flex flex-col md:flex-row md:justify-center md:space-x-4 space-y-4 md:space-y-0 mt-4">
+              <button
+                className="bg-green-600 text-white px-6 py-2 rounded-xl hover:bg-green-700 transition w-full md:w-auto"
+                onClick={handleContinueShopping}
+              >
+                Continue Shopping
+              </button>
+              <button
+                className="bg-blue-600 text-white px-6 py-2 rounded-xl hover:bg-blue-700 transition w-full md:w-auto"
+                onClick={handleProceedToPayment}
+              >
+                Proceed to Payment
+              </button>
+            </div>
           </div>
         </div>
       )}
