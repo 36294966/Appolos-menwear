@@ -265,9 +265,9 @@ const Home = () => {
     { id: 9, name: 'Executive Boardroom Suit', image: Threepiece9, price: 13000 },
   ]
   const tuxedoSuits = [
-    { id: 10, name: 'Velvet Tuxedo', image: Tuxedo1, price: 12000 },
-    { id: 11, name: 'Midnight Blue Dinner Suit', image: Tuxedo2, price: 12000 },
-    { id: 12, name: 'Classic Tuxedo Suit', image: Tuxedo3, price: 12000 },
+    { id: 10, name: 'Velvet Tuxedo', image: Tuxedo1, price: 15000},
+    { id: 11, name: 'Midnight Blue Dinner Suit', image: Tuxedo2, price: 15000 },
+    { id: 12, name: 'Classic Tuxedo Suit', image: Tuxedo3, price: 15000},
   ]
   const officialShirts = [
     { id: 101, name: 'Presidential Shirt', image: Official1, price: 3000 },
@@ -390,7 +390,7 @@ const Home = () => {
 
       {/* Two Piece Suits */}
       <h2 className='text-4xl font-bold mb-10 text-center text-blue-800'>
-        Premium Two Piece Suits
+        Premium Two Piece Suits 💯 super wool fading free  
       </h2>
       <div className='grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16'>
         {twoPieceSuits.map((suit) => (
@@ -435,7 +435,7 @@ const Home = () => {
 
       {/* Three Piece Suits */}
       <h2 className='text-4xl font-bold mb-10 text-center text-blue-800'>
-        Premium Three Piece Suits
+        Premium Three Piece Suits 💯 super wool fading free  
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16'>
         {threePieceSuits.map((suit) => (
@@ -480,7 +480,7 @@ const Home = () => {
 
       {/* Tuxedo Collection */}
       <h2 className='text-4xl font-bold mb-10 text-center text-blue-800'>
-        Tuxedo Dinner Collection
+        Tuxedo Dinner Collection 💯 super wool fading free  
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-10'>
         {tuxedoSuits.map((suit) => (
@@ -525,7 +525,7 @@ const Home = () => {
 
       {/* Official Shirts */}
       <h2 className='text-4xl font-bold mb-10 text-center text-blue-800'>
-        Official Shirts
+        Official Shirts  💯 super material fading free
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-16'>
         {officialShirts.map((shirt) => (
@@ -570,7 +570,7 @@ const Home = () => {
 
       {/* Casual Collection */}
       <h2 className='text-4xl font-bold mb-10 text-center text-blue-800'>
-        Casual Collection
+        Casual Collection 💯 super Casual fading free  
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-3 gap-6 mb-16'>
         {casualShirts.map((shirt) => (
@@ -615,7 +615,7 @@ const Home = () => {
 
       {/* Jeans Collection */}
       <h2 className='text-4xl font-bold mb-10 text-center text-blue-800'>
-        Jeans Collection
+        Jeans Collection 💯 super jean fading free  
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16'>
         {jeansItems.map((jean) => (
@@ -660,7 +660,7 @@ const Home = () => {
 
       {/* Leather Jackets */}
       <h2 className='text-4xl font-bold mb-10 text-center text-blue-800'>
-        Leather Jackets
+        Leather Jackets 💯 super leather fading free
       </h2>
       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16'>
         {leatherJackets.map((leather) => (
