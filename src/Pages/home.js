@@ -270,9 +270,9 @@ const Home = () => {
     { id: 12, name: 'Classic Tuxedo Suit', image: Tuxedo3, price: 12000 },
   ]
   const officialShirts = [
-    { id: 101, name: 'Premium Official Shirt', image: Official1, price: 1800 },
-    { id: 102, name: 'Classic Official Shirt', image: Official2, price: 1800 },
-    { id: 103, name: 'Classic Official Shirt', image: Official3, price: 1800 },
+    { id: 101, name: 'Presidential Shirt', image: Official1, price: 3000 },
+    { id: 102, name: 'Presidential Shirt', image: Official2, price: 3000 },
+    { id: 103, name: 'Presidential Shirt', image: Official3, price: 3000 },
     { id: 104, name: 'Premium Official Shirt', image: Official4, price: 1800 },
     { id: 105, name: 'Classic Official Shirt', image: Official5, price: 1800 },
     { id: 106, name: 'Classic Official Shirt', image: Official6, price: 1800 },
