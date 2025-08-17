@@ -318,7 +318,7 @@ const Home = () => {
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-24 mx-4">
         <p>Hurry Up! Limited Time Only! 💯 Super Wool Free Fading ThreePiece Suits – Get Yours Today!</p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
         {threePieceSuits.map((suit) => (
           <div key={suit.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
             <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
@@ -376,7 +376,7 @@ const Home = () => {
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
         <p>Hurry Up! Limited Time Only! 💯 Super Wool Free Fading Two-Piece Suits – Get Yours Today!</p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
         {twoPieceSuits.map((suit) => (
           <div key={suit.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
             <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
@@ -434,7 +434,7 @@ const Home = () => {
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
         <p>Hurry Up! Limited Time Only! 💯 Fading Free Tuxedo Dinner Suits – Get Yours Today!</p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
         {tuxedoSuits.map((suit) => (
           <div key={suit.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
             <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
@@ -492,7 +492,7 @@ const Home = () => {
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
         <p>Hurry Up! Limited Time Only! 💯 Fading Free Kaunda Suits – Get Yours Today!</p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
         {kaundaSuits.map((suit) => (
           <div key={suit.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
             <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
@@ -550,7 +550,7 @@ const Home = () => {
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
         <p>Hurry Up! Limited Time Only! 💯 Official Shirts – Get Yours Today!</p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
         {officialShirts.map((shirt) => (
           <div key={shirt.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
             <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
@@ -593,7 +593,7 @@ const Home = () => {
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
         <p>Hurry up! Limited time. 💯 premium Jean collection.</p>
       </div>
-      <div className="grid grid-cols-2 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
         {jeansProducts.map((jean) => (
           <div key={jean.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
             <div className="h-64 p-4 flex items-center justify-center bg-gray-50">
