@@ -140,7 +140,7 @@ const Footer = () => {
       {/* Bottom Line */}
       <div className="mt-12 border-t border-white/20 pt-8 pb-2 text-center">
         <p className="text-gray-400 text-xs">
-          © 2025, Sir Apollo's Menswear — Created by Dr Erastus Coding Co-oporation
+          © 2025, Sir Apollo's Menswear — Powered by Dr Erastus Coding Co-oporation
         </p>
       </div>
     </footer>

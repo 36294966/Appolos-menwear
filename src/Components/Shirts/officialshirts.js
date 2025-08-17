@@ -12,18 +12,23 @@ import Official9 from '../../Assets/Official/official9.jpg';
 import Official10 from '../../Assets/Official/official10.jpg';
 import Official11 from '../../Assets/Official/official11.jpg';
 import Official12 from '../../Assets/Official/official12.jpg';
+import Official13 from '../../Assets/Official/official13.jpg';
+import Official14 from '../../Assets/Official/official14.jpg';
+import Official15 from '../../Assets/Official/official15.jpg';
+import Official16 from '../../Assets/Official/official16.jpg';
 
+// Payment Popup Component
 const PaymentPopup = ({ item, onClose }) => {
   const [amount, setAmount] = useState('');
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const paymentDetails = {
     paybill: '542542',
-    account: '378179'
+    account: '378179',
   };
 
   const generatePaymentFile = () => {
     const content = `OFFICIAL SHIRT PURCHASE\n---------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${item?.price}`;
-    
+
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -39,8 +44,8 @@ const PaymentPopup = ({ item, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
-        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+      <div className="bg-white p-6 rounded-lg w-[95%] max-w-md space-y-6">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 flex items-center gap-2">
           {paymentSuccess ? (
             <>
               <CheckCircle className="w-8 h-8 text-green-500" />
@@ -53,45 +58,45 @@ const PaymentPopup = ({ item, onClose }) => {
 
         {!paymentSuccess ? (
           <>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                <span className="font-medium">Paybill:</span>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                <span className="font-medium text-sm sm:text-base">Paybill:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
               </div>
-              
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                <span className="font-medium">Account:</span>
+
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                <span className="font-medium text-sm sm:text-base">Account:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
               </div>
 
-              <div className="bg-green-50 p-4 rounded-lg">
+              <div className="bg-green-50 p-3 rounded-lg">
                 <div className="flex justify-between items-center">
-                  <span className="font-medium">Standard Price:</span>
+                  <span className="font-medium text-sm sm:text-base">Standard Price:</span>
                   <span className="font-mono text-green-600 font-bold">Ksh {item?.price?.toLocaleString()}</span>
                 </div>
               </div>
-              
+
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"
-                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 min="1800"
               />
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-3 mt-4">
               <button
                 onClick={generatePaymentFile}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 Confirm Payment
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
               >
                 <XCircle className="w-5 h-5" />
                 Cancel
@@ -109,28 +114,28 @@ const PaymentPopup = ({ item, onClose }) => {
   );
 };
 
+// Main Official Component
 const Official = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedShirt, setSelectedShirt] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Cart synchronization
   useEffect(() => {
     const updateCart = () => {
       const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
       setCartCount(storedCart.length);
     };
-    
+
     updateCart();
     window.addEventListener('storage', updateCart);
     return () => window.removeEventListener('storage', updateCart);
   }, []);
 
   const shirts = [
-    { id: 1, image: Official1, name: 'Executive White Shirt', price: 1800 },
-    { id: 2, image: Official2, name: 'Classic Blue Formal', price: 1800 },
-    { id: 3, image: Official3, name: 'Tailored Striped Shirt', price: 1800 },
+    { id: 1, image: Official1, name: 'Presidential Shirt', price: 3000 },
+    { id: 2, image: Official2, name: 'Presidential Shirt', price: 3000 },
+    { id: 3, image: Official3, name: 'Presidential Shirt', price: 3000 },
     { id: 4, image: Official4, name: 'Premium Cotton Blend', price: 1800 },
     { id: 5, image: Official5, name: 'French Cuff Formal', price: 1800 },
     { id: 6, image: Official6, name: 'Slim Fit Office Shirt', price: 1800 },
@@ -139,7 +144,11 @@ const Official = () => {
     { id: 9, image: Official9, name: 'Executive Checkered', price: 1800 },
     { id: 10, image: Official10, name: 'Silk Blend Formal', price: 1800 },
     { id: 11, image: Official11, name: 'Premium Twill Shirt', price: 1800 },
-    { id: 12, image: Official12, name: 'Classic Spread Collar', price: 1800 }
+    { id: 12, image: Official12, name: 'Classic Spread Collar', price: 1800 },
+    { id: 13, image: Official13, name: 'Luxury Official Shirt', price: 1800 },
+    { id: 14, image: Official14, name: 'Sophistic Official Shirt', price: 1800 },
+    { id: 15, image: Official15, name: 'Classic Official Shirt', price: 1800},
+    { id: 16, image: Official16, name: 'Exclusive Official Shirt', price: 1800}
   ];
 
   const handleAddToCart = (item) => {
@@ -160,10 +169,10 @@ const Official = () => {
   };
 
   return (
-    <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
-      {/* Cart Indicator */}
-      <div className="fixed top-4 right-4 z-40">
-        <button 
+    <section className="p-4 sm:p-6 bg-gray-50 min-h-screen mt-8">
+      {/* Cart Button */}
+      <div className="fixed top-16 right-4 z-40">
+        <button
           onClick={() => setIsCartOpen(true)}
           className="relative bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition"
         >
@@ -237,16 +246,13 @@ const Official = () => {
         </div>
       )}
 
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">
-          Professional Office Attire
-        </h1>
-        <p className="text-gray-600 text-lg">
-          Premium quality shirts for corporate excellence
-        </p>
+      <header className="bg-gradient-to-r from-green-600 via-red-500 to-yellow-500 text-white p-6 mb-8 rounded-xl shadow-lg text-center mt-12">
+        <h1 className="text-3xl sm:text-4xl font-bold">Welcome to Official Shirts Collection</h1>
+        <p className="text-lg sm:text-xl mt-2">High-quality shirts for professional occasions 💯 super wool fading free</p>
       </header>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {/* Shirt Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6">
         {shirts.map((shirt) => (
           <article 
             key={shirt.id}
@@ -261,7 +267,7 @@ const Official = () => {
               />
             </div>
             <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold text-gray-900">{shirt.name}</h3>
+              <h3 className="text-xl sm:text-lg font-bold text-gray-900">{shirt.name}</h3>
               <p className="text-blue-600 font-bold text-xl">Ksh {shirt.price.toLocaleString()}</p>
               <div className="space-y-2">
                 <button
@@ -276,7 +282,7 @@ const Official = () => {
                 </button>
                 <button
                   onClick={() => handleAddToCart(shirt)}
-                  className="w-full bg-green-600 hover:bg-green-800 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" />
                   Add to Cart
@@ -301,3 +307,8 @@ const Official = () => {
 };
 
 export default Official;
+
+
+
+
+

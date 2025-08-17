@@ -38,67 +38,65 @@ Amount: Ksh ${amount || '________'}
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
-        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+      <div className="bg-white p-6 sm:p-8 rounded-2xl w-[95%] max-w-md space-y-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center gap-2 mb-4">
           {paymentSuccess ? (
             <>
-              <CheckCircle className="w-8 h-8 text-green-500" />
-              Payment Verified!
+              <CheckCircle className="w-6 h-6 text-green-500" />
+              Payment Complete!
             </>
           ) : (
-            `${item?.name} Purchase`
+            'Payment Details'
           )}
         </h2>
 
         {!paymentSuccess ? (
           <>
-            {/* Payment details similar to official.js */}
             <div className="space-y-4">
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                <span className="font-medium">Paybill:</span>
+              <div className="flex justify-between items-center bg-gray-50 p-3 sm:p-4 rounded-lg">
+                <span className="font-medium text-sm sm:text-base">Paybill:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
               </div>
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                <span className="font-medium">Account:</span>
+              <div className="flex justify-between items-center bg-gray-50 p-3 sm:p-4 rounded-lg">
+                <span className="font-medium text-sm sm:text-base">Account:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg">
+              <div className="bg-green-50 p-3 sm:p-4 rounded-lg">
                 <div className="flex justify-between items-center">
-                  <span className="font-medium">Standard Price:</span>
-                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price?.toLocaleString()}</span>
+                  <span className="font-medium text-sm sm:text-base">Price:</span>
+                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price}</span>
                 </div>
               </div>
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"
-                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 min={item?.price}
               />
             </div>
-            {/* Buttons */}
-            <div className="flex gap-4 mt-4">
+            <div className="flex gap-3 sm:gap-4 mt-4">
               <button
                 onClick={generatePaymentFile}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                <CheckCircle className="w-5 h-5" />
-                Confirm Payment
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                PAY NOW
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-gray-300 hover:bg-gray-400 text-black py-2 sm:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                <XCircle className="w-5 h-5" />
-                Cancel
+                <XCircle className="w-4 h-4 sm:w-5 sm:h-5" />
+                Close
               </button>
             </div>
           </>
         ) : (
           <div className="text-center text-green-600">
-            <p>Transaction receipt downloaded successfully</p>
-            <p className="text-sm text-gray-500 mt-2">Closing automatically...</p>
+            <p>Receipt downloaded successfully</p>
+            <p className="text-sm sm:text-base mt-2">Closing automatically...</p>
           </div>
         )}
       </div>
@@ -111,7 +109,6 @@ const Socks = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [cartCount, setCartCount] = useState(0);
 
-  // Sync cart count with localStorage
   useEffect(() => {
     const updateCartCount = () => {
       const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -123,7 +120,7 @@ const Socks = () => {
   }, []);
 
   const socksItems = [
-    { id: 1, name: 'Comfortable Cotton Socks - White', image: Socks1, price: 300 },
+    { id: 1, name: 'Cotton Socks - White', image: Socks1, price: 300 },
     { id: 2, name: 'Formal Dress Socks - Black', image: Socks2, price: 300 },
     { id: 3, name: 'Colorful Crew Socks', image: Socks3, price: 300 },
   ];
@@ -141,6 +138,11 @@ const Socks = () => {
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+      {/* Fixed Advertisement Card */}
+      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-center text-2xl font-bold p-6 rounded-xl mb-8 animate-pulse mt-24 mx-4">
+        <p className="text-sm sm:text-base md:text-lg lg:text-2xl">Hurry up! Limited time . 💯 super wool fading free Get your premium socks collection today!</p>
+      </div>
+
       {/* Payment Popup */}
       {showPayment && (
         <PaymentPopup
@@ -156,7 +158,7 @@ const Socks = () => {
       <div className="fixed top-4 right-4 z-40">
         <button
           className="relative bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition"
-          onClick={() => alert('Implement cart modal similar to belt.js')}
+          onClick={() => alert('Cart modal would go here')}
         >
           <ShoppingCart className="w-6 h-6 text-gray-700" />
           {cartCount > 0 && (
@@ -167,31 +169,23 @@ const Socks = () => {
         </button>
       </div>
 
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">
-          Premium Socks Collection
-        </h1>
-        <p className="text-blue-800 font-bold text-xl">
-          High-quality socks for ultimate comfort and style
-        </p>
-      </header>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
         {socksItems.map((sock) => (
           <article
             key={sock.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
           >
-            <div className="aspect-square bg-gray-100 p-5 flex items-center justify-center">
+            {/* Image Container */}
+            <div className="h-48 sm:h-60 md:h-72 bg-gray-100 p-4 flex items-center justify-center">
               <img
                 src={sock.image}
                 alt={sock.name}
-                className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                 loading="lazy"
               />
             </div>
             <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold text-gray-900">{sock.name}</h3>
+              <h3 className="text-xl sm:text-lg font-bold mb-1">{sock.name}</h3>
               <p className="text-blue-600 font-bold text-xl">Ksh {sock.price}</p>
               <div className="space-y-2">
                 <button
@@ -199,7 +193,7 @@ const Socks = () => {
                     setSelectedItem(sock);
                     setShowPayment(true);
                   }}
-                  className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-gray-800 hover:bg-gray-900 text-white font-semibold py-2 sm:py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
                 >
                   <CheckCircle className="w-5 h-5" />
                   Purchase Now
@@ -209,7 +203,7 @@ const Socks = () => {
                     handleAddToCart(sock);
                     alert(`${sock.name} added to cart`);
                   }}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 sm:py-3 rounded-lg transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
                 >
                   <ShoppingCart className="w-5 h-5" />
                   Add to Cart

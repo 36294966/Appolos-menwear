@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
+import { CheckCircle, XCircle, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react'; // Added the missing imports
+
 import TwoPiece1 from '../../Assets/Suits/twopiece1.jpg';
 import TwoPiece2 from '../../Assets/Suits/twopiece2.jpg';
 import TwoPiece3 from '../../Assets/Suits/twopiece3.jpg';
-import Photo4 from '../../Assets/Appolo/photo4.jpg';
-import Photo5 from '../../Assets/Appolo/photo5.jpg';
-import Photo6 from '../../Assets/Appolo/photo6.jpg';
+import TwoPiece4 from '../../Assets/Suits/twopiece4.jpg';
+import TwoPiece5 from '../../Assets/Suits/twopiece5.jpg';
+import TwoPiece7 from '../../Assets/Suits/twopiece7.jpg';
+import TwoPiece8 from '../../Assets/Suits/twopiece8.jpg';
+import TwoPiece9 from '../../Assets/Suits/twopiece9.jpg'; // Added TwoPiece9
 
-const PaymentPopup = ({ item, onClose }) => {
+const PaymentPopup = ({ item, selectedSize, onClose }) => {
   const [amount, setAmount] = useState('');
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const paymentDetails = {
@@ -16,7 +19,7 @@ const PaymentPopup = ({ item, onClose }) => {
   };
 
   const generatePaymentFile = () => {
-    const content = `TWO PIECE SUIT PURCHASE\n------------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${item?.price?.toLocaleString()}`;
+    const content = `TWO PIECE SUIT PURCHASE\n------------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nSize: ${selectedSize}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${item?.price?.toLocaleString()}`;
     
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -49,40 +52,40 @@ const PaymentPopup = ({ item, onClose }) => {
           <>
             <div className="space-y-4">
               <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                <span className="font-medium">Paybill:</span>
-                <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
+                <span className="font-medium text-lg">Paybill:</span>
+                <span className="font-mono text-blue-600 font-bold text-lg">{paymentDetails.paybill}</span>
               </div>
               <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                <span className="font-medium">Account:</span>
-                <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
+                <span className="font-medium text-lg">Account:</span>
+                <span className="font-mono text-blue-600 font-bold text-lg">{paymentDetails.account}</span>
               </div>
               <div className="bg-green-50 p-4 rounded-lg">
                 <div className="flex justify-between items-center">
-                  <span className="font-medium">Standard Price:</span>
-                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price?.toLocaleString()}</span>
+                  <span className="font-medium text-lg">Standard Price:</span>
+                  <span className="font-mono text-green-600 font-bold text-lg">Ksh {item?.price?.toLocaleString()}</span>
                 </div>
               </div>
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"
-                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 text-lg"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value.replace(/\D/g, ''))}
                 min="11000"
               />
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-4">
               <button
                 onClick={generatePaymentFile}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2 text-lg"
               >
                 <CheckCircle className="w-5 h-5" />
                 Confirm Payment
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2 text-lg"
               >
                 <XCircle className="w-5 h-5" />
                 Cancel
@@ -105,6 +108,20 @@ const TwoPieceSuits = () => {
   const [selectedSuit, setSelectedSuit] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
+
+  const twoPieceSuits = [
+    { id: 1, name: 'Executive Two-Piece Suit', image: TwoPiece1, price: 11000 },
+    { id: 2, name: 'Modern Classic Two-Piece Suit', image: TwoPiece2, price: 11000 },
+    { id: 3, name: 'Premium Two-Piece Suit', image: TwoPiece3, price: 11000 },
+    { id: 4, name: 'Business Two-Piece Suit', image: TwoPiece4, price: 11000 },
+    { id: 5, name: '💯 Super Classic Two-Piece Suit', image: TwoPiece5, price: 11000 },
+    { id: 7, name: 'Modern Two-Piece Suit', image: TwoPiece7, price: 11000 },
+    { id: 8, name: 'Premium Two-Piece Suit', image: TwoPiece8, price: 11000 },
+    { id: 9, name: 'Elegant Two-Piece Suit', image: TwoPiece9, price: 11000 }
+  ];
+
+  const sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
 
   useEffect(() => {
     const updateCart = () => {
@@ -117,33 +134,11 @@ const TwoPieceSuits = () => {
     return () => window.removeEventListener('storage', updateCart);
   }, []);
 
-  const twoPieceSuits = [
-    { 
-      id: 1, 
-      name: 'Executive Wool Blend Suit', 
-      image: TwoPiece1, 
-      price: 11000 
-    },
-    { 
-      id: 2, 
-      name: 'Modern Slim-Fit Tuxedo', 
-      image: TwoPiece2, 
-      price: 11000 
-    },
-    { 
-      id: 3, 
-      name: 'Premium Linen Wedding Suit', 
-      image: TwoPiece3, 
-      price: 11000 
-    }
-  ];
-
-  const photos = [Photo4, Photo6, Photo5];
-
   const handleAddToCart = (item) => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
+      size: selectedSizeForSuit[item.id] || 'Not Selected',
       addedAt: new Date().toISOString()
     };
     const updatedCart = [...storedCart, newItem];
@@ -153,14 +148,29 @@ const TwoPieceSuits = () => {
   };
 
   const cartTotal = () => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const storedCart = JSON.parse(localStorage.getItem('cart') || '[]');
     return storedCart.reduce((sum, item) => sum + item.price, 0);
+  };
+
+  const handlePrevClick = (id) => {
+    const sizeSelector = document.getElementById(`size-selector-${id}`);
+    sizeSelector.scrollBy({ left: -100, behavior: 'smooth' });
+  };
+
+  const handleNextClick = (id) => {
+    const sizeSelector = document.getElementById(`size-selector-${id}`);
+    sizeSelector.scrollBy({ left: 100, behavior: 'smooth' });
   };
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
-      {/* Cart Indicator */}
-      <div className="fixed top-4 right-4 z-40">
+      {/* Blinking Banner */}
+      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center text-xl font-bold p-6 rounded-xl mb-8 animate-pulse mt-24 mx-4">
+        <p>Hurry up! Limited time offer! Get your premium two-piece suits today! 💯 super wool fading free</p>
+      </div>
+
+      {/* Cart Button */}
+      <div className="fixed top-16 right-4 z-40">
         <button 
           onClick={() => setIsCartOpen(true)}
           className="relative bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition"
@@ -205,12 +215,10 @@ const TwoPieceSuits = () => {
                         </div>
                         <div>
                           <p className="font-semibold text-sm">{item.name}</p>
-                          <p className="text-xs text-gray-500">
-                            Added: {new Date(item.addedAt).toLocaleDateString()}
-                          </p>
+                          <p className="text-xs text-gray-500">Size: {item.size}</p>
                         </div>
                       </div>
-                      <p className="text-sm font-bold">Ksh {item.price.toLocaleString()}</p>
+                      <p className="text-sm font-bold">Ksh {item.price}</p>
                     </div>
                   ))}
                 </div>
@@ -235,28 +243,7 @@ const TwoPieceSuits = () => {
         </div>
       )}
 
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Premium Two Piece Suits</h1>
-        <p className="text-gray-600 text-lg">Stylish and elegant suits tailored for confidence</p>
-      </header>
-
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12">
-        {photos.map((photo, index) => (
-          <div
-            key={index}
-            className="relative overflow-hidden rounded-xl shadow-lg aspect-square group"
-          >
-            <img
-              src={photo}
-              alt="Style Inspiration"
-              className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-300"
-              loading="lazy"
-            />
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
         {twoPieceSuits.map((suit) => (
           <article
             key={suit.id}
@@ -271,8 +258,38 @@ const TwoPieceSuits = () => {
               />
             </div>
             <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold text-gray-900">{suit.name}</h3>
-              <p className="text-blue-600 font-bold text-xl">Ksh {suit.price.toLocaleString()}</p>
+              <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-900">{suit.name}</h3>
+              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-600 font-bold">Ksh {suit.price}</p>
+              {/* Size Selection */}
+              <div className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold mb-2">Select Size:</div>
+              <div className="flex justify-center items-center mb-2">
+                <button
+                  onClick={() => handlePrevClick(suit.id)}
+                  className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 hover:text-gray-800"
+                >
+                  <ChevronLeft />
+                </button>
+                <div
+                  id={`size-selector-${suit.id}`}
+                  className="size-selector flex gap-2 overflow-x-auto py-2"
+                >
+                  {sizes.map((size) => (
+                    <button
+                      key={size}
+                      onClick={() => setSelectedSizeForSuit({ ...selectedSizeForSuit, [suit.id]: size })}
+                      className={`px-4 py-2 rounded-lg border-2 ${selectedSizeForSuit[suit.id] === size ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={() => handleNextClick(suit.id)}
+                  className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 hover:text-gray-800"
+                >
+                  <ChevronRight />
+                </button>
+              </div>
               <div className="space-y-2">
                 <button
                   onClick={() => {
@@ -300,6 +317,7 @@ const TwoPieceSuits = () => {
       {showPayment && (
         <PaymentPopup
           item={selectedSuit}
+          selectedSize={selectedSizeForSuit[selectedSuit.id]}
           onClose={() => {
             setShowPayment(false);
             setSelectedSuit(null);

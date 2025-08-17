@@ -3,27 +3,28 @@ import Navbar from '../Components/navbar';
 import Footer from '../Components/footer';
 
 const Layout = ({ children }) => {
-  // Define WhatsApp number and message
-  const whatsappNumber = '254746311274'; // Replace with your actual number (no "+" sign)
-  const prefilledMessage = encodeURIComponent('Hello Sir Apollo, I want to clarify about your products');
+  const whatsappNumber = '254746311274';
+  const prefilledMessage = encodeURIComponent(
+    'Hello Sir Apollo, I want to clarify about your products'
+  );
 
   return (
-    <div className="flex flex-col min-h-screen">
-      {/* Navbar always on top */}
+    <div className="min-h-screen bg-gray-100 text-gray-900">
+      {/* Navbar */}
       <Navbar />
 
-      {/* Page content */}
-      <main className="flex-grow mt-28">{children}</main>
+      {/* Main Content */}
+      <main className="p-4">{children}</main>
 
-      {/* Footer always at bottom */}
+      {/* Footer */}
       <Footer />
 
-      {/* WhatsApp chat icon */}
+      {/* WhatsApp Floating Button */}
       <a
         href={`https://wa.me/${whatsappNumber}?text=${prefilledMessage}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-5 right-5 z-50 hover:scale-110 transition-transform"
+        className="fixed bottom-5 right-5 z-[998] hover:scale-110 transition-transform"
         aria-label="Chat with Sir Apollo on WhatsApp"
       >
         <svg
@@ -43,3 +44,6 @@ const Layout = ({ children }) => {
 };
 
 export default Layout;
+
+
+

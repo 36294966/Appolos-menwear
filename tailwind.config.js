@@ -1,5 +1,6 @@
 // tailwind.config.js
 module.exports = {
+  darkMode: 'class', // Enable class-based dark mode
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
@@ -8,7 +9,7 @@ module.exports = {
           '0%': { transform: 'translateX(100%)', opacity: 1 },
           '70%': { opacity: 0.2 },
           '100%': { transform: 'translateX(-100%)', opacity: 0 },
-        }, // <-- Missing brace added here
+        },
       },
       animation: {
         'scroll-left-slow': 'scrollLeft 15s linear infinite',
@@ -17,6 +18,3 @@ module.exports = {
   },
   plugins: [],
 };
-
-
-

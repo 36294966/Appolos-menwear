@@ -33,7 +33,7 @@ Paybill Number: ${paybillNumber}
 Account Number: ${accountNumber}
 Date: ${dateStr}
 Items:
-${cartItems.map(item => `- ${item.name} : KES ${item.price}`).join('\n')}
+${cartItems.map(item => `- ${item.name} (Size: ${item.size}) : KES ${item.price}`).join('\n')}
 Total Amount: KES ${total.toLocaleString('en-KE', { minimumFractionDigits: 2 })}
 
 Thank you for your purchase!
@@ -83,7 +83,7 @@ Thank you for your purchase!
             ) : (
               cartItems.map((item, index) => (
                 <li key={index} className="flex justify-between mb-2">
-                  <span>{item.name}</span>
+                  <span>{item.name} (Size: {item.size})</span> {/* Display size here */}
                   <span>KES {item.price}</span>
                 </li>
               ))

@@ -1,129 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, XCircle, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ShoppingCart, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-// Import tuxedo images
-import Tuxedo1 from '../../Assets/Suits/tuxedo1.jpg';
-import Tuxedo2 from '../../Assets/Suits/tuxedo2.jpg';
-import Tuxedo3 from '../../Assets/Suits/tuxedo3.jpg';
-import Tuxedo5 from '../../Assets/Suits/tuxedo5.jpg';
-import Tuxedo6 from '../../Assets/Suits/tuxedo6.jpg';
-import Tuxedo7 from '../../Assets/Suits/tuxedo7.jpg';
-import Tuxedo8 from '../../Assets/Suits/tuxedo8.jpg';
-import Tuxedo9 from '../../Assets/Suits/tuxedo9.jpg'; // New tuxedo added
+// Import Kaunda suits images
+import Kaunda1 from '../../Assets/Suits/Kaunda1.jpg';
+import Kaunda2 from '../../Assets/Suits/kaunda2.jpg';
+import Kaunda3 from '../../Assets/Suits/kaunda3.jpg';
+import Kaunda4 from '../../Assets/Suits/kaunda4.jpg';
 
-const PaymentPopup = ({ item, selectedSize, onClose }) => {
-  const [amount, setAmount] = useState('');
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const paymentDetails = {
-    paybill: '542542',
-    account: '378179',
-    standardPrice: 12000,
-  };
-
-  const handlePaymentConfirmation = () => {
-    const content = `TUXEDO DINNER PURCHASE\n-----------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nSize: ${selectedSize}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${paymentDetails.standardPrice.toLocaleString()}`;
-    
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `tuxedo_payment_${item?.id}.txt`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    setPaymentSuccess(true);
-    setTimeout(onClose, 1500);
-  };
-
-  return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white p-6 rounded-lg w-full max-w-md space-y-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center gap-2 mb-4">
-          {paymentSuccess ? (
-            <>
-              <CheckCircle className="w-8 h-8 text-green-500" />
-              Payment Verified!
-            </>
-          ) : (
-            'Tuxedo Dinner Purchase'
-          )}
-        </h2>
-
-        {!paymentSuccess ? (
-          <>
-            <div className="space-y-3">
-              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
-                <span className="font-medium text-sm">Paybill:</span>
-                <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
-              </div>
-              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
-                <span className="font-medium text-sm">Account:</span>
-                <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
-              </div>
-              <div className="bg-green-50 p-3 rounded-lg">
-                <div className="flex justify-between items-center">
-                  <span className="font-medium text-sm">Standard Price:</span>
-                  <span className="font-mono text-green-600 font-bold">Ksh {paymentDetails.standardPrice.toLocaleString()}</span>
-                </div>
-              </div>
-              <input
-                type="number"
-                placeholder="Enter amount (Ksh)"
-                className="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value.replace(/\D/g, ''))}
-                min="12000"
-              />
-            </div>
-
-            <div className="flex gap-3 mt-4">
-              <button
-                onClick={handlePaymentConfirmation}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
-              >
-                <CheckCircle className="w-5 h-5" />
-                Confirm Payment
-              </button>
-              <button
-                onClick={onClose}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
-              >
-                <XCircle className="w-5 h-5" />
-                Cancel
-              </button>
-            </div>
-          </>
-        ) : (
-          <div className="text-center text-green-600">
-            <p>Transaction receipt downloaded successfully</p>
-            <p className="text-sm text-gray-500 mt-2">Closing automatically...</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
-const Tuxedo = () => {
-  const [showPayment, setShowPayment] = useState(false);
-  const [selectedTuxedo, setSelectedTuxedo] = useState(null);
+const KaundaSuits = () => {
+  const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [selectedSizeForTuxedo, setSelectedSizeForTuxedo] = useState({});
+  const [selectedSizeForKaunda, setSelectedSizeForKaunda] = useState({});
 
-  const tuxedoSuits = [
-    { id: 1, name: ' Velvet Tuxedo Suit', image: Tuxedo1, price: 15000 },
-    { id: 2, name: 'Midnight Tuxedo  Suit', image: Tuxedo2, price: 15000 },
-    { id: 3, name: 'Ensemble Tuxedo Suit', image: Tuxedo3, price: 15000 },
-    { id: 4, name: 'Classic Tuxedo Suit', image: Tuxedo5, price: 15000 },
-    { id: 5, name: 'Slim Tuxedo Suit', image: Tuxedo6, price: 15000 },
-    { id: 6, name: 'Designer Tuxedo Set', image: Tuxedo7, price: 15000 },
-    { id: 7, name: 'Royal Dinner Suit', image: Tuxedo8, price: 15000 },
-    { id: 8, name: 'Premium Tuxedo Suit', image: Tuxedo9, price: 15000 }, // Added new tuxedo
+  const kaundaSuits = [
+    { id: 1, name: 'Classic Kaunda Suit', image: Kaunda1, price: 14000 },
+    { id: 2, name: 'Royal Kaunda Suit', image: Kaunda2, price: 14000 },
+    { id: 3, name: 'Modern Kaunda Suit', image: Kaunda3, price: 14000 },
+    { id: 4, name: 'Elegant Kaunda Suit', image: Kaunda4, price: 14000 },
   ];
 
-  const sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
+  const sizes = ['44', '46', '48', '50', '52', '54', '56'];
 
   useEffect(() => {
     const updateCart = () => {
@@ -140,7 +38,7 @@ const Tuxedo = () => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
-      size: selectedSizeForTuxedo[item.id] || 'Not Selected',
+      size: selectedSizeForKaunda[item.id] || 'Not Selected',
       addedAt: new Date().toISOString(),
     };
     const updatedCart = [...storedCart, newItem];
@@ -166,14 +64,9 @@ const Tuxedo = () => {
 
   return (
     <section className="p-4 sm:p-6 bg-gray-50 min-h-screen">
-      {/* Blinking Banner */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center text-xl sm:text-2xl font-bold p-6 rounded-xl mb-8 animate-pulse mt-24 mx-4">
-        <p>Hurry up! Limited time offer! Get your premium tuxedo dinner suits today 💯 super wool fading free!</p>
-      </div>
-
       {/* Cart Button */}
       <div className="fixed top-16 right-4 z-40">
-        <button 
+        <button
           onClick={() => setIsCartOpen(true)}
           className="relative bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition"
         >
@@ -245,12 +138,18 @@ const Tuxedo = () => {
         </div>
       )}
 
-      {/* Tuxedo Cards */}
+      {/* Kaunda Suits Section with Smaller Ad and Blinking Effect */}
+      <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white pt-6 pb-3 text-center rounded-lg mb-12 mt-24 animate-pulse">
+        <h1 className="text-lg sm:text-2xl font-bold">Kaunda Suits Collection</h1>
+        <p className="text-sm sm:text-md font-bold text-xl mt-2">Stylish, Timeless & Elegant Suits for Every Occasion💯 super wool fading free</p>
+      </div>
+
+      {/* Kaunda Suits Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
-        {tuxedoSuits.map((suit) => (
+        {kaundaSuits.map((suit, index) => (
           <div
             key={suit.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden"
+            className={`bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 overflow-hidden ${index < 2 ? 'blink-card' : ''}`}
           >
             <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
               <img
@@ -279,8 +178,8 @@ const Tuxedo = () => {
                   {sizes.map((size) => (
                     <button
                       key={size}
-                      onClick={() => setSelectedSizeForTuxedo({ ...selectedSizeForTuxedo, [suit.id]: size })}
-                      className={`px-4 py-2 rounded-lg border-2 ${selectedSizeForTuxedo[suit.id] === size ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                      onClick={() => setSelectedSizeForKaunda({ ...selectedSizeForKaunda, [suit.id]: size })}
+                      className={`px-4 py-2 rounded-lg border-2 ${selectedSizeForKaunda[suit.id] === size ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
                     >
                       {size}
                     </button>
@@ -295,41 +194,30 @@ const Tuxedo = () => {
               </div>
               <div className="space-y-2">
                 <button
-                  onClick={() => {
-                    setSelectedTuxedo(suit);
-                    setShowPayment(true);
-                  }}
+                  onClick={() => handleAddToCart(suit)}
                   className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
-                  Purchase Now
+                  Add to Cart
                 </button>
                 <button
-                  onClick={() => handleAddToCart(suit)}
+                  onClick={() => alert('Proceed to purchase')}
                   className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  Add to Cart
+                  Purchase Now
                 </button>
               </div>
             </div>
           </div>
         ))}
       </div>
-
-      {showPayment && (
-        <PaymentPopup 
-          item={selectedTuxedo}
-          selectedSize={selectedSizeForTuxedo[selectedTuxedo.id]}
-          onClose={() => {
-            setShowPayment(false);
-            setSelectedTuxedo(null);
-            setSelectedSizeForTuxedo({});
-          }}
-        />
-      )}
     </section>
   );
 };
 
-export default Tuxedo;
+export default KaundaSuits;
+
+
+
+

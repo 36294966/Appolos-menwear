@@ -1,4 +1,4 @@
-// components/Cart.jsx
+// Components/Cart.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ShoppingCart, Trash2 } from 'lucide-react';
@@ -44,7 +44,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-300 p-6 pt-8">
+    <div className="min-h-screen bg-gray-300 p-6 pt-44"> {/* Increased padding top to 16 */}
       <h2 className="text-4xl font-bold mb-6 text-center">Your Cart</h2>
       {cartItems.length === 0 ? (
         <div className="text-center text-gray-500">
@@ -74,6 +74,7 @@ const Cart = () => {
                   <div>
                     <h3 className="font-semibold text-lg">{item.name}</h3>
                     <p className="text-sm text-gray-500">Price: KES {item.price}</p>
+                    <p className="text-sm text-gray-500">Size: {item.size}</p> {/* Display the selected size */}
                   </div>
                 </div>
                 <button

@@ -8,6 +8,23 @@
   50% { opacity: 0; }
 }
 
+@keyframes blink {
+  0% {
+    background-color: #f9f9f9;
+  }
+  50% {
+    background-color: #ffcc00;
+  }
+  100% {
+    background-color: #f9f9f9;
+  }
+}
+
+.blink-card {
+  animation: blink 2s infinite;
+}
+
+
 .blinking-line {
   animation: blinkLine 1s infinite;
   background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
@@ -22,6 +39,29 @@
 .animate-scroll-left-slow {
   animation: scrollLeftSlow 15s linear infinite;
 }
+
+@keyframes blink {
+  0% {
+    background-color: #38bdf8; /* Light Blue */
+  }
+  25% {
+    background-color: #f97316; /* Orange */
+  }
+  50% {
+    background-color: #10b981; /* Green */
+  }
+  75% {
+    background-color: #9333ea; /* Purple */
+  }
+  100% {
+    background-color: #38bdf8; /* Light Blue */
+  }
+}
+
+.animate-blink {
+  animation: blink 3s infinite ease-in-out;
+}
+
 
 /* Blinking Text Fade Between White & Black */
 @keyframes blinkFadeWhiteBlack {

@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 
+// Import belt images
 import Belt1 from '../../Assets/Accessories/belt1.jpg';
 import Belt2 from '../../Assets/Accessories/belt2.jpg';
 import Belt3 from '../../Assets/Accessories/belt3.jpg';
 import Belt4 from '../../Assets/Accessories/belt4.jpg';
 import Belt5 from '../../Assets/Accessories/belt5.jpg';
 import Belt6 from '../../Assets/Accessories/belt6.jpg';
+import Belt7 from '../../Assets/Accessories/belt7.jpg';
+import Belt8 from '../../Assets/Accessories/belt8.jpg';
 
 const PaymentPopup = ({ onClose, item }) => {
   const paybillNumber = '542542';
@@ -38,11 +41,11 @@ Amount: Ksh ${amount || '[Enter amount here]'}
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
-        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2 mb-4">
+      <div className="bg-white p-6 sm:p-8 rounded-2xl w-[95%] max-w-md space-y-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center gap-2 mb-4">
           {paymentSuccess ? (
             <>
-              <CheckCircle className="w-8 h-8 text-green-500" />
+              <CheckCircle className="w-6 h-6 text-green-500" />
               Payment Verified!
             </>
           ) : (
@@ -54,42 +57,42 @@ Amount: Ksh ${amount || '[Enter amount here]'}
           <>
             {/* Payment info styled similar to official.js */}
             <div className="space-y-4">
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                <span className="font-medium">Paybill:</span>
+              <div className="flex justify-between items-center bg-gray-50 p-3 sm:p-4 rounded-lg">
+                <span className="font-medium text-sm sm:text-base">Paybill:</span>
                 <span className="font-mono text-blue-600 font-bold">{paybillNumber}</span>
               </div>
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
-                <span className="font-medium">Account:</span>
+              <div className="flex justify-between items-center bg-gray-50 p-3 sm:p-4 rounded-lg">
+                <span className="font-medium text-sm sm:text-base">Account:</span>
                 <span className="font-mono text-blue-600 font-bold">{accountNumber}</span>
               </div>
-              <div className="bg-green-50 p-4 rounded-lg">
+              <div className="bg-green-50 p-3 sm:p-4 rounded-lg">
                 <div className="flex justify-between items-center">
-                  <span className="font-medium">Price:</span>
+                  <span className="font-medium text-sm sm:text-base">Price:</span>
                   <span className="font-mono text-green-600 font-bold">Ksh {item?.price.replace('Ksh ', '')}</span>
                 </div>
               </div>
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"
-                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent"
+                className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
               />
             </div>
             {/* Buttons */}
-            <div className="flex gap-4 mt-4">
+            <div className="flex gap-3 sm:gap-4 mt-4">
               <button
                 onClick={handleDownload}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                <CheckCircle className="w-5 h-5" />
+                <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                 PAY NOW
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 bg-gray-300 hover:bg-gray-400 text-black py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+                className="flex-1 bg-gray-300 hover:bg-gray-400 text-black py-2 sm:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                <XCircle className="w-5 h-5" />
+                <XCircle className="w-4 h-4 sm:w-5 sm:h-5" />
                 Close
               </button>
             </div>
@@ -97,7 +100,7 @@ Amount: Ksh ${amount || '[Enter amount here]'}
         ) : (
           <div className="text-center text-green-600">
             <p>Receipt downloaded successfully</p>
-            <p className="text-sm mt-2">Closing automatically...</p>
+            <p className="text-sm sm:text-base mt-2">Closing automatically...</p>
           </div>
         )}
       </div>
@@ -116,6 +119,8 @@ const Belt = () => {
     { id: 4, image: Belt4, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
     { id: 5, image: Belt5, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
     { id: 6, image: Belt6, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
+    { id: 7, image: Belt7, name: 'Stylish Brown Belt', price: 'Ksh 2,000' },
+    { id: 8, image: Belt8, name: 'Elegant Black Belt', price: 'Ksh 2,000' },
   ];
 
   const handlePurchase = (item) => {
@@ -136,6 +141,11 @@ const Belt = () => {
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+      {/* Fixed Advertisement Card */}
+      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-center font-bold text-xl p-6 rounded-xl mb-8 animate-pulse mt-24 mx-4">
+        <p>Hurry up! Limited time offer! Get your premium leather belts today!</p>
+      </div>
+
       {showPayment && (
         <PaymentPopup
           onClose={() => {
@@ -146,44 +156,34 @@ const Belt = () => {
         />
       )}
 
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">
-          Professional Belts Collection
-        </h1>
-        <p className="text-blue-800 font-bold text-xl">
-          High-quality leather belts for complete professional attire
-        </p>
-      </header>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      {/* Belt Items */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {belts.map((belt) => (
           <article
             key={belt.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
           >
-            <div className="aspect-square bg-gray-100 p-5 flex items-center justify-center">
+            <div className="h-48 sm:h-60 bg-gray-100 p-4 flex items-center justify-center">
               <img
                 src={belt.image}
                 alt={belt.name}
-                className="w-full h-full object-contain hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-contain rounded-t-lg hover:scale-105 transition-transform duration-300"
                 loading="lazy"
               />
             </div>
             <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold text-gray-900">{belt.name}</h3>
+              <h3 className="text-xl sm:text-lg font-bold text-gray-900">{belt.name}</h3>
               <p className="text-blue-600 font-bold text-xl">{belt.price}</p>
-              {/* Purchase Button */}
               <button
                 onClick={() => handlePurchase(belt)}
-                className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
               >
                 <CheckCircle className="w-5 h-5" />
                 Purchase Now
               </button>
-              {/* Add to Cart Button */}
               <button
                 onClick={() => handleAddToCart(belt)}
-                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-sm sm:text-base"
               >
                 <ShoppingCart className="w-5 h-5" />
                 Add to Cart

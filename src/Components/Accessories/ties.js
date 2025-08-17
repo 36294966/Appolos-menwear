@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
+
+// Import tie images
 import Tie1 from '../../Assets/Ties/tie1.jpg';
 import Tie2 from '../../Assets/Ties/tie2.jpg';
 import Tie3 from '../../Assets/Ties/tie3.jpg';
@@ -9,6 +11,9 @@ import Tie6 from '../../Assets/Ties/tie6.jpg';
 import Tie7 from '../../Assets/Ties/tie7.jpg';
 import Tie8 from '../../Assets/Ties/tie8.jpg';
 import Tie9 from '../../Assets/Ties/tie9.jpg';
+import Tie10 from '../../Assets/Ties/tie10.jpg';
+import Tie11 from '../../Assets/Ties/tie11.jpg';
+import Tie12 from '../../Assets/Ties/tie12.jpg';
 
 const PaymentFileGenerator = ({ item, onClose }) => {
   const [amount, setAmount] = useState('');
@@ -29,7 +34,7 @@ Standard Price: Ksh ${item?.price || 900}
 `;
     const file = new Blob([template], { type: 'text/plain' });
     const fileURL = URL.createObjectURL(file);
-    
+
     const tempLink = document.createElement('a');
     tempLink.href = fileURL;
     tempLink.download = 'tie_payment.txt';
@@ -43,8 +48,8 @@ Standard Price: Ksh ${item?.price || 900}
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
-        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+      <div className="bg-white p-8 rounded-lg w-[95%] max-w-md space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2 mb-4">
           {paymentSuccess ? (
             <>
               <CheckCircle className="w-8 h-8 text-green-500" />
@@ -62,39 +67,37 @@ Standard Price: Ksh ${item?.price || 900}
                 <span className="font-medium">Paybill:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
               </div>
-              
               <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
                 <span className="font-medium">Account:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
               </div>
-              
-              {item?.price && (
-                <div className="flex justify-between items-center bg-green-50 p-4 rounded-lg">
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="flex justify-between items-center">
                   <span className="font-medium">Price:</span>
-                  <span className="font-mono text-green-600 font-bold">Ksh {item.price}</span>
+                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price || 900}</span>
                 </div>
-              )}
-
+              </div>
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"
                 className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
+                min={item?.price || 900}
               />
             </div>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 mt-4">
               <button
                 onClick={handlePaymentFile}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-full font-bold transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2"
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-md font-bold transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2"
               >
                 <CheckCircle className="w-5 h-5" />
                 CONFIRM PAYMENT
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-4 rounded-full font-bold transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2"
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-4 rounded-md font-bold transition-all duration-200 hover:scale-[1.02] flex items-center justify-center gap-2"
               >
                 <XCircle className="w-5 h-5" />
                 CANCEL
@@ -102,9 +105,7 @@ Standard Price: Ksh ${item?.price || 900}
             </div>
           </>
         ) : (
-          <p className="text-center text-green-600 font-medium">
-            Payment details downloaded successfully
-          </p>
+          <p className="text-center text-green-600 font-medium">Payment details downloaded successfully</p>
         )}
       </div>
     </div>
@@ -117,13 +118,12 @@ const Ties = () => {
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
-  // Cart synchronization
   useEffect(() => {
     const updateCart = () => {
       const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
       setCartCount(storedCart.length);
     };
-    
+
     updateCart();
     window.addEventListener('storage', updateCart);
     return () => window.removeEventListener('storage', updateCart);
@@ -135,10 +135,13 @@ const Ties = () => {
     { id: 3, image: Tie3, name: 'Classic Windsor Tie', price: 900 },
     { id: 4, image: Tie4, name: 'Executive Striped Tie', price: 900 },
     { id: 5, image: Tie5, name: 'Luxury Silk Tie', price: 900 },
-    { id: 6, image: Tie6, name: 'Modern Slim Tie', price: 900 },
+    { id: 6, image: Tie6, name: 'Modern Tie', price: 900 },
     { id: 7, image: Tie7, name: 'Bold Color Tie', price: 900 },
-    { id: 8, image: Tie8, name: 'Traditional Knit Tie', price: 900 },
-    { id: 9, image: Tie9, name: 'Designer Collection Tie', price: 900 }
+    { id: 8, image: Tie8, name: ' Knit Tie', price: 900 },
+    { id: 9, image: Tie9, name: 'Designer  Tie', price: 900 },
+    { id: 10, image: Tie10, name: 'Glamorous Tie', price: 900 },
+    { id: 11, image: Tie11, name: 'Classic Necktie', price: 900 },
+    { id: 12, image: Tie12, name: 'Formal Tie', price: 900 }
   ];
 
   const handleAddToCart = (item) => {
@@ -160,9 +163,14 @@ const Ties = () => {
 
   return (
     <section className="p-6 sm:p-8 bg-gray-50 min-h-screen">
+      {/* Fixed Advertisement Card */}
+      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-2xl p-6 text-center font-bold rounded-xl mb-8 animate-pulse mt-24 mx-4">
+        <p>Hurry up! Limited time only. 💯 super wool fading free Get your premium neckwear collection today!</p>
+      </div>
+
       {/* Cart Indicator */}
       <div className="fixed top-4 right-4 z-40">
-        <button 
+        <button
           onClick={() => setIsCartOpen(true)}
           className="relative bg-white p-3 rounded-full shadow-lg hover:shadow-xl transition"
         >
@@ -236,26 +244,14 @@ const Ties = () => {
         </div>
       )}
 
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">
-          Premium Neckwear Collection
-        </h1>
-        <p className="text-blue-600 text-xl">
-          Elevate your professional appearance with our curated ties
-        </p>
-      </header>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         {tiesCollection.map((tie) => (
-          <article 
-            key={tie.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
-          >
+          <article key={tie.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
             <div className="aspect-square bg-gray-100 p-5 flex items-center justify-center">
               <img
                 src={tie.image}
                 alt={tie.name}
-                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 rounded-lg"
                 loading="lazy"
               />
             </div>
@@ -268,14 +264,14 @@ const Ties = () => {
                     setSelectedTie(tie);
                     setShowPayment(true);
                   }}
-                  className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-full font-semibold transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-md font-semibold transition-colors flex items-center justify-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
                   Purchase Now
                 </button>
                 <button
                   onClick={() => handleAddToCart(tie)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-full font-semibold transition-colors flex items-center justify-center gap-2"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-md font-semibold transition-colors flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" />
                   Add to Cart
@@ -287,7 +283,7 @@ const Ties = () => {
       </div>
 
       {showPayment && (
-        <PaymentFileGenerator 
+        <PaymentFileGenerator
           item={selectedTie}
           onClose={() => {
             setShowPayment(false);
@@ -300,3 +296,4 @@ const Ties = () => {
 };
 
 export default Ties;
+

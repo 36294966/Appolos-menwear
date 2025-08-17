@@ -45,7 +45,8 @@ const Navbar = ({ onFilterSelect }) => {
       Suits: {
         '2 Piece Suits': '/suits/2piecesuits',
         '3 Piece Suits': '/suits/3piecesuits',
-        'Tuxedo & Dinner': '/suits/tuxedo'
+        'Tuxedo & Dinner': '/suits/tuxedo',
+        'Kaunda Suits': '/suits/kaunda' // New Kaunda Suits category
       },
       Accessories: {
         'Belt': '/accessories/belt',
@@ -72,7 +73,14 @@ const Navbar = ({ onFilterSelect }) => {
     {
       title: 'Suits',
       icon: <FontAwesomeIcon icon={faUserTie} className="text-xl" />,
-      dropdown: { Style: ['2 Piece Suits', '3 Piece Suits', 'Tuxedo & Dinner'] }
+      dropdown: {
+        Style: [
+          '2 Piece Suits', 
+          '3 Piece Suits', 
+          'Tuxedo & Dinner', 
+          'Kaunda Suits'  // Added Kaunda Suits
+        ]
+      }
     },
     {
       title: 'Shirts',
@@ -264,4 +272,3 @@ const Navbar = ({ onFilterSelect }) => {
 };
 
 export default Navbar;
-

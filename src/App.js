@@ -5,6 +5,7 @@ import Home from './Pages/home';
 import TwoPieceSuits from './Components/Suits/2piecesuits';
 import ThreePieceSuits from './Components/Suits/3piecesuits';
 import Tuxedo from './Components/Suits/tuxedo';
+import KaundaSuits from './Components/Suits/kaundo';
 
 import Belt from './Components/Accessories/belt';
 import Socks from './Components/Accessories/socks';
@@ -18,27 +19,36 @@ import Jeans from './Components/Jeans/jeans';
 import Cart from './Components/cart';
 import Payment from './Components/Payment/payment';
 
-
-
 function App() {
   return (
-    <Router>
+    <Router>  {/* Ensure Router is properly wrapping everything */}
       <Layout>
         <Routes>
+          {/* Home Route */}
           <Route path="/" element={<Home />} />
+          
+          {/* Suit Routes */}
           <Route path="/suits/2piecesuits" element={<TwoPieceSuits />} />
           <Route path="/suits/3piecesuits" element={<ThreePieceSuits />} />
           <Route path="/suits/tuxedo" element={<Tuxedo />} />
+          <Route path="/suits/kaunda" element={<KaundaSuits />} />
+          
+          {/* Accessories Routes */}
           <Route path="/accessories/belt" element={<Belt />} />
           <Route path="/accessories/socks" element={<Socks />} />
           <Route path="/accessories/ties" element={<Ties />} />
+          
+          {/* Shirt Routes */}
           <Route path="/shirts/cassual" element={<Cassual />} />
           <Route path="/shirts/official" element={<Official />} />
-          <Route path="/jackets/leather" element={<Leather />}/>
+          
+          {/* Other Categories Routes */}
+          <Route path="/jackets/leather" element={<Leather />} />
           <Route path="/jeans" element={<Jeans />} />
+          
+          {/* Cart and Payment Routes */}
           <Route path="/cart" element={<Cart />} />
-          <Route path="/payment" element={<Payment/>} />
-         
+          <Route path="/payment" element={<Payment />} />
         </Routes>
       </Layout>
     </Router>
@@ -46,6 +56,8 @@ function App() {
 }
 
 export default App;
+
+
 
 
 
