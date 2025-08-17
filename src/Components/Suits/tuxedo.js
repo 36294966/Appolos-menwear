@@ -246,7 +246,7 @@ const Tuxedo = () => {
       )}
 
       {/* Tuxedo Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-6 mb-10">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-4 gap-6 mb-10">
         {tuxedoSuits.map((suit) => (
           <div
             key={suit.id}
