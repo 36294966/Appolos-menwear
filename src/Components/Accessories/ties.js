@@ -130,18 +130,18 @@ const Ties = () => {
   }, []);
 
   const tiesCollection = [
-    { id: 1, image: Tie1, name: 'Silk Business Tie', price: 900 },
-    { id: 2, image: Tie2, name: 'Patterned Formal Tie', price: 900 },
-    { id: 3, image: Tie3, name: 'Classic Windsor Tie', price: 900 },
-    { id: 4, image: Tie4, name: 'Executive Striped Tie', price: 900 },
-    { id: 5, image: Tie5, name: 'Luxury Silk Tie', price: 900 },
-    { id: 6, image: Tie6, name: 'Modern Tie', price: 900 },
-    { id: 7, image: Tie7, name: 'Bold Color Tie', price: 900 },
-    { id: 8, image: Tie8, name: ' Knit Tie', price: 900 },
-    { id: 9, image: Tie9, name: 'Designer  Tie', price: 900 },
-    { id: 10, image: Tie10, name: 'Glamorous Tie', price: 900 },
-    { id: 11, image: Tie11, name: 'Classic Necktie', price: 900 },
-    { id: 12, image: Tie12, name: 'Formal Tie', price: 900 }
+    { id: 1, image: Tie1, name: 'Silk Business Tie', price: 800 },
+    { id: 2, image: Tie2, name: 'Patterned Formal Tie', price: 800},
+    { id: 3, image: Tie3, name: 'Classic Windsor Tie', price: 800},
+    { id: 4, image: Tie4, name: 'Executive Striped Tie', price: 800},
+    { id: 5, image: Tie5, name: 'Luxury Silk Tie', price: 800 },
+    { id: 6, image: Tie6, name: 'Modern Tie', price: 800 },
+    { id: 7, image: Tie7, name: 'Bold Color Tie', price: 800 },
+    { id: 8, image: Tie8, name: ' Knit Tie', price: 800},
+    { id: 9, image: Tie9, name: 'Designer  Tie', price: 800 },
+    { id: 10, image: Tie10, name: 'Glamorous Tie', price: 800 },
+    { id: 11, image: Tie11, name: 'Classic Necktie', price: 800},
+    { id: 12, image: Tie12, name: 'Formal Tie', price: 800 }
   ];
 
   const handleAddToCart = (item) => {
@@ -165,7 +165,7 @@ const Ties = () => {
     <section className="p-6 sm:p-8 bg-gray-50 min-h-screen">
       {/* Fixed Advertisement Card */}
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-2xl p-6 text-center font-bold rounded-xl mb-8 animate-pulse mt-24 mx-4">
-        <p>Hurry up! Limited time only. 💯 super wool fading free Get your premium neckwear collection today!</p>
+        <p>Hurry up! Limited time only. 💯 super wool fading free Get your premium Tie + Pocket Square collection today!</p>
       </div>
 
       {/* Cart Indicator */}
