@@ -244,7 +244,7 @@ const Ties = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-4 xl:grid-cols-4 gap-6">
         {tiesCollection.map((tie) => (
           <article key={tie.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group">
             <div className="aspect-square bg-gray-100 p-5 flex items-center justify-center">
