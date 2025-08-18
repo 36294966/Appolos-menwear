@@ -247,7 +247,7 @@ const Home = () => {
     { id: 1, name: 'Presidential Official Shirt', image: Official1, price: 3000 },
     { id: 2, name: 'Presidential Official Shirt', image: Official2, price: 3000 },
     { id: 3, name: 'Presidential Official Shirt', image: Official3, price: 3000 },
-    { id: 4, name: 'Presidential Official Shirt', image: Official4, price: 1800 },
+    { id: 4, name: 'Presidential Official Shirt', image: Official4, price: 3000 },
     { id: 5, name: 'Classic Official Shirt', image: Official5, price: 1800 },
     { id: 6, name: 'Premium Official Shirt', image: Official6, price: 1800 },
     { id: 7, name: 'Classic Official Shirt', image: Official7, price: 1800 },

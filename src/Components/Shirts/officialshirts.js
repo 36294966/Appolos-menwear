@@ -136,7 +136,7 @@ const Official = () => {
     { id: 1, image: Official1, name: 'Presidential Shirt', price: 3000 },
     { id: 2, image: Official2, name: 'Presidential Shirt', price: 3000 },
     { id: 3, image: Official3, name: 'Presidential Shirt', price: 3000 },
-    { id: 4, image: Official4, name: 'Premium Cotton Blend', price: 1800 },
+    { id: 4, image: Official4, name: 'Presidential Shirt', price: 3000 },
     { id: 5, image: Official5, name: 'French Cuff Formal', price: 1800 },
     { id: 6, image: Official6, name: 'Slim Fit Office Shirt', price: 1800 },
     { id: 7, image: Official7, name: 'Double Cuff Business', price: 1800 },
