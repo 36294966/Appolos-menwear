@@ -273,7 +273,7 @@ const Home = () => {
       {/* Categories */}
       {categories.map((category) => (
         <div key={category.title}>
-          <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
+          <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-16 mx-4">
             <p>{category.title} – Hurry Up!! 🚀 Limited Time Offer! Get Yours Today! Get Supper Wool💯 Free
               Fading Products 
             </p>
