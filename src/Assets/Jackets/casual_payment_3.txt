@@ -1,0 +1,9 @@
+CASUAL WEAR PURCHASE
+-------------------
+Item: Premium Linen Three-Piece Suit
+Product ID: 3
+Size: 46
+Paybill: 542542
+Account: 378179
+Amount Paid: Ksh ________
+Standard Price: Ksh 13,000

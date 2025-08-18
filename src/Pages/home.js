@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { CheckCircle, ChevronLeft, ChevronRight, ShoppingCart, XCircle } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { CheckCircle, ChevronRight, ShoppingCart, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Import images for all products
+// Import all images as needed
 import Photo1 from '../Assets/Appolo/photo1.jpeg';
 import Photo2 from '../Assets/Appolo/photo2.jpeg';
 import Photo3 from '../Assets/Appolo/photo3.jpeg';
@@ -22,11 +22,6 @@ import TwoPiece7 from '../Assets/Suits/twopiece7.jpg';
 import TwoPiece8 from '../Assets/Suits/twopiece8.jpg';
 import TwoPiece9 from '../Assets/Suits/twopiece9.jpg';
 
-import Kaunda1 from '../Assets/Suits/Kaunda1.jpg';
-import Kaunda2 from '../Assets/Suits/kaunda2.jpg';
-import Kaunda3 from '../Assets/Suits/kaunda3.jpg';
-import Kaunda4 from '../Assets/Suits/kaunda4.jpg';
-
 import Tuxedo1 from '../Assets/Suits/tuxedo1.jpg';
 import Tuxedo2 from '../Assets/Suits/tuxedo2.jpg';
 import Tuxedo3 from '../Assets/Suits/tuxedo3.jpg';
@@ -35,6 +30,11 @@ import Tuxedo5 from '../Assets/Suits/tuxedo5.jpg';
 import Tuxedo6 from '../Assets/Suits/tuxedo6.jpg';
 import Tuxedo7 from '../Assets/Suits/tuxedo7.jpg';
 import Tuxedo8 from '../Assets/Suits/tuxedo8.jpg';
+
+import Kaunda1 from '../Assets/Suits/Kaunda1.jpg';
+import Kaunda2 from '../Assets/Suits/kaunda2.jpg';
+import Kaunda3 from '../Assets/Suits/kaunda3.jpg';
+import Kaunda4 from '../Assets/Suits/kaunda4.jpg';
 
 import Official1 from '../Assets/Official/official1.jpg';
 import Official2 from '../Assets/Official/official2.jpg';
@@ -54,43 +54,56 @@ import Jean6 from '../Assets/Jeans/jean6.jpg';
 import Jean7 from '../Assets/Jeans/jean7.jpg';
 import Jean8 from '../Assets/Jeans/jean8.jpg';
 import Jean9 from '../Assets/Jeans/jean9.jpg';
-import Jean10 from '../Assets/Jeans/jean10.jpg';
+import jean10 from '../Assets/Jeans/jean10.jpg';
 import Jean11 from '../Assets/Jeans/jean11.jpg';
 import Jean12 from '../Assets/Jeans/jean12.jpg';
-import Jean13 from '../Assets/Jeans/jean13.jpg';
-import Jean14 from '../Assets/Jeans/jean14.jpg';
-import Jean15 from '../Assets/Jeans/jean15.jpg';
-import Jean16 from '../Assets/Jeans/jean16.jpg';
 
-// Import your jackets images
 import Jacket1 from '../Assets/Jackets/jacket1.jpg';
 import Jacket2 from '../Assets/Jackets/jacket2.jpg';
 import Jacket3 from '../Assets/Jackets/jacket3.jpg';
 import Jacket4 from '../Assets/Jackets/jacket4.webp';
 
-// Your main component
+import Belt5 from '../Assets/Accessories/belt5.jpg';
+import Belt6 from '../Assets/Accessories/belt6.jpg';
+import Belt7 from '../Assets/Accessories/belt7.jpg';
+import Belt8 from '../Assets/Accessories/belt8.jpg';
+
 const Home = () => {
+  // State variables
   const [cartCount, setCartCount] = useState(0);
-  const [showPayment, setShowPayment] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
+  const [paymentImmediate, setPaymentImmediate] = useState(false);
   const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [immediateSuccess, setImmediateSuccess] = useState(false);
+  const [hoveredItemId, setHoveredItemId] = useState(null); // Track which item is hovered
 
-  const sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
-  const sizeScrollRefs = useRef({});
+  const Sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
 
+  // Handle adding to cart
+  const handleAddToCart = (item) => {
+    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
+    const newItem = {
+      ...item,
+      size: item.category !== 'jeans' && item.category !== 'jacket' && item.category !== 'belt' ? (selectedSizeForSuit[item.id] || 'Not Selected') : 'N/A',
+      addedAt: new Date().toISOString(),
+    };
+    localStorage.setItem('cart', JSON.stringify([...storedCart, newItem]));
+    window.dispatchEvent(new Event('storage'));
+    alert(`${item.name} added to cart`);
+  };
+
+  // Update cart count
   useEffect(() => {
     const updateCart = () => {
-      const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-      setCartCount(storedCart.length);
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      setCartCount(cart.length);
     };
     updateCart();
     window.addEventListener('storage', updateCart);
     return () => window.removeEventListener('storage', updateCart);
   }, []);
 
-  // Data arrays
+  // Data arrays for products
   const threePieceSuits = [
     { id: 1, name: 'Executive Three-Piece Suit', image: Photo1, price: 13000 },
     { id: 2, name: 'Classic Fading Free Three-Piece Suit', image: Photo2, price: 13000 },
@@ -114,522 +127,268 @@ const Home = () => {
   ];
 
   const tuxedoSuits = [
-    { id: 1, name: 'Classic Tuxedo Dinner Suit', image: Tuxedo1, price: 15000 },
-    { id: 2, name: 'Royal Tuxedo Dinner Suit', image: Tuxedo2, price: 15000 },
-    { id: 3, name: 'Elegant Tuxedo Dinner Suit', image: Tuxedo3, price: 15000 },
-    { id: 4, name: 'Luxury Tuxedo Dinner Suit', image: Tuxedo4, price: 15000 },
-    { id: 5, name: 'Elegant Tuxedo Dinner Suit', image: Tuxedo5, price: 15000 },
-    { id: 6, name: 'Classic Tuxedo Dinner Suit', image: Tuxedo6, price: 15000 },
-    { id: 7, name: 'Designer Tuxedo Dinner Suit', image: Tuxedo7, price: 15000 },
-    { id: 8, name: 'Glamorous Tuxedo Dinner Suit', image: Tuxedo8, price: 15000 },
+    { id: 1, name: 'Velvet Tuxedo Suit', image: Tuxedo1, price: 15000 },
+    { id: 2, name: 'Midnight Tuxedo Suit', image: Tuxedo2, price: 15000 },
+    { id: 3, name: 'Ensemble Tuxedo Suit', image: Tuxedo3, price: 15000 },
+    { id: 4, name: 'Classic Tuxedo Suit', image: Tuxedo4, price: 15000 },
+    { id: 5, name: 'Slim Tuxedo Suit', image: Tuxedo5, price: 15000 },
+    { id: 6, name: 'Designer Tuxedo Set', image: Tuxedo6, price: 15000 },
+    { id: 7, name: 'Royal Dinner Suit', image: Tuxedo7, price: 15000 },
+    { id: 8, name: 'Premium Tuxedo Suit', image: Tuxedo8, price: 15000 },
   ];
 
   const kaundaSuits = [
     { id: 1, name: 'Classic Kaunda Suit', image: Kaunda1, price: 14000 },
     { id: 2, name: 'Royal Kaunda Suit', image: Kaunda2, price: 14000 },
-    { id: 3, name: 'Modern Kaunda Suit', image: Kaunda3, price: 14000 },
-    { id: 4, name: 'Elegant Kaunda Suit', image: Kaunda4, price: 14000 },
+    { id: 3, name: 'Modern Kaunda Suit', image: Kaunda3, price:14000 },
+    { id: 4, name: 'Elegent Kaunda Suit', image: Kaunda4, price: 14000 },
   ];
 
   const officialShirts = [
-    { id: 1, name: 'Presidential Official Shirt', image: Official1, price: 3000 },
-    { id: 2, name: 'Presidential Official Shirt', image: Official2, price: 3000 },
-    { id: 3, name: 'Presidential Official Shirt', image: Official3, price: 3000 },
-    { id: 4, name: 'Presidential Official Shirt', image: Official4, price: 3000 },
-    { id: 5, name: 'Classic Official Shirt', image: Official5, price: 1800 },
-    { id: 6, name: 'Premium Official Shirt', image: Official6, price: 1800 },
-    { id: 7, name: 'Classic Official Shirt', image: Official7, price: 1800 },
-    { id: 8, name: 'Premium  Official Shirt', image: Official8, price: 1800 },
+    { id: 1, name: 'Presidential Shirt', image: Official1, price: 3000},
+    { id: 2, name: 'Presidential Shirt', image: Official2, price: 3000},
+    { id: 3, name: 'Presidential Shirt', image: Official3, price: 3000},
+    { id: 4, name: 'Presidential Shirt', image: Official4, price: 3000 },
+    { id: 5, name: 'French Cuff Formal', image: Official5, price: 1800 },
+    { id: 6, name: 'Slim Fit Office Shirt', image: Official6, price: 1800 },
+    { id: 7, name: 'Double Cuff Business', image: Official7, price: 1800 },
+    { id: 8, name: 'Designer Collar Shirt', image: Official8, price: 1800 },
   ];
 
-  const jeansProducts = [
-    { id: 1, image: Jean1, name: 'Slim Fit jean', price: 2000 },
-    { id: 2, image: Jean2, name: 'Vintage Jean', price: 2000 },
-    { id: 3, image: Jean3, name: 'Ripped Skinny Jeans', price: 2000 },
-    { id: 4, image: Jean4, name: 'Classic Straight Leg', price: 2000 },
-    { id: 5, image: Jean5, name: 'High Super Jean', price: 2000 },
-    { id: 6, image: Jean6, name: 'Black Stretch jean', price: 2000 },
-    { id: 7, image: Jean7, name: 'Classic Jean', price: 2000 },
-    { id: 8, image: Jean8, name: 'Tapered Cargo Jeans', price: 2000 },
-    { id: 9, image: Jean9, name: '💯 Flare Jeans', price: 2000 },
-    { id: 10, image: Jean10, name: 'Selvedge Denim', price: 2000 },
-    { id: 11, image: Jean11, name: '💯 Super Jeans', price: 2000 },
-    { id: 12, image: Jean12, name: 'Stretch Skinny Fit', price: 2000 },
-    { id: 13, image: Jean13, name: 'Mid Wash Denim', price: 2000 },
-    { id: 14, image: Jean14, name: 'Slim Fit Jogger', price: 2000 },
-    { id: 15, image: Jean15, name: 'Premium Jeans', price: 2000 },
-    { id: 16, image: Jean16, name: 'Dark Blue Jeans', price: 2000 },
+  // Adding Jeans products
+  const jeans = [
+    { id: 1, name: 'Slim Fit jean', image: Jean1, price: 2000 },
+    { id: 2, name: 'Vintage Jean', image: Jean2, price: 2000 },
+    { id: 3, name: 'Ripped Skinny Jean', image: Jean3, price: 2000 },
+    { id: 4, name: 'Classic Straight Leg', image: Jean4, price: 2000 },
+    { id: 5, name: 'High Super Jean', image: Jean5, price: 2000 },
+    { id: 6, name: 'Black Stretch jean', image: Jean6, price: 2000 },
+    { id: 7, name: 'Classic Jean', image: Jean7, price: 2000 },
+    { id: 8, name: 'Tapered Cargo Jeans', image: Jean8, price: 2000 },
+    { id: 9, name: '💯Flare Jeans', image: Jean9, price: 2000 },
+    { id: 10, name: 'Selvedge Denim', image: jean10, price: 2000 },
+    { id: 11, name: '💯 Super Jean', image: Jean11, price: 2000 },
+    { id: 12, name: 'Stretch Skinny Fit', image: Jean12, price: 2000 },
   ];
 
-  // Jackets data
+  // Leather Jackets data
   const leatherJackets = [
-    { id: 1, name: 'Classic Leather Jacket', image: Jacket1, price: 3500 },
-    { id: 2, name: 'Stylish Leather Jacket', image: Jacket2, price: 3500 },
-    { id: 3, name: 'Modern Leather Jacket', image: Jacket3, price: 3500 },
-    { id: 4, name: 'Elegant Leather Jacket', image: Jacket4, price: 3500 },
+    { id: 1, name: 'Leather Jacket - Classic', image: Jacket1, price: 3500 },
+    { id: 2, name: 'Leather Jacket - Premium', image: Jacket2, price: 3500 },
+    { id: 3, name: 'Leather Jacket - Modern Fit', image: Jacket3, price: 3500 },
+    { id: 4, name: 'Leather Jacket - Elegant Fit', image: Jacket4, price: 3500 },
   ];
 
-  const handleAddToCart = (item) => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    const newItem = {
-      ...item,
-      size: item.category !== 'jeans' && item.category !== 'jacket' ? (selectedSizeForSuit[item.id] || 'Not Selected') : 'N/A',
-      addedAt: new Date().toISOString(),
-    };
-    localStorage.setItem('cart', JSON.stringify([...storedCart, newItem]));
-    window.dispatchEvent(new Event('storage'));
-    alert(`${item.name} added to cart`);
-    if (item.category !== 'jeans' && item.category !== 'jacket') {
-      setSelectedSizeForSuit((prev) => ({
-        ...prev,
-        [item.id]: undefined,
-      }));
-    }
+  // Belts data
+  const belts = [
+    { id: 1, name: 'Premium Leather Belt', image: Belt5, price: 2000 },
+    { id: 2, name: 'Premium Leather Belt', image: Belt6, price: 2000 },
+    { id: 3, name: 'Stylish Brown Belt', image: Belt7, price: 2000 },
+    { id: 4, name: 'Elegant Black Belt', image: Belt8, price: 2000 },
+  ];
+
+  // Categories for display
+  const categories = [
+    {
+      title: 'Three-Piece Suits',
+      items: threePieceSuits,
+      link: '/suits/3piecesuits',
+    },
+    {
+      title: 'Two-Piece Suits',
+      items: twoPieceSuits,
+      link: '/suits/2piecesuits',
+    },
+    {
+      title: 'Tuxedo Dinner Suits',
+      items: tuxedoSuits,
+      link: '/suits/tuxedo',
+    },
+    {
+      title: 'Kaunda Suits',
+      items: kaundaSuits,
+      link: '/suits/kaunda',
+    },
+    {
+      title: 'Official Shirts',
+      items: officialShirts,
+      link: '/shirts/official',
+    },
+    {
+      title: 'Jeans',
+      items: jeans,
+      link: '/jeans',
+    },
+    {
+      title: 'Leather Jackets',
+      items: leatherJackets,
+      link: '/jackets/leather',
+    },
+    {
+      title: 'Belts',
+      items: belts,
+      link: '/accessories/belt', // Link for Belt category
+    },
+  ];
+
+  // Handle mouse hover to zoom item
+  const handleMouseEnter = (id) => {
+    setHoveredItemId(id);
   };
 
-  const handlePrevClick = (id) => {
-    const sizeScrollRef = sizeScrollRefs.current[id];
-    if (sizeScrollRef) sizeScrollRef.scrollBy({ left: -100, behavior: 'smooth' });
+  // Handle mouse leave to remove zoom effect
+  const handleMouseLeave = () => {
+    setHoveredItemId(null);
   };
-  const handleNextClick = (id) => {
-    const sizeScrollRef = sizeScrollRefs.current[id];
-    if (sizeScrollRef) sizeScrollRef.scrollBy({ left: 100, behavior: 'smooth' });
+
+  // Function to open modal for purchase
+  const handlePurchaseClick = (item) => {
+    setSelectedItem(item);
+    setPaymentImmediate(true);
+    setShowModal(true);
   };
-  const handleSizeSelect = (suitId, size) => {
-    setSelectedSizeForSuit((prev) => ({
-      ...prev,
-      [suitId]: prev[suitId] === size ? undefined : size,
-    }));
-  };
-  const cartTotal = () => {
-    const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
-    return storedCart.reduce((sum, item) => sum + item.price, 0);
+
+  // Function to close modal
+  const handleCloseModal = () => {
+    setShowModal(false);
+    setSelectedItem(null);
+    setPaymentImmediate(false);
   };
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
-
-      {/* =================== 1. Three Piece Suits =================== */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-16 mx-4">
-        <p>Hurry Up! Limited Time Only! 💯 Super Wool Free Fading ThreePiece Suits – Get Yours Today!</p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-        {threePieceSuits.map((suit) => (
-          <div key={suit.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-            <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
-              <img src={suit.image} alt={suit.name} className="w-full h-full object-contain rounded-lg" loading="lazy" />
-            </div>
-            <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold">{suit.name}</h3>
-              <p className="text-lg font-semibold text-blue-600">Ksh {suit.price}</p>
-              {/* Sizes in horizontal scrollable row */}
-              <div className="flex flex-col items-start space-y-2">
-                <span className="text-sm sm:text-base md:text-lg font-medium">Select Sizes</span>
-                <div className="flex space-x-2 overflow-x-auto pb-2 w-full">
-                  {sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => handleSizeSelect(suit.id, size)}
-                      className={`px-3 sm:px-4 md:px-5 py-1 sm:py-2 rounded-lg border-2 text-xs sm:text-sm md:text-base ${selectedSizeForSuit[suit.id] === size ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300'}`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Buttons */}
-              <div className="space-y-2 mt-4">
-                <button
-                  onClick={() => {
-                    setSelectedItem(suit);
-                    setImmediateSuccess(true);
-                    setShowPayment(true);
-                  }}
-                  className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base"
-                >
-                  <CheckCircle className="w-5 h-5" /> Purchase Now
-                </button>
-                <button
-                  onClick={() => handleAddToCart(suit)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base"
-                >
-                  <ShoppingCart className="w-5 h-5" /> Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* View More for 3-piece suits */}
-      <div className="flex justify-end mt-6 mb-8">
-        <Link to="/suits/3piecesuits" className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2">
-          <span>View More</span> <ChevronRight className="w-6 h-6" />
-        </Link>
-      </div>
-
-      {/* 2. Two Piece Suits */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
-        <p>Hurry Up! Limited Time Only! 💯 Super Wool Free Fading Two-Piece Suits – Get Yours Today!</p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-        {twoPieceSuits.map((suit) => (
-          <div key={suit.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-            <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
-              <img src={suit.image} alt={suit.name} className="w-full h-full object-contain rounded-lg" loading="lazy" />
-            </div>
-            <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold">{suit.name}</h3>
-              <p className="text-lg font-semibold text-blue-600">Ksh {suit.price}</p>
-              {/* Sizes in horizontal scrollable row */}
-              <div className="flex flex-col items-start space-y-2">
-                <span className="text-sm sm:text-base md:text-lg font-medium">Select Sizes</span>
-                <div className="flex space-x-2 overflow-x-auto pb-2 w-full">
-                  {sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => handleSizeSelect(suit.id, size)}
-                      className={`px-3 sm:px-4 md:px-5 py-1 sm:py-2 rounded-lg border-2 text-xs sm:text-sm md:text-base ${selectedSizeForSuit[suit.id] === size ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300'}`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Buttons */}
-              <div className="space-y-2 mt-4">
-                <button
-                  onClick={() => {
-                    setSelectedItem(suit);
-                    setImmediateSuccess(true);
-                    setShowPayment(true);
-                  }}
-                  className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base"
-                >
-                  <CheckCircle className="w-5 h-5" /> Purchase Now
-                </button>
-                <button
-                  onClick={() => handleAddToCart(suit)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart className="w-5 h-5" /> Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* View More for 2-piece suits */}
-      <div className="flex justify-end mt-6 mb-8">
-        <Link to="/suits/2piecesuits" className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2">
-          <span>View More</span> <ChevronRight className="w-6 h-6" />
-        </Link>
-      </div>
-
-      {/* 3. Tuxedo Dinner Suits */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
-        <p>Hurry Up! Limited Time Only! 💯 Fading Free Tuxedo Dinner Suits – Get Yours Today!</p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-        {tuxedoSuits.map((suit) => (
-          <div key={suit.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-            <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
-              <img src={suit.image} alt={suit.name} className="w-full h-full object-contain rounded-lg" loading="lazy" />
-            </div>
-            <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold">{suit.name}</h3>
-              <p className="text-lg font-semibold text-blue-600">Ksh {suit.price}</p>
-              {/* Sizes in horizontal scroll row */}
-              <div className="flex flex-col items-start space-y-2">
-                <span className="text-sm sm:text-base md:text-lg font-medium">Select Sizes</span>
-                <div className="flex space-x-2 overflow-x-auto pb-2 w-full">
-                  {sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => handleSizeSelect(suit.id, size)}
-                      className={`px-3 sm:px-4 md:px-5 py-1 sm:py-2 rounded-lg border-2 text-xs sm:text-sm md:text-base ${selectedSizeForSuit[suit.id] === size ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300'}`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Buttons */}
-              <div className="space-y-2 mt-4">
-                <button
-                  onClick={() => {
-                    setSelectedItem(suit);
-                    setImmediateSuccess(true);
-                    setShowPayment(true);
-                  }}
-                  className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base"
-                >
-                  <CheckCircle className="w-5 h-5" /> Purchase Now
-                </button>
-                <button
-                  onClick={() => handleAddToCart(suit)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart className="w-5 h-5" /> Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* View More for tuxedo suits */}
-      <div className="flex justify-end mt-6 mb-8">
-        <Link to="/suits/tuxedo" className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2">
-          <span>View More</span> <ChevronRight className="w-6 h-6" />
-        </Link>
-      </div>
-
-      {/* 4. Kaunda Suits */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
-        <p>Hurry Up! Limited Time Only! 💯 Fading Free Kaunda Suits – Get Yours Today!</p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-        {kaundaSuits.map((suit) => (
-          <div key={suit.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-            <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
-              <img src={suit.image} alt={suit.name} className="w-full h-full object-contain rounded-lg" loading="lazy" />
-            </div>
-            <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold">{suit.name}</h3>
-              <p className="text-lg font-semibold text-blue-600">Ksh {suit.price.toLocaleString()}</p>
-              {/* Size selection row */}
-              <div className="flex flex-col items-start space-y-2">
-                <span className="text-sm sm:text-base md:text-lg font-medium">Select Sizes</span>
-                <div className="flex space-x-2 overflow-x-auto pb-2 w-full">
-                  {sizes.map((size) => (
-                    <button
-                      key={size}
-                      onClick={() => handleSizeSelect(suit.id, size)}
-                      className={`px-3 sm:px-4 md:px-5 py-1 sm:py-2 rounded-lg border-2 text-xs sm:text-sm md:text-base ${selectedSizeForSuit[suit.id] === size ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300'}`}
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-              {/* Buttons */}
-              <div className="space-y-2 mt-4">
-                <button
-                  onClick={() => {
-                    setSelectedItem(suit);
-                    setImmediateSuccess(true);
-                    setShowPayment(true);
-                  }}
-                  className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                >
-                  <CheckCircle className="w-5 h-5" /> Purchase Now
-                </button>
-                <button
-                  onClick={() => handleAddToCart(suit)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart className="w-5 h-5" /> Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* View More for Kaunda suits */}
-      <div className="flex justify-end mt-6 mb-8">
-        <Link to="/suits/kaunda" className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2">
-          <span>View More</span> <ChevronRight className="w-6 h-6" />
-        </Link>
-      </div>
-
-      {/* 5. Official Shirts */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
-        <p>Hurry Up! Limited Time Only! 💯 Official Shirts – Get Yours Today!</p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-        {officialShirts.map((shirt) => (
-          <div key={shirt.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-            <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
-              <img src={shirt.image} alt={shirt.name} className="w-full h-full object-contain rounded-lg" loading="lazy" />
-            </div>
-            <div className="p-5 text-center space-y-4">
-              <h3 className="text-xl font-bold">{shirt.name}</h3>
-              <p className="text-lg font-semibold text-blue-600">Ksh {shirt.price}</p>
-              {/* Buttons */}
-              <div className="space-y-2">
-                <button
-                  onClick={() => {
-                    setSelectedItem(shirt);
-                    setImmediateSuccess(true);
-                    setShowPayment(true);
-                  }}
-                  className="w-full bg-blue-600 hover:bg-blue-800 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                >
-                  <CheckCircle className="w-5 h-5" /> Purchase Now
-                </button>
-                <button
-                  onClick={() => handleAddToCart(shirt)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart className="w-5 h-5" /> Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* View More for official shirts */}
-      <div className="flex justify-end mt-6 mb-8">
-        <Link to="/shirts/official" className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2">
-          <span>View More</span> <ChevronRight className="w-6 h-6" />
-        </Link>
-      </div>
-
-      {/* 6. Jeans Collection */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
-        <p>Hurry up! Limited time. 💯 premium Jean collection.</p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-        {jeansProducts.map((jean) => (
-          <div key={jean.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
-            <div className="h-64 p-4 flex items-center justify-center bg-gray-50">
-              <img
-                src={jean.image}
-                alt={jean.name}
-                className="w-full h-full object-cover rounded-lg group-hover:scale-105 transition-transform duration-300"
-                loading="lazy"
-              />
-            </div>
-            <div className="p-6 text-center space-y-2">
-              <h3 className="text-xl font-bold mb-1">{jean.name}</h3>
-              <p className="text-lg font-bold text-blue-600 mb-2">Ksh {jean.price.toLocaleString()}</p>
-              {/* Buttons */}
-              <div className="space-y-2">
-                <button
-                  onClick={() => {
-                    setSelectedItem(jean);
-                    setImmediateSuccess(true);
-                    setShowPayment(true);
-                  }}
-                  className="w-full bg-gray-800 hover:bg-gray-900 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                >
-                  <CheckCircle className="w-5 h-5" /> Purchase
-                </button>
-                <button
-                  onClick={() => handleAddToCart(jean)}
-                  className="w-full bg-green-600 hover:bg-green-800 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
-                >
-                  <ShoppingCart className="w-5 h-5" /> Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* View More Button at bottom of Jeans collection */}
-      <div className="flex justify-end mt-6 mb-8">
-        <Link to="/jeans" className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2">
-          <span>View More</span> <ChevronRight className="w-6 h-6" />
-        </Link>
-      </div>
-      {/* Leather Jackets Section */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
-        <p>Limited Time! Premium Leather Jackets - Style & Comfort Combined! 💯</p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 px-4 mb-8">
-        {leatherJackets.map((jacket) => (
-          <div
-            key={jacket.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 duration-300 flex flex-col"
-          >
-            <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center rounded-t-xl overflow-hidden">
-              <img
-                src={jacket.image}
-                alt={jacket.name}
-                className="w-full h-full object-contain rounded-lg"
-                loading="lazy"
-              />
-            </div>
-            <div className="p-4 flex-1 flex flex-col justify-between space-y-2">
-              {/* Centered price label */}
-              <div className="flex justify-center mb-2">
-                <span className="text-blue-600 font-bold text-xl">Ksh {jacket.price}</span>
-              </div>
-              <h3 className="text-lg font-semibold text-lg flex justify-center text-gray-900">{jacket.name}</h3>
-              <div className="flex flex-col space-y-2 mt-2">
-                <button
-                  onClick={() => {
-                    setSelectedItem(jacket);
-                    setImmediateSuccess(true);
-                    setShowPayment(true);
-                  }}
-                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-800 text-white py-2 px-4 rounded-lg font-semibold transition-colors text-sm"
-                >
-                  <CheckCircle className="w-4 h-4" />
-                  Purchase Now
-                </button>
-                <button
-                  onClick={() => handleAddToCart(jacket)}
-                  className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors text-sm"
-                >
-                  <ShoppingCart className="w-4 h-4" /> Add to Cart
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      {/* View More Button for Leather Jackets */}
-      <div className="flex justify-end mt-6 mb-8 px-4">
-        <Link
-          to="/jackets/leather"
-          className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2"
+      {/* Banner */}
+      <div className="mb-4 p-4 bg-yellow-100 rounded-lg shadow-md flex items-center justify-between">
+        <div className="text-gray-800 font-semibold">
+          🚀 Special Offer! Free shipping on orders over Ksh 10,000! Limited time only!
+        </div>
+        {/* <Link
+          to="/special-offer"
+          className="bg-yellow-300 px-3 py-1 rounded-lg font-semibold hover:bg-yellow-400"
         >
-          <span>View More</span>
-          <ChevronRight className="w-6 h-6" />
-        </Link>
+          View Details
+        </Link> */}
       </div>
+
+      {/* Categories */}
+      {categories.map((category) => (
+        <div key={category.title}>
+          <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
+            <p>{category.title} – Hurry Up!! 🚀 Limited Time Offer! Get Yours Today! Get Supper Wool💯 Free
+              Fading Products 
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+            {category.items.map((item) => (
+              <div
+                key={item.id}
+                className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden relative"
+                onMouseEnter={() => handleMouseEnter(item.id)} // Zoom on hover
+                onMouseLeave={handleMouseLeave} // Remove zoom on mouse leave
+              >
+                <div
+                  className={`h-64 w-full bg-gray-100 p-4 flex items-center justify-center ${hoveredItemId === item.id ? 'transform scale-150 transition-all duration-300' : ''}`}
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full h-full object-contain rounded-lg"
+                    loading="lazy"
+                  />
+                </div>
+
+                {/* View More Button (visible on hover) */}
+                {hoveredItemId === item.id && (
+                  <div className="absolute top-4 right-4">
+                    <Link
+                      to={category.link} // Correct link for the category
+                      className="bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+                    >
+                      View More
+                    </Link>
+                  </div>
+                )}
+
+                <div className="p-5 text-center space-y-4">
+                  <h3 className="text-xl font-bold">{item.name}</h3>
+                  <div className="flex justify-center mb-2">
+                    <span className="text-blue-600 font-bold text-xl">Ksh {item.price}</span>
+                  </div>
+
+                  {/* Sizes */}
+                  {category.title !== 'Jeans' && category.title !== 'Official Shirts' && category.title !== 'Leather Jackets' && category.title !== 'Belts' && (
+                    <div className="flex flex-col items-start space-y-2">
+                      <span className="text-sm sm:text-base md:text-lg font-medium">Select Sizes</span>
+                      <div className="flex space-x-2 overflow-x-auto pb-2 w-full">
+                        {Sizes.map((size) => (
+                          <button
+                            key={size}
+                            onClick={() => setSelectedSizeForSuit((prev) => ({ ...prev, [item.id]: prev[item.id] === size ? undefined : size }))} 
+                            className={`px-3 sm:px-4 md:px-5 py-1 sm:py-2 rounded-lg border-2 text-xs sm:text-sm md:text-base ${selectedSizeForSuit[item.id] === size ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300'}`}
+                          >
+                            {size}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Buttons */}
+                  <div className="space-y-2 mt-4">
+                    <button
+                      onClick={() => handlePurchaseClick(item)}
+                      className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition"
+                    >
+                      <CheckCircle className="w-5 h-5" /> Purchase
+                    </button>
+                    <button
+                      onClick={() => handleAddToCart(item)}
+                      className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition"
+                    >
+                      <ShoppingCart className="w-5 h-5" /> Add to Cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="flex justify-end mt-6 mb-8">
+            <Link
+              to={category.link} // Correct link for View More for the category
+              className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2"
+            >
+              <span>View More</span> <ChevronRight className="w-6 h-6" />
+            </Link>
+          </div>
+        </div>
+      ))}
+
+      {/* Payment Popup Modal */}
+      {showModal && selectedItem && (
+        <PaymentPopup item={selectedItem} selectedSize={selectedSizeForSuit[selectedItem.id]} onClose={handleCloseModal} />
+      )}
     </section>
   );
 };
 
-// Payment Popup component remains unchanged
-const PaymentPopup = ({ item, selectedSize, onClose, immediateSuccess }) => {
+// Payment Popup component
+const PaymentPopup = ({ item, selectedSize, onClose }) => {
   const [amount, setAmount] = useState('');
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const paymentDetails = {
     paybill: '542542',
     account: '378179',
-    standardPrice: 13000,
   };
 
-  useEffect(() => {
-    if (immediateSuccess) {
-      setPaymentSuccess(true);
-      setTimeout(() => {
-        onClose();
-      }, 1500);
-    }
-  }, [immediateSuccess, onClose]);
-
-  const handlePaymentConfirm = () => {
-    if (paymentSuccess) {
-      onClose();
-      return;
-    }
-    const content = `SUIT PURCHASE
--------------------------
-Item: ${item?.name}
-Product ID: ${item?.id}
-Size: ${selectedSize}
-Paybill: ${paymentDetails.paybill}
-Account: ${paymentDetails.account}
-Amount Paid: ${amount || '________'}
-Standard Price: Ksh ${item?.price?.toLocaleString()}`;
+  const handlePaymentConfirmation = () => {
+    const content = `CASUAL WEAR PURCHASE\n-------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nSize: ${selectedSize}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${item?.price?.toLocaleString()}`;
+    
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
-    link.download = `suit_payment_${item?.id}.txt`;
+    link.download = `casual_payment_${item?.id}.txt`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -641,60 +400,69 @@ Standard Price: Ksh ${item?.price?.toLocaleString()}`;
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
       <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
-        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 flex items-center gap-2">
           {paymentSuccess ? (
             <>
               <CheckCircle className="w-8 h-8 text-green-500" />
-              Payment Verified!
+              Payment Confirmed!
             </>
           ) : (
-            `${item?.name} Purchase`
+            'Complete Purchase'
           )}
         </h2>
+
         {!paymentSuccess ? (
           <>
             <div className="space-y-4">
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg text-sm sm:text-base">
-                <span className="font-medium">Paybill:</span>
+              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                <span className="font-medium text-sm sm:text-base">Paybill:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
               </div>
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg text-sm sm:text-base">
-                <span className="font-medium">Account:</span>
+              
+              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg">
+                <span className="font-medium text-sm sm:text-base">Account:</span>
                 <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
               </div>
+
               <div className="bg-green-50 p-4 rounded-lg">
-                <div className="flex justify-between items-center text-sm sm:text-base">
-                  <span className="font-medium">Standard Price:</span>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-sm sm:text-base">Standard Price:</span>
                   <span className="font-mono text-green-600 font-bold">Ksh {item?.price?.toLocaleString()}</span>
                 </div>
               </div>
+              
+
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"
-                className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent text-sm sm:text-base"
+                className="w-full p-4 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => setAmount(e.target.value.replace(/\D/g, ''))}
+                min="1700"
               />
             </div>
-            <div className="flex gap-4 mt-4">
+
+            <div className="flex gap-4">
               <button
-                onClick={handlePaymentConfirm}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+                onClick={handlePaymentConfirmation}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
               >
-                <CheckCircle className="w-5 h-5" /> Confirm Payment
+                <CheckCircle className="w-5 h-5" />
+                Confirm Payment
               </button>
               <button
                 onClick={onClose}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 sm:py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2"
               >
-                <XCircle className="w-5 h-5" /> Cancel
+                <XCircle className="w-5 h-5" />
+                Cancel
               </button>
             </div>
           </>
         ) : (
-          <div className="text-center text-green-600 text-sm sm:text-base">
+          <div className="text-center text-green-600">
             <p>Transaction receipt downloaded successfully</p>
-            <p className="mt-2">Closing automatically...</p>
+            <p className="text-sm text-gray-500 mt-2">Closing automatically...</p>
           </div>
         )}
       </div>
@@ -703,3 +471,4 @@ Standard Price: Ksh ${item?.price?.toLocaleString()}`;
 };
 
 export default Home;
+
