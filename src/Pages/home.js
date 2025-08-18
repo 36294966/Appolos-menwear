@@ -258,17 +258,17 @@ const Home = () => {
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
       {/* Banner */}
-      <div className="mb-4 p-4 bg-yellow-100 rounded-lg shadow-md flex items-center justify-between">
+      {/* <div className="mb-4 p-4 bg-yellow-100 rounded-lg shadow-md flex items-center justify-between">
         <div className="text-gray-800 font-semibold">
           🚀 Special Offer! Free shipping on orders over Ksh 10,000! Limited time only!
-        </div>
+        </div> */}
         {/* <Link
           to="/special-offer"
           className="bg-yellow-300 px-3 py-1 rounded-lg font-semibold hover:bg-yellow-400"
         >
           View Details
         </Link> */}
-      </div>
+      {/* </div> */}
 
       {/* Categories */}
       {categories.map((category) => (
