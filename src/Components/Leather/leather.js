@@ -5,6 +5,7 @@ import { CheckCircle, XCircle, ShoppingCart } from 'lucide-react';
 import Leather1 from '../../Assets/Jackets/jacket1.jpg';
 import Leather2 from '../../Assets/Jackets/jacket2.jpg';
 import Leather3 from '../../Assets/Jackets/jacket3.jpg';
+import Leather4 from '../../Assets/Jackets/jacket4.webp';
 
 const PaymentPopup = ({ onClose, item }) => {
   const paybillNumber = '542542';
@@ -126,6 +127,12 @@ const LeatherJackets = () => {
       image: Leather3,
       price: 'Ksh 3,500',
     },
+    {
+      id: 4,
+      name: 'Leather Jacket - Elegant Fit',
+      image: Leather4,
+      price: 'Ksh 3,500',
+    },
   ];
 
   const handlePurchase = (item) => {
@@ -162,7 +169,7 @@ const LeatherJackets = () => {
       )}
 
       {/* Leather Jackets Items */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {leathers.map((leather) => (
           <div
             key={leather.id}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { CheckCircle, ChevronLeft, ChevronRight, ShoppingCart, XCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-// Import images (ensure paths are correct)
+// Import images for all products
 import Photo1 from '../Assets/Appolo/photo1.jpeg';
 import Photo2 from '../Assets/Appolo/photo2.jpeg';
 import Photo3 from '../Assets/Appolo/photo3.jpeg';
@@ -62,132 +62,20 @@ import Jean14 from '../Assets/Jeans/jean14.jpg';
 import Jean15 from '../Assets/Jeans/jean15.jpg';
 import Jean16 from '../Assets/Jeans/jean16.jpg';
 
+// Import your jackets images
 import Jacket1 from '../Assets/Jackets/jacket1.jpg';
 import Jacket2 from '../Assets/Jackets/jacket2.jpg';
 import Jacket3 from '../Assets/Jackets/jacket3.jpg';
+import Jacket4 from '../Assets/Jackets/jacket4.webp';
 
-const PaymentPopup = ({ item, selectedSize, onClose, immediateSuccess }) => {
-  const [amount, setAmount] = useState('');
-  const [paymentSuccess, setPaymentSuccess] = useState(false);
-  const paymentDetails = {
-    paybill: '542542',
-    account: '378179',
-    standardPrice: 13000,
-  };
-
-  // Handle immediate success if the prop is true
-  useEffect(() => {
-    if (immediateSuccess) {
-      setPaymentSuccess(true);
-      setTimeout(() => {
-        // Save to cart or handle post payment if needed
-        // For now, just close popup
-        onClose();
-      }, 1500);
-    }
-  }, [immediateSuccess, onClose]);
-
-  const handlePaymentConfirm = () => {
-    if (paymentSuccess) {
-      // Already successful, just close
-      onClose();
-      return;
-    }
-    // Prepare payment receipt file
-    const content = `SUIT PURCHASE
--------------------------
-Item: ${item?.name}
-Product ID: ${item?.id}
-Size: ${selectedSize}
-Paybill: ${paymentDetails.paybill}
-Account: ${paymentDetails.account}
-Amount Paid: ${amount || '________'}
-Standard Price: Ksh ${item?.price?.toLocaleString()}`;
-    const blob = new Blob([content], { type: 'text/plain' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `suit_payment_${item?.id}.txt`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    setPaymentSuccess(true);
-    setTimeout(onClose, 1500);
-  };
-
-  return (
-    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
-        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
-          {paymentSuccess ? (
-            <>
-              <CheckCircle className="w-8 h-8 text-green-500" />
-              Payment Verified!
-            </>
-          ) : (
-            `${item?.name} Purchase`
-          )}
-        </h2>
-
-        {!paymentSuccess ? (
-          <>
-            <div className="space-y-4">
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg text-sm sm:text-base">
-                <span className="font-medium">Paybill:</span>
-                <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
-              </div>
-              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg text-sm sm:text-base">
-                <span className="font-medium">Account:</span>
-                <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
-              </div>
-              <div className="bg-green-50 p-4 rounded-lg">
-                <div className="flex justify-between items-center text-sm sm:text-base">
-                  <span className="font-medium">Standard Price:</span>
-                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price?.toLocaleString()}</span>
-                </div>
-              </div>
-              <input
-                type="number"
-                placeholder="Enter amount (Ksh)"
-                className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent text-sm sm:text-base"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-            </div>
-            <div className="flex gap-4 mt-4">
-              <button
-                onClick={handlePaymentConfirm}
-                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
-              >
-                <CheckCircle className="w-5 h-5" /> Confirm Payment
-              </button>
-              <button
-                onClick={onClose}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 sm:py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
-              >
-                <XCircle className="w-5 h-5" /> Cancel
-              </button>
-            </div>
-          </>
-        ) : (
-          <div className="text-center text-green-600 text-sm sm:text-base">
-            <p>Transaction receipt downloaded successfully</p>
-            <p className="mt-2">Closing automatically...</p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
+// Your main component
 const Home = () => {
   const [cartCount, setCartCount] = useState(0);
   const [showPayment, setShowPayment] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [immediateSuccess, setImmediateSuccess] = useState(false); // added for instant success
+  const [immediateSuccess, setImmediateSuccess] = useState(false);
 
   const sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
   const sizeScrollRefs = useRef({});
@@ -273,19 +161,25 @@ const Home = () => {
     { id: 16, image: Jean16, name: 'Dark Blue Jeans', price: 2000 },
   ];
 
-  // handleAddToCart, handlePrevClick, handleNextClick, handleSizeSelect, cartTotal...
+  // Jackets data
+  const leatherJackets = [
+    { id: 1, name: 'Classic Leather Jacket', image: Jacket1, price: 3500 },
+    { id: 2, name: 'Stylish Leather Jacket', image: Jacket2, price: 3500 },
+    { id: 3, name: 'Modern Leather Jacket', image: Jacket3, price: 3500 },
+    { id: 4, name: 'Elegant Leather Jacket', image: Jacket4, price: 3500 },
+  ];
+
   const handleAddToCart = (item) => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
-      size: item.category !== 'jeans' ? (selectedSizeForSuit[item.id] || 'Not Selected') : 'N/A',
+      size: item.category !== 'jeans' && item.category !== 'jacket' ? (selectedSizeForSuit[item.id] || 'Not Selected') : 'N/A',
       addedAt: new Date().toISOString(),
     };
     localStorage.setItem('cart', JSON.stringify([...storedCart, newItem]));
     window.dispatchEvent(new Event('storage'));
     alert(`${item.name} added to cart`);
-    // Reset selected size after adding
-    if (item.category !== 'jeans') {
+    if (item.category !== 'jeans' && item.category !== 'jacket') {
       setSelectedSizeForSuit((prev) => ({
         ...prev,
         [item.id]: undefined,
@@ -314,8 +208,9 @@ const Home = () => {
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+
       {/* =================== 1. Three Piece Suits =================== */}
-      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-24 mx-4">
+      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-16 mx-4">
         <p>Hurry Up! Limited Time Only! 💯 Super Wool Free Fading ThreePiece Suits – Get Yours Today!</p>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
@@ -414,7 +309,7 @@ const Home = () => {
                 </button>
                 <button
                   onClick={() => handleAddToCart(suit)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" /> Add to Cart
                 </button>
@@ -472,7 +367,7 @@ const Home = () => {
                 </button>
                 <button
                   onClick={() => handleAddToCart(suit)}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2 text-xs sm:text-sm md:text-base"
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" /> Add to Cart
                 </button>
@@ -636,74 +531,174 @@ const Home = () => {
           <span>View More</span> <ChevronRight className="w-6 h-6" />
         </Link>
       </div>
-
-      {/* Cart modal */}
-      {isCartOpen && (
-        <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
-          <div className="bg-white w-80 max-h-[80vh] overflow-y-auto p-4 rounded-lg shadow-lg relative">
-            <button className="absolute top-2 right-2 text-gray-600 hover:text-gray-800" onClick={() => setIsCartOpen(false)}>✕</button>
-            <h3 className="text-xl font-semibold mb-4 flex items-center gap-2 flex-wrap gap-x-2">
-              <ShoppingCart className="w-6 h-6" /> Your Cart ({cartCount})
-            </h3>
-            {cartCount === 0 ? (
-              <p className="text-gray-600">Your cart is empty</p>
-            ) : (
-              <>
-                <div className="space-y-4">
-                  {JSON.parse(localStorage.getItem('cart') || '[]').map((item, index) => (
-                    <div key={index} className="pb-2 border-b flex justify-between items-center">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 bg-gray-100 rounded-md flex items-center justify-center">
-                          <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
-                        </div>
-                        <div>
-                          <p className="font-semibold text-sm">{item.name}</p>
-                          <p className="text-xs text-gray-500">Added: {new Date(item.addedAt).toLocaleDateString()}</p>
-                        </div>
-                      </div>
-                      <p className="text-sm font-bold">Ksh {item.price}</p>
-                    </div>
-                  ))}
-                </div>
-                <div className="mt-4 pt-4 border-t">
-                  <div className="flex justify-between mb-2">
-                    <span className="font-semibold">Total:</span>
-                    <span className="font-bold">Ksh {cartTotal()}</span>
-                  </div>
-                  <button
-                    className="mt-4 w-full bg-blue-600 hover:bg-blue-800 text-white py-2 px-4 rounded transition"
-                    onClick={() => {
-                      alert('Proceed to checkout');
-                      setIsCartOpen(false);
-                    }}
-                  >
-                    Checkout
-                  </button>
-                </div>
-              </>
-            )}
+      {/* Leather Jackets Section */}
+      <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
+        <p>Limited Time! Premium Leather Jackets - Style & Comfort Combined! 💯</p>
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10 px-4 mb-8">
+        {leatherJackets.map((jacket) => (
+          <div
+            key={jacket.id}
+            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 duration-300 flex flex-col"
+          >
+            <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center rounded-t-xl overflow-hidden">
+              <img
+                src={jacket.image}
+                alt={jacket.name}
+                className="w-full h-full object-contain rounded-lg"
+                loading="lazy"
+              />
+            </div>
+            <div className="p-4 flex-1 flex flex-col justify-between space-y-2">
+              {/* Centered price label */}
+              <div className="flex justify-center mb-2">
+                <span className="text-blue-600 font-bold text-xl">Ksh {jacket.price}</span>
+              </div>
+              <h3 className="text-lg font-semibold text-lg flex justify-center text-gray-900">{jacket.name}</h3>
+              <div className="flex flex-col space-y-2 mt-2">
+                <button
+                  onClick={() => {
+                    setSelectedItem(jacket);
+                    setImmediateSuccess(true);
+                    setShowPayment(true);
+                  }}
+                  className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-800 text-white py-2 px-4 rounded-lg font-semibold transition-colors text-sm"
+                >
+                  <CheckCircle className="w-4 h-4" />
+                  Purchase Now
+                </button>
+                <button
+                  onClick={() => handleAddToCart(jacket)}
+                  className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white py-2 px-4 rounded-lg font-semibold transition-colors text-sm"
+                >
+                  <ShoppingCart className="w-4 h-4" /> Add to Cart
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-
-      {/* Payment Popup */}
-      {showPayment && selectedItem && (
-        <PaymentPopup
-          item={selectedItem}
-          selectedSize={selectedSizeForSuit[selectedItem.id]}
-          immediateSuccess={immediateSuccess}
-          onClose={() => {
-            setShowPayment(false);
-            setSelectedItem(null);
-            setImmediateSuccess(false);
-            setSelectedSizeForSuit((prev) => ({
-              ...prev,
-              [selectedItem.id]: undefined,
-            }));
-          }}
-        />
-      )}
+        ))}
+      </div>
+      {/* View More Button for Leather Jackets */}
+      <div className="flex justify-end mt-6 mb-8 px-4">
+        <Link
+          to="/jackets/leather"
+          className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2"
+        >
+          <span>View More</span>
+          <ChevronRight className="w-6 h-6" />
+        </Link>
+      </div>
     </section>
+  );
+};
+
+// Payment Popup component remains unchanged
+const PaymentPopup = ({ item, selectedSize, onClose, immediateSuccess }) => {
+  const [amount, setAmount] = useState('');
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const paymentDetails = {
+    paybill: '542542',
+    account: '378179',
+    standardPrice: 13000,
+  };
+
+  useEffect(() => {
+    if (immediateSuccess) {
+      setPaymentSuccess(true);
+      setTimeout(() => {
+        onClose();
+      }, 1500);
+    }
+  }, [immediateSuccess, onClose]);
+
+  const handlePaymentConfirm = () => {
+    if (paymentSuccess) {
+      onClose();
+      return;
+    }
+    const content = `SUIT PURCHASE
+-------------------------
+Item: ${item?.name}
+Product ID: ${item?.id}
+Size: ${selectedSize}
+Paybill: ${paymentDetails.paybill}
+Account: ${paymentDetails.account}
+Amount Paid: ${amount || '________'}
+Standard Price: Ksh ${item?.price?.toLocaleString()}`;
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `suit_payment_${item?.id}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    setPaymentSuccess(true);
+    setTimeout(onClose, 1500);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
+        <h2 className="text-3xl font-bold text-gray-800 flex items-center gap-2">
+          {paymentSuccess ? (
+            <>
+              <CheckCircle className="w-8 h-8 text-green-500" />
+              Payment Verified!
+            </>
+          ) : (
+            `${item?.name} Purchase`
+          )}
+        </h2>
+        {!paymentSuccess ? (
+          <>
+            <div className="space-y-4">
+              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg text-sm sm:text-base">
+                <span className="font-medium">Paybill:</span>
+                <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
+              </div>
+              <div className="flex justify-between items-center bg-gray-50 p-4 rounded-lg text-sm sm:text-base">
+                <span className="font-medium">Account:</span>
+                <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
+              </div>
+              <div className="bg-green-50 p-4 rounded-lg">
+                <div className="flex justify-between items-center text-sm sm:text-base">
+                  <span className="font-medium">Standard Price:</span>
+                  <span className="font-mono text-green-600 font-bold">Ksh {item?.price?.toLocaleString()}</span>
+                </div>
+              </div>
+              <input
+                type="number"
+                placeholder="Enter amount (Ksh)"
+                className="w-full p-3 sm:p-4 border-2 border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent text-sm sm:text-base"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+              />
+            </div>
+            <div className="flex gap-4 mt-4">
+              <button
+                onClick={handlePaymentConfirm}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 sm:py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+              >
+                <CheckCircle className="w-5 h-5" /> Confirm Payment
+              </button>
+              <button
+                onClick={onClose}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 sm:py-3 rounded-lg font-bold transition-all flex items-center justify-center gap-2 text-sm sm:text-base"
+              >
+                <XCircle className="w-5 h-5" /> Cancel
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="text-center text-green-600 text-sm sm:text-base">
+            <p>Transaction receipt downloaded successfully</p>
+            <p className="mt-2">Closing automatically...</p>
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 
