@@ -113,14 +113,14 @@ const Tuxedo = () => {
   const [selectedSizeForTuxedo, setSelectedSizeForTuxedo] = useState({});
 
   const tuxedoSuits = [
-    { id: 1, name: ' Velvet Tuxedo Suit', image: Tuxedo1, price: 15000 },
-    { id: 2, name: 'Midnight Tuxedo  Suit', image: Tuxedo2, price: 15000 },
-    { id: 3, name: 'Ensemble Tuxedo Suit', image: Tuxedo3, price: 15000 },
-    { id: 4, name: 'Classic Tuxedo Suit', image: Tuxedo5, price: 15000 },
-    { id: 5, name: 'Slim Tuxedo Suit', image: Tuxedo6, price: 15000 },
-    { id: 6, name: 'Designer Tuxedo Set', image: Tuxedo7, price: 15000 },
-    { id: 7, name: 'Royal Dinner Suit', image: Tuxedo8, price: 15000 },
-    { id: 8, name: 'Premium Tuxedo Suit', image: Tuxedo9, price: 15000 }, // Added new tuxedo
+    { id: 1, name: ' Velvet Tuxedo Suit ⭐⭐⭐⭐⭐', image: Tuxedo1, price: 15000 },
+    { id: 2, name: 'Midnight Tuxedo  Suit ⭐⭐⭐⭐⭐', image: Tuxedo2, price: 15000 },
+    { id: 3, name: 'Ensemble Tuxedo Suit ⭐⭐⭐⭐⭐', image: Tuxedo3, price: 15000 },
+    { id: 4, name: 'Classic Tuxedo Suit ⭐⭐⭐⭐⭐', image: Tuxedo5, price: 15000 },
+    { id: 5, name: 'Slim Tuxedo Suit ⭐⭐⭐⭐⭐', image: Tuxedo6, price: 15000 },
+    { id: 6, name: 'Designer Tuxedo Set ⭐⭐⭐⭐⭐', image: Tuxedo7, price: 15000 },
+    { id: 7, name: 'Royal Dinner Suit ⭐⭐⭐⭐⭐', image: Tuxedo8, price: 15000 },
+    { id: 8, name: 'Premium Tuxedo Suit ⭐⭐⭐⭐⭐', image: Tuxedo9, price: 15000 }, // Added new tuxedo
   ];
 
   const sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];

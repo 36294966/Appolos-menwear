@@ -18,6 +18,26 @@ import ThreePiece9 from '../../Assets/Suits/threepiece9.jpg';
 import ThreePiece10 from '../../Assets/Suits/threepiece10.jpg';
 import ThreePiece11 from '../../Assets/Suits/threepiece11.jpg';
 import ThreePiece12 from '../../Assets/Suits/threepiece12.jpg';
+import ThreePiece13 from '../../Assets/Suits/threepiece13.jpg';
+import ThreePiece14 from '../../Assets/Suits/threepiece14.jpg';
+import ThreePiece15 from '../../Assets/Suits/threepiece15.jpg';
+import ThreePiece16 from '../../Assets/Suits/threepiece16.jpg';
+import ThreePiece17 from '../../Assets/Suits/threepiece17.jpg';
+import ThreePiece18 from '../../Assets/Suits/threepiece18.jpg';
+import ThreePiece19 from '../../Assets/Suits/threepiece19.jpg';
+import ThreePiece20 from '../../Assets/Suits/threepiece20.jpg';
+import ThreePiece21 from '../../Assets/Suits/threepiece21.jpg';
+import ThreePiece22 from '../../Assets/Suits/threepiece22.jpg';
+import ThreePiece23 from '../../Assets/Suits/threepiece23.jpg';
+import ThreePiece24 from '../../Assets/Suits/threepiece24.jpg';
+import ThreePiece25 from '../../Assets/Suits/threepiece25.jpg';
+import ThreePiece26 from '../../Assets/Suits/threepiece26.jpg';
+import ThreePiece27 from '../../Assets/Suits/threepiece27.jpg';
+import ThreePiece28 from '../../Assets/Suits/threepiece28.jpg';
+import ThreePiece29 from '../../Assets/Suits/threepiece29.jpg';
+import ThreePiece30 from '../../Assets/Suits/threepiece30.jpg';
+import ThreePiece31 from '../../Assets/Suits/threepiece31.jpg';
+import ThreePiece32 from '../../Assets/Suits/threepiece32.jpg';
 
 const PaymentPopup = ({ onClose, item, selectedSize }) => {
   const [amount, setAmount] = useState('');
@@ -133,22 +153,43 @@ const ThreePieceSuits = () => {
   }, []);
 
   const threePieceSuits = [
-    { id: 1, name: 'Executive Three-Piece Suit', image: Photo1, price: 13000 },
-    { id: 2, name: 'Classic fading free Three-Piece Suit', image: Photo2, price: 13000 },
-    { id: 3, name: 'Premium Linen Three-Piece Suit', image: Photo3, price: 13000 },
-    { id: 4, name: 'Classic Pinstripe Ensemble', image: Photo4, price: 13000 },
-    { id: 5, name: 'Modern-Fit Three-Piece Suit', image: ThreePiece1, price: 13000 },
-    { id: 6, name: 'Royal Navy Three-Piece Suit', image: ThreePiece2, price: 13000 },
-    { id: 7, name: 'Designer Three-Piece Suit', image: ThreePiece3, price: 13000 },
-    { id: 8, name: '💯Bespoke Three-piece Suit', image: ThreePiece4, price: 13000 },
-    { id: 9, name: 'Executive Three-Piece Suit', image: ThreePiece5, price: 13000 },
-    { id: 10, name: 'Luxurious Three-Piece Suit', image: ThreePiece6, price: 13000 },
-    { id: 11, name: '💯Prestige Three-Piece Suit', image: ThreePiece7, price: 13000 },
-    { id: 12, name: 'Elite Evening Three-piece Suit', image: ThreePiece8, price: 13000 },
-    { id: 13, name: 'Glamorous Three-Piece Suit', image: ThreePiece9, price: 13000 },
-    { id: 14, name: 'Sleek Business Three-Piece Suit', image: ThreePiece10, price: 13000 },
-    { id: 15, name: '💯super wool fading Three-Piece Suit', image: ThreePiece11, price: 13000 },
-    { id: 16, name: ' 💯Fashion Three-Piece Suit', image: ThreePiece12, price: 13000 }
+    { id: 1, name: 'Executive Three-Piece Suit ⭐⭐⭐⭐⭐', image: Photo1, price: 13000 },
+    { id: 2, name: 'Classic fading free Three-Piece Suit ⭐⭐⭐⭐⭐', image: Photo2, price: 13000 },
+    { id: 3, name: 'Premium Linen Three-Piece Suit ⭐⭐⭐⭐⭐', image: Photo3, price: 13000 },
+    { id: 4, name: 'Classic Pinstripe Ensemble ⭐⭐⭐⭐⭐', image: Photo4, price: 13000 },
+    { id: 5, name: 'Modern-Fit Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece1, price: 13000 },
+    { id: 6, name: 'Royal Navy Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece2, price: 13000 },
+    { id: 7, name: 'Designer Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece3, price: 13000 },
+    { id: 8, name: 'Bespoke Three-piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece4, price: 13000 },
+    { id: 9, name: 'Executive Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece5, price: 13000 },
+    { id: 10, name: 'Luxurious Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece6, price: 13000 },
+    { id: 11, name: 'Prestige Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece7, price: 13000 },
+    { id: 12, name: 'Elite Evening Three-piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece8, price: 13000 },
+    { id: 13, name: 'Glamorous Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece9, price: 13000 },
+    { id: 14, name: 'Sleek Business Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece10, price: 13000 },
+    { id: 15, name: 'super wool fading Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece11, price: 13000 },
+    { id: 16, name: ' Fashion Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece12, price: 13000 },
+  
+    { id: 16, name: 'Opulence Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece14, price: 13000 },
+           { id: 17, name: 'Sophistication Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece15, price: 13000 },
+       { id: 18, name: 'Couture ClassicsThree-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece16, price: 13000 },
+       { id: 20, name: 'Dignity Collection Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece17, price: 13000 },
+       { id: 21, name: 'Vanguard Elite Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece18, price: 13000 },
+       { id: 22, name: 'Summit Suits Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece19, price: 13000 },
+       { id: 23, name: 'Executive Edge Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece20, price: 13000 },
+       { id: 24, name: 'Eminence Collection Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece21, price: 13000 },
+       { id: 25, name: 'Refined Royalty Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece22, price: 13000 },
+    { id: 26, name: 'Pinnacle Series Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece23, price: 13000 },
+    { id: 27, name: 'Urban Aristocrat Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece24, price: 13000 },
+    { id: 27, name: 'Noble AttireThree-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece25, price: 13000 },
+    { id: 29, name: 'Legacy Luxe Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece26, price: 13000 },
+    { id: 30, name: 'Signature Sovereign Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece27, price: 13000 },
+    { id: 31, name: 'Majesty Mode Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece28, price: 13000 },
+    { id: 32, name: 'Imperial Attire Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece29, price: 13000 },
+    { id: 33, name: 'Monarch Line Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece30, price: 13000 },
+    { id: 34, name: 'Crown & Confidence Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece31, price: 13000 },
+    { id: 35, name: 'Virtue Vogue Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece32, price: 13000 },
+    { id: 36, name: 'Fashion Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece13, price: 13000 },
   ];
 
   const handleAddToCart = (item) => {

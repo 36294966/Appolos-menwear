@@ -120,9 +120,9 @@ const Socks = () => {
   }, []);
 
   const socksItems = [
-    { id: 1, name: 'Cotton Socks - White', image: Socks1, price: 300 },
-    { id: 2, name: 'Formal Dress Socks - Black', image: Socks2, price: 300 },
-    { id: 3, name: 'Colorful Crew Socks', image: Socks3, price: 300 },
+    { id: 1, name: 'Cotton Socks - White ⭐⭐⭐⭐⭐', image: Socks1, price: 300 },
+    { id: 2, name: 'Formal Dress Socks - Black ⭐⭐⭐⭐⭐', image: Socks2, price: 300 },
+    { id: 3, name: 'Colorful Crew Socks ⭐⭐⭐⭐⭐', image: Socks3, price: 300 },
   ];
 
   const handleAddToCart = (item) => {
@@ -140,7 +140,7 @@ const Socks = () => {
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
       {/* Fixed Advertisement Card */}
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-black text-center text-2xl font-bold p-6 rounded-xl mb-8 animate-pulse mt-24 mx-4">
-        <p className="text-sm sm:text-base md:text-lg lg:text-2xl">Hurry up! Limited time . 💯 super wool fading free Get your premium socks collection today!</p>
+        <p className="text-sm sm:text-base md:text-lg lg:text-2xl">Hurry up! Limited time . 💯 Super wool fading free Get your premium socks collection today!</p>
       </div>
 
       {/* Payment Popup */}
@@ -169,7 +169,7 @@ const Socks = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-12">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6 mt-12">
         {socksItems.map((sock) => (
           <article
             key={sock.id}

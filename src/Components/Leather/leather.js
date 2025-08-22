@@ -111,25 +111,25 @@ const LeatherJackets = () => {
   const leathers = [
     {
       id: 1,
-      name: 'Leather Jacket - Classic',
+      name: 'Leather Jacket - Classic ⭐⭐⭐⭐⭐',
       image: Leather1,
       price: 'Ksh 3,500',
     },
     {
       id: 2,
-      name: 'Leather Jacket - Premium',
+      name: 'Leather Jacket - Premium ⭐⭐⭐⭐⭐',
       image: Leather2,
       price: 'Ksh 3,500',
     },
     {
       id: 3,
-      name: 'Leather Jacket - Modern Fit',
+      name: 'Leather Jacket - Modern Fit ⭐⭐⭐⭐⭐',
       image: Leather3,
       price: 'Ksh 3,500',
     },
     {
       id: 4,
-      name: 'Leather Jacket - Elegant Fit',
+      name: 'Leather Jacket - Elegant Fit ⭐⭐⭐⭐⭐',
       image: Leather4,
       price: 'Ksh 3,500',
     },

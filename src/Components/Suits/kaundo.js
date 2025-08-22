@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ShoppingCart, ChevronLeft, ChevronRight, CheckCircle } from 'lucide-react';
+import { ShoppingCart, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 // Import Kaunda suits images
@@ -8,17 +8,114 @@ import Kaunda2 from '../../Assets/Suits/kaunda2.jpg';
 import Kaunda3 from '../../Assets/Suits/kaunda3.jpg';
 import Kaunda4 from '../../Assets/Suits/kaunda4.jpg';
 
+// Payment Popup Component
+const PaymentPopup = ({ item, selectedSize, onClose }) => {
+  const [amount, setAmount] = useState('');
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const paymentDetails = {
+    paybill: '542542',
+    account: '378179',
+    standardPrice: 14000,
+  };
+
+  const handlePaymentConfirmation = () => {
+    const content = `KAUNDA SUIT PURCHASE\n-----------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nSize: ${selectedSize}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${paymentDetails.standardPrice.toLocaleString()}`;
+    
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `kaunda_payment_${item?.id}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    setPaymentSuccess(true);
+    setTimeout(onClose, 1500);
+  };
+
+  return (
+    <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
+      <div className="bg-white p-6 rounded-lg w-full max-w-md space-y-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-gray-800 flex items-center gap-2 mb-4">
+          {paymentSuccess ? (
+            <>
+              <CheckCircle className="w-8 h-8 text-green-500" />
+              Payment Verified!
+            </>
+          ) : (
+            'Kaunda Suit Purchase'
+          )}
+        </h2>
+
+        {!paymentSuccess ? (
+          <>
+            <div className="space-y-3">
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                <span className="font-medium text-sm">Paybill:</span>
+                <span className="font-mono text-blue-600 font-bold">{paymentDetails.paybill}</span>
+              </div>
+              <div className="flex justify-between items-center bg-gray-50 p-3 rounded-lg">
+                <span className="font-medium text-sm">Account:</span>
+                <span className="font-mono text-blue-600 font-bold">{paymentDetails.account}</span>
+              </div>
+              <div className="bg-green-50 p-3 rounded-lg">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium text-sm">Standard Price:</span>
+                  <span className="font-mono text-green-600 font-bold">Ksh {paymentDetails.standardPrice.toLocaleString()}</span>
+                </div>
+              </div>
+              <input
+                type="number"
+                placeholder="Enter amount (Ksh)"
+                className="w-full p-3 border-2 border-gray-200 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value.replace(/\D/g, ''))}
+                min="14000"
+              />
+            </div>
+
+            <div className="flex gap-3 mt-4">
+              <button
+                onClick={handlePaymentConfirmation}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+              >
+                <CheckCircle className="w-5 h-5" />
+                Confirm Payment
+              </button>
+              <button
+                onClick={onClose}
+                className="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold transition-all flex items-center justify-center gap-2"
+              >
+                <XCircle className="w-5 h-5" />
+                Cancel
+              </button>
+            </div>
+          </>
+        ) : (
+          <div className="text-center text-green-600">
+            <p>Transaction receipt downloaded successfully</p>
+            <p className="text-sm text-gray-500 mt-2">Closing automatically...</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const KaundaSuits = () => {
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedSizeForKaunda, setSelectedSizeForKaunda] = useState({});
+  const [showPayment, setShowPayment] = useState(false);
+  const [selectedKaunda, setSelectedKaunda] = useState(null);
 
   const kaundaSuits = [
-    { id: 1, name: 'Classic Kaunda Suit', image: Kaunda1, price: 14000 },
-    { id: 2, name: 'Royal Kaunda Suit', image: Kaunda2, price: 14000 },
-    { id: 3, name: 'Modern Kaunda Suit', image: Kaunda3, price: 14000 },
-    { id: 4, name: 'Elegant Kaunda Suit', image: Kaunda4, price: 14000 },
+    { id: 1, name: 'Classic Kaunda Suit ⭐⭐⭐⭐⭐', image: Kaunda1, price: 14000 },
+    { id: 2, name: 'Royal Kaunda Suit ⭐⭐⭐⭐⭐', image: Kaunda2, price: 14000 },
+    { id: 3, name: 'Modern Kaunda Suit ⭐⭐⭐⭐⭐', image: Kaunda3, price: 14000 },
+    { id: 4, name: 'Elegant Kaunda Suit ⭐⭐⭐⭐⭐', image: Kaunda4, price: 14000 },
   ];
 
   const sizes = ['44', '46', '48', '50', '52', '54', '56'];
@@ -54,12 +151,16 @@ const KaundaSuits = () => {
 
   const handlePrevClick = (id) => {
     const sizeSelector = document.getElementById(`size-selector-${id}`);
-    sizeSelector.scrollBy({ left: -100, behavior: 'smooth' });
+    if (sizeSelector) {
+      sizeSelector.scrollBy({ left: -100, behavior: 'smooth' });
+    }
   };
 
   const handleNextClick = (id) => {
     const sizeSelector = document.getElementById(`size-selector-${id}`);
-    sizeSelector.scrollBy({ left: 100, behavior: 'smooth' });
+    if (sizeSelector) {
+      sizeSelector.scrollBy({ left: 100, behavior: 'smooth' });
+    }
   };
 
   return (
@@ -173,7 +274,7 @@ const KaundaSuits = () => {
                 </button>
                 <div
                   id={`size-selector-${suit.id}`}
-                  className="size-selector flex gap-2 overflow-x-auto py-2"
+                  className="size-selector flex gap-2 overflow-x-auto py-2 max-w-[180px] mx-2"
                 >
                   {sizes.map((size) => (
                     <button
@@ -194,24 +295,39 @@ const KaundaSuits = () => {
               </div>
               <div className="space-y-2">
                 <button
-                  onClick={() => handleAddToCart(suit)}
+                  onClick={() => {
+                    setSelectedKaunda(suit);
+                    setShowPayment(true);
+                  }}
                   className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
-                  Add to Cart
+                  Purchase Now
                 </button>
                 <button
-                  onClick={() => alert('Proceed to purchase')}
+                  onClick={() => handleAddToCart(suit)}
                   className="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  Purchase Now
+                  Add to Cart
                 </button>
               </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Payment Popup */}
+      {showPayment && (
+        <PaymentPopup 
+          item={selectedKaunda}
+          selectedSize={selectedSizeForKaunda[selectedKaunda?.id]}
+          onClose={() => {
+            setShowPayment(false);
+            setSelectedKaunda(null);
+          }}
+        />
+      )}
     </section>
   );
 };

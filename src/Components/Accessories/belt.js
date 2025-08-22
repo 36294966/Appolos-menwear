@@ -113,14 +113,14 @@ const Belt = () => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const belts = [
-    { id: 1, image: Belt1, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
-    { id: 2, image: Belt2, name: 'Premium Black Belt', price: 'Ksh 2,000' },
-    { id: 3, image: Belt3, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
-    { id: 4, image: Belt4, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
-    { id: 5, image: Belt5, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
-    { id: 6, image: Belt6, name: 'Premium Leather Belt', price: 'Ksh 2,000' },
-    { id: 7, image: Belt7, name: 'Stylish Brown Belt', price: 'Ksh 2,000' },
-    { id: 8, image: Belt8, name: 'Elegant Black Belt', price: 'Ksh 2,000' },
+    { id: 1, image: Belt1, name: 'Premium Leather Belt ⭐⭐⭐⭐⭐', price: 'Ksh 2,000' },
+    { id: 2, image: Belt2, name: 'Premium Black Belt ⭐⭐⭐⭐⭐', price: 'Ksh 2,000' },
+    { id: 3, image: Belt3, name: 'Premium Leather Belt ⭐⭐⭐⭐⭐', price: 'Ksh 2,000' },
+    { id: 4, image: Belt4, name: 'Premium Leather Belt ⭐⭐⭐⭐⭐', price: 'Ksh 2,000' },
+    { id: 5, image: Belt5, name: 'Premium Leather Belt ⭐⭐⭐⭐⭐', price: 'Ksh 2,000' },
+    { id: 6, image: Belt6, name: 'Premium Leather Belt ⭐⭐⭐⭐⭐', price: 'Ksh 2,000' },
+    { id: 7, image: Belt7, name: 'Stylish Brown Belt ⭐⭐⭐⭐⭐', price: 'Ksh 2,000' },
+    { id: 8, image: Belt8, name: 'Elegant Black Belt ⭐⭐⭐⭐⭐', price: 'Ksh 2,000' },
   ];
 
   const handlePurchase = (item) => {

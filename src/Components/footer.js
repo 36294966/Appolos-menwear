@@ -26,6 +26,26 @@ const Footer = () => {
           animation: colorBlink 4s linear infinite;
           font-style: oblique 25deg;
         }
+        /* Styling for the links */
+        .quick-link {
+          text-decoration: none;
+          color: #bbb;
+          position: relative;
+          font-weight: 500;
+          transition: all 0.3s ease;
+        }
+        .quick-link:hover {
+          color: #fff;
+        }
+        .quick-link:hover::after {
+          content: '';
+          position: absolute;
+          bottom: -3px;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: #fbbf24;
+        }
       `}</style>
 
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-6">
@@ -135,6 +155,24 @@ const Footer = () => {
             </a>
           </div>
         </div>
+
+        {/* Quick Links Section */}
+        <div className="text-left space-y-2 pr-8 md:pr-16">
+          <h3 className="text-xl font-semibold">Quick Links</h3>
+          <ul className="text-gray-300 space-y-1 text-sm">
+            <li><a href="/suits/3piecesuits" className="quick-link">Three Piece Suits</a></li>
+            <li><a href="/suits/2piecesuits" className="quick-link">Two Piece Suits</a></li>
+            <li><a href="/suits/tuxedo" className="quick-link">Tuxedo Dinner Suit</a></li>
+            <li><a href="/suits/kaunda" className="quick-link">Kaunda Suit</a></li>
+            <li><a href="/shirts/official" className="quick-link">Official Shirt</a></li>
+            <li><a href="/shirts/casual" className="quick-link">Casual Shirt</a></li>
+            <li><a href="/jeans" className="quick-link">Jean</a></li>
+            <li><a href="/accessories/ties" className="quick-link">Ties</a></li>
+            <li><a href="/accessories/belt" className="quick-link">Belt</a></li>
+            <li><a href="/accessories/socks" className="quick-link">Socks</a></li>
+            <li><a href="/jackets/leather" className="quick-link">Leather Jackets</a></li>
+          </ul>
+        </div>
       </div>
 
       {/* Bottom Line */}
@@ -148,3 +186,5 @@ const Footer = () => {
 };
 
 export default Footer;
+
+

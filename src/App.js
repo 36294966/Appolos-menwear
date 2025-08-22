@@ -1,23 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Layout from './Components/layout';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom'; 
+import Layout from './Components/layout'; 
 import Home from './Pages/home';
 
-import TwoPieceSuits from './Components/Suits/2piecesuits';
-import ThreePieceSuits from './Components/Suits/3piecesuits';
+import TwoPieceSuits from './Components/Suits/2piecesuits'; 
+import ThreePieceSuits from './Components/Suits/3piecesuits'; 
+import KaundaSuits from './Components/Suits/kaundo'; 
 import Tuxedo from './Components/Suits/tuxedo';
-import KaundaSuits from './Components/Suits/kaundo';
 
-import Belt from './Components/Accessories/belt';
-import Socks from './Components/Accessories/socks';
+import Belt from './Components/Accessories/belt'; 
+import Socks from './Components/Accessories/socks'; 
 import Ties from './Components/Accessories/ties';
 
 import Cassual from './Components/Shirts/cassualshirts'; 
-import Official from './Components/Shirts/officialshirts'; 
+import Official from './Components/Shirts/officialshirts';
 
+import Cart from './Components/cart'; 
+import Jeans from './Components/Jeans/jeans'; 
 import Leather from './Components/Leather/leather'; 
-import Jeans from './Components/Jeans/jeans';
-import Cart from './Components/cart';
-import Payment from './Components/Payment/payment';
+import Payment from './Components/Payment/payment'; 
+import ProductDetails from './Components/Product/productDetails';
 
 function App() {
   return (
@@ -49,6 +50,9 @@ function App() {
           {/* Cart and Payment Routes */}
           <Route path="/cart" element={<Cart />} />
           <Route path="/payment" element={<Payment />} />
+          
+          {/* Product Detail Route (corrected) */}
+          <Route path="/product/:id" element={<ProductDetails />} />  {/* Corrected the way we pass the component */}
         </Routes>
       </Layout>
     </Router>
@@ -56,24 +60,3 @@ function App() {
 }
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -111,14 +111,14 @@ const TwoPieceSuits = () => {
   const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
 
   const twoPieceSuits = [
-    { id: 1, name: 'Executive Two-Piece Suit', image: TwoPiece1, price: 11000 },
-    { id: 2, name: 'Modern Classic Two-Piece Suit', image: TwoPiece2, price: 11000 },
-    { id: 3, name: 'Premium Two-Piece Suit', image: TwoPiece3, price: 11000 },
-    { id: 4, name: 'Business Two-Piece Suit', image: TwoPiece4, price: 11000 },
-    { id: 5, name: '💯 Super Classic Two-Piece Suit', image: TwoPiece5, price: 11000 },
-    { id: 7, name: 'Modern Two-Piece Suit', image: TwoPiece7, price: 11000 },
-    { id: 8, name: 'Premium Two-Piece Suit', image: TwoPiece8, price: 11000 },
-    { id: 9, name: 'Elegant Two-Piece Suit', image: TwoPiece9, price: 11000 }
+    { id: 1, name: 'Executive Two-Piece Suit ⭐⭐⭐⭐⭐', image: TwoPiece1, price: 11000 },
+    { id: 2, name: 'Modern Classic Two-Piece Suit ⭐⭐⭐⭐⭐', image: TwoPiece2, price: 11000 },
+    { id: 3, name: 'Premium Two-Piece Suit ⭐⭐⭐⭐⭐', image: TwoPiece3, price: 11000 },
+    { id: 4, name: 'Business Two-Piece Suit ⭐⭐⭐⭐⭐', image: TwoPiece4, price: 11000 },
+    { id: 5, name: 'Super Classic Two-Piece Suit⭐⭐⭐⭐⭐', image: TwoPiece5, price: 11000 },
+    { id: 7, name: 'Modern Two-Piece Suit⭐⭐⭐⭐⭐', image: TwoPiece7, price: 11000 },
+    { id: 8, name: 'Premium Two-Piece Suit⭐⭐⭐⭐⭐', image: TwoPiece8, price: 11000 },
+    { id: 9, name: 'Elegant Two-Piece Suit⭐⭐⭐⭐⭐', image: TwoPiece9, price: 11000 }
   ];
 
   const sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];

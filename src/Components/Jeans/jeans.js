@@ -129,22 +129,22 @@ const Jeans = () => {
   }, []);
 
   const jeansProducts = [
-    { id: 1, image: Jean1, name: 'Slim Fit jean', price: 2000 },
-    { id: 2, image: Jean2, name: 'Vintage Jean', price: 2000 },
-    { id: 3, image: Jean3, name: 'Ripped Skinny Jeans', price: 2000 },
-    { id: 4, image: Jean4, name: 'Classic Straight Leg', price: 2000 },
-    { id: 5, image: Jean5, name: 'High Super Jean', price: 2000 },
-    { id: 6, image: Jean6, name: 'Black Stretch Jean', price: 2000 },
-    { id: 7, image: Jean7, name: 'Classic Jean', price: 2000 },
-    { id: 8, image: Jean8, name: 'Tapered Cargo Jeans', price: 2000 },
-    { id: 9, image: Jean9, name: 'Flare Jeans', price: 2000 },
-    { id: 10, image: Jean10, name: 'Selvedge Denim', price: 2000 },
-    { id: 11, image: Jean11, name: '💯 Super Jeans', price: 2000 },
-    { id: 12, image: Jean12, name: 'Stretch Skinny Fit', price: 2000 },
-    { id: 13, image: Jean13, name: 'Mid Wash Denim', price: 2000 },
-    { id: 14, image: Jean14, name: 'Slim Fit Jogger', price: 2000 },
-    { id: 15, image: Jean15, name: 'Premium Jeans', price: 2000 },
-    { id: 16, image: Jean16, name: 'Dark Blue Jeans', price: 2000 }
+    { id: 1, image: Jean1, name: 'Slim Fit jean ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 2, image: Jean2, name: 'Vintage Jean ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 3, image: Jean3, name: 'Ripped Skinny Jeans ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 4, image: Jean4, name: 'Classic Straight Leg ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 5, image: Jean5, name: 'High Super Jean ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 6, image: Jean6, name: 'Black Stretch Jean ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 7, image: Jean7, name: 'Classic Jean ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 8, image: Jean8, name: 'Tapered Cargo Jeans ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 9, image: Jean9, name: 'Flare Jeans ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 10, image: Jean10, name: 'Selvedge Denim ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 11, image: Jean11, name: 'Super Jeans ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 12, image: Jean12, name: 'Stretch Skinny Fit ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 13, image: Jean13, name: 'Mid Wash Denim ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 14, image: Jean14, name: 'Slim Fit Jogger ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 15, image: Jean15, name: 'Premium Jeans ⭐⭐⭐⭐⭐', price: 2000 },
+    { id: 16, image: Jean16, name: 'Dark Blue Jeans ⭐⭐⭐⭐⭐', price: 2000 }
   ];
 
   const handleAddToCart = (item) => {

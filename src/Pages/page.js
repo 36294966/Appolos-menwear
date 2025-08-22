@@ -75,6 +75,8 @@ const Home = () => {
   const [selectedItem, setSelectedItem] = useState(null);
   const [paymentImmediate, setPaymentImmediate] = useState(false);
   const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
+  const [hoveredItemId, setHoveredItemId] = useState(null); // Track which item is hovered
+
   const Sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
 
   // Handle adding to cart
@@ -82,19 +84,12 @@ const Home = () => {
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
-      size: item.category !== 'jeans' && item.category !== 'jacket' ? (selectedSizeForSuit[item.id] || 'Not Selected') : 'N/A',
+      size: item.category !== 'jeans' && item.category !== 'jacket' && item.category !== 'belt' ? (selectedSizeForSuit[item.id] || 'Not Selected') : 'N/A',
       addedAt: new Date().toISOString(),
     };
     localStorage.setItem('cart', JSON.stringify([...storedCart, newItem]));
     window.dispatchEvent(new Event('storage'));
     alert(`${item.name} added to cart`);
-
-    // Reset selected size after adding to cart
-    setSelectedSizeForSuit(prev => {
-      const newSizes = { ...prev };
-      delete newSizes[item.id]; // Reset selected size for this item
-      return newSizes;
-    });
   };
 
   // Update cart count
@@ -132,61 +127,64 @@ const Home = () => {
   ];
 
   const tuxedoSuits = [
-    { id: 1, name: 'Classic Tuxedo Dinner Suit', image: Tuxedo1, price: 15000 },
-    { id: 2, name: 'Royal Tuxedo Dinner Suit', image: Tuxedo2, price: 15000 },
-    { id: 3, name: 'Elegant Tuxedo Dinner Suit', image: Tuxedo3, price: 15000 },
-    { id: 4, name: 'Luxury Tuxedo Dinner Suit', image: Tuxedo4, price: 15000 },
-    { id: 5, name: 'Elegant Tuxedo Dinner Suit', image: Tuxedo5, price: 15000 },
-    { id: 6, name: 'Classic Tuxedo Dinner Suit', image: Tuxedo6, price: 15000 },
-    { id: 7, name: 'Designer Tuxedo Dinner Suit', image: Tuxedo7, price: 15000 },
-    { id: 8, name: 'Glamorous Tuxedo Dinner Suit', image: Tuxedo8, price: 15000 },
+    { id: 1, name: 'Velvet Tuxedo Suit', image: Tuxedo1, price: 15000 },
+    { id: 2, name: 'Midnight Tuxedo Suit', image: Tuxedo2, price: 15000 },
+    { id: 3, name: 'Ensemble Tuxedo Suit', image: Tuxedo3, price: 15000 },
+    { id: 4, name: 'Classic Tuxedo Suit', image: Tuxedo4, price: 15000 },
+    { id: 5, name: 'Slim Tuxedo Suit', image: Tuxedo5, price: 15000 },
+    { id: 6, name: 'Designer Tuxedo Set', image: Tuxedo6, price: 15000 },
+    { id: 7, name: 'Royal Dinner Suit', image: Tuxedo7, price: 15000 },
+    { id: 8, name: 'Premium Tuxedo Suit', image: Tuxedo8, price: 15000 },
   ];
 
   const kaundaSuits = [
     { id: 1, name: 'Classic Kaunda Suit', image: Kaunda1, price: 14000 },
     { id: 2, name: 'Royal Kaunda Suit', image: Kaunda2, price: 14000 },
-    { id: 3, name: 'Modern Kaunda Suit', image: Kaunda3, price: 14000 },
-    { id: 4, name: 'Elegant Kaunda Suit', image: Kaunda4, price: 14000 },
+    { id: 3, name: 'Modern Kaunda Suit', image: Kaunda3, price:14000 },
+    { id: 4, name: 'Elegent Kaunda Suit', image: Kaunda4, price: 14000 },
   ];
 
   const officialShirts = [
-    { id: 1, name: 'Presidential Shirt', image: Official1, price: 3000 },
-    { id: 2, name: 'Presidential Shirt', image: Official2, price: 3000 },
-    { id: 3, name: 'Presidential Shirt', image: Official3, price: 3000 },
+    { id: 1, name: 'Presidential Shirt', image: Official1, price: 3000},
+    { id: 2, name: 'Presidential Shirt', image: Official2, price: 3000},
+    { id: 3, name: 'Presidential Shirt', image: Official3, price: 3000},
     { id: 4, name: 'Presidential Shirt', image: Official4, price: 3000 },
-    { id: 5, name: 'Classic Official Shirt', image: Official5, price: 1800 },
-    { id: 6, name: 'Designer Official Shirt', image: Official6, price: 1800 },
-    { id: 7, name: 'Elegant Official Shirt', image: Official7, price: 1800 },
-    { id: 8, name: 'Stylish Official Shirt', image: Official8, price: 1800 },
+    { id: 5, name: 'French Cuff Formal', image: Official5, price: 1800 },
+    { id: 6, name: 'Slim Fit Office Shirt', image: Official6, price: 1800 },
+    { id: 7, name: 'Double Cuff Business', image: Official7, price: 1800 },
+    { id: 8, name: 'Designer Collar Shirt', image: Official8, price: 1800 },
   ];
 
+  // Adding Jeans products
   const jeans = [
-    { id: 1, name: 'Comfortable Denim Jean', image: Jean1, price: 2000 },
-    { id: 2, name: 'Classic Blue Jean', image: Jean2, price: 2000 },
-    { id: 3, name: 'Slim Fit Dark Blue Jean', image: Jean3, price: 2000 },
-    { id: 4, name: 'Relaxed Fit Jean', image: Jean4, price: 2000 },
-    { id: 5, name: 'Stretchable Skinny Jean', image: Jean5, price: 2000 },
-    { id: 6, name: 'Premium Black Jean', image: Jean6, price: 2000 },
-    { id: 7, name: 'Luxury Denim Jean', image: Jean7, price: 2000 },
-    { id: 8, name: 'Designer Blue Jean', image: Jean8, price: 2000 },
-    { id: 9, name: 'Casual Slim Fit Jean', image: Jean9, price: 2000 },
-    { id: 10, name: 'Trendy Ripped Jean', image: jean10, price: 2000 },
-    { id: 11, name: 'Faded Vintage Jean', image: Jean11, price: 2000 },
-    { id: 12, name: 'Tight Fit Black Jean', image: Jean12, price: 2000 },
+    { id: 1, name: 'Slim Fit jean', image: Jean1, price: 2000 },
+    { id: 2, name: 'Vintage Jean', image: Jean2, price: 2000 },
+    { id: 3, name: 'Ripped Skinny Jean', image: Jean3, price: 2000 },
+    { id: 4, name: 'Classic Straight Leg', image: Jean4, price: 2000 },
+    { id: 5, name: 'High Super Jean', image: Jean5, price: 2000 },
+    { id: 6, name: 'Black Stretch jean', image: Jean6, price: 2000 },
+    { id: 7, name: 'Classic Jean', image: Jean7, price: 2000 },
+    { id: 8, name: 'Tapered Cargo Jeans', image: Jean8, price: 2000 },
+    { id: 9, name: '💯Flare Jeans', image: Jean9, price: 2000 },
+    { id: 10, name: 'Selvedge Denim', image: jean10, price: 2000 },
+    { id: 11, name: '💯 Super Jean', image: Jean11, price: 2000 },
+    { id: 12, name: 'Stretch Skinny Fit', image: Jean12, price: 2000 },
   ];
 
+  // Leather Jackets data
   const leatherJackets = [
-    { id: 1, name: 'Classic Black Leather Jacket', image: Jacket1, price: 3500 },
-    { id: 2, name: 'Stylish Brown Leather Jacket', image: Jacket2, price: 3500 },
-    { id: 3, name: 'Luxury Leather Jacket', image: Jacket3, price: 3500 },
-    { id: 4, name: 'Modern Fit Leather Jacket', image: Jacket4, price: 3500 },
+    { id: 1, name: 'Leather Jacket - Classic', image: Jacket1, price: 3500 },
+    { id: 2, name: 'Leather Jacket - Premium', image: Jacket2, price: 3500 },
+    { id: 3, name: 'Leather Jacket - Modern Fit', image: Jacket3, price: 3500 },
+    { id: 4, name: 'Leather Jacket - Elegant Fit', image: Jacket4, price: 3500 },
   ];
 
+  // Belts data
   const belts = [
-    { id: 1, name: 'Classic Brown Belt', image: Belt5, price: 1000 },
-    { id: 2, name: 'Elegant Black Belt', image: Belt6, price: 1200 },
-    { id: 3, name: 'Luxury Leather Belt', image: Belt7, price: 1500 },
-    { id: 4, name: 'Modern Stylish Belt', image: Belt8, price: 1800 },
+    { id: 1, name: 'Premium Leather Belt', image: Belt5, price: 2000 },
+    { id: 2, name: 'Premium Leather Belt', image: Belt6, price: 2000 },
+    { id: 3, name: 'Stylish Brown Belt', image: Belt7, price: 2000 },
+    { id: 4, name: 'Elegant Black Belt', image: Belt8, price: 2000 },
   ];
 
   // Categories for display
@@ -229,9 +227,19 @@ const Home = () => {
     {
       title: 'Belts',
       items: belts,
-      link: '/accessories/belt',
+      link: '/accessories/belt', // Link for Belt category
     },
   ];
+
+  // Handle mouse hover to zoom item
+  const handleMouseEnter = (id) => {
+    setHoveredItemId(id);
+  };
+
+  // Handle mouse leave to remove zoom effect
+  const handleMouseLeave = () => {
+    setHoveredItemId(null);
+  };
 
   // Function to open modal for purchase
   const handlePurchaseClick = (item) => {
@@ -249,29 +257,26 @@ const Home = () => {
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
-      {/* Banner */}
-      <div className="mb-4 p-4 bg-yellow-100 rounded-lg shadow-md flex items-center justify-between">
-        <div className="text-gray-800 font-semibold">
-          🚀 Special Offer! Free shipping on orders over Ksh 10,000! Limited time only!
-        </div>
-        <Link
-          to="/special-offer"
-          className="bg-yellow-300 px-3 py-1 rounded-lg font-semibold hover:bg-yellow-400"
-        >
-          View Details
-        </Link>
-      </div>
-
+    
       {/* Categories */}
       {categories.map((category) => (
         <div key={category.title}>
-          <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-8 mx-4">
-            <p>{category.title} – Limited Time Offer! Get Yours Today!</p>
+          <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-16 mx-4">
+            <p>{category.title} – Hurry Up!! 🚀 Limited Time Offer! Get Yours Today! Get Supper Wool💯 Free
+              Fading Products 
+            </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
             {category.items.map((item) => (
-              <div key={item.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
-                <div className="h-64 w-full bg-gray-100 p-4 flex items-center justify-center">
+              <div
+                key={item.id}
+                className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden relative"
+                onMouseEnter={() => handleMouseEnter(item.id)} // Zoom on hover
+                onMouseLeave={handleMouseLeave} // Remove zoom on mouse leave
+              >
+                <div
+                  className={`h-64 w-full bg-gray-100 p-4 flex items-center justify-center ${hoveredItemId === item.id ? 'transform scale-150 transition-all duration-300' : ''}`}
+                >
                   <img
                     src={item.image}
                     alt={item.name}
@@ -279,13 +284,27 @@ const Home = () => {
                     loading="lazy"
                   />
                 </div>
+
+                {/* View More Button (visible on hover) */}
+                {hoveredItemId === item.id && (
+                  <div className="absolute top-4 right-4">
+                    <Link
+                      to={category.link} // Correct link for the category
+                      className="bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all"
+                    >
+                      View More
+                    </Link>
+                  </div>
+                )}
+
                 <div className="p-5 text-center space-y-4">
                   <h3 className="text-xl font-bold">{item.name}</h3>
                   <div className="flex justify-center mb-2">
                     <span className="text-blue-600 font-bold text-xl">Ksh {item.price}</span>
                   </div>
+
                   {/* Sizes */}
-                  {category.title !== 'Belts' && (
+                  {category.title !== 'Jeans' && category.title !== 'Official Shirts' && category.title !== 'Leather Jackets' && category.title !== 'Belts' && (
                     <div className="flex flex-col items-start space-y-2">
                       <span className="text-sm sm:text-base md:text-lg font-medium">Select Sizes</span>
                       <div className="flex space-x-2 overflow-x-auto pb-2 w-full">
@@ -301,6 +320,7 @@ const Home = () => {
                       </div>
                     </div>
                   )}
+
                   {/* Buttons */}
                   <div className="space-y-2 mt-4">
                     <button
@@ -320,9 +340,10 @@ const Home = () => {
               </div>
             ))}
           </div>
+
           <div className="flex justify-end mt-6 mb-8">
             <Link
-              to={category.link} // Dynamic Link for View More
+              to={category.link} // Correct link for View More for the category
               className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2"
             >
               <span>View More</span> <ChevronRight className="w-6 h-6" />
@@ -398,6 +419,7 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
                 </div>
               </div>
               
+
               <input
                 type="number"
                 placeholder="Enter amount (Ksh)"

@@ -12,6 +12,36 @@ import ThreePiece1 from '../Assets/Suits/threepiece1.jpg';
 import ThreePiece2 from '../Assets/Suits/threepiece2.jpg';
 import ThreePiece3 from '../Assets/Suits/threepiece3.jpg';
 import ThreePiece4 from '../Assets/Suits/threepiece4.jpg';
+import ThreePiece5 from '../Assets/Suits/threepiece5.jpg';
+import ThreePiece6 from '../Assets/Suits/threepiece6.jpg';
+import ThreePiece7 from '../Assets/Suits/threepiece7.jpg';
+import ThreePiece8 from '../Assets/Suits/threepiece8.jpg';
+import ThreePiece9 from '../Assets/Suits/threepiece9.jpg';
+import ThreePiece10 from '../Assets/Suits/threepiece10.jpg';
+import ThreePiece11 from '../Assets/Suits/threepiece11.jpg';
+import ThreePiece12 from '../Assets/Suits/threepiece12.jpg';
+import ThreePiece14 from '../Assets/Suits/threepiece14.jpg';
+import ThreePiece15 from '../Assets/Suits/threepiece15.jpg';
+import ThreePiece16 from '../Assets/Suits/threepiece16.jpg';
+import ThreePiece17 from '../Assets/Suits/threepiece17.jpg';
+import ThreePiece18 from '../Assets/Suits/threepiece18.jpg';
+import ThreePiece19 from '../Assets/Suits/threepiece19.jpg';
+import ThreePiece20 from '../Assets/Suits/threepiece20.jpg';
+import ThreePiece21 from '../Assets/Suits/threepiece21.jpg';
+import ThreePiece22 from '../Assets/Suits/threepiece22.jpg';
+import ThreePiece23 from '../Assets/Suits/threepiece23.jpg';
+import ThreePiece24 from '../Assets/Suits/threepiece24.jpg';
+import ThreePiece25 from '../Assets/Suits/threepiece25.jpg';
+import ThreePiece26 from '../Assets/Suits/threepiece26.jpg';
+import ThreePiece27 from '../Assets/Suits/threepiece27.jpg';
+import ThreePiece28 from '../Assets/Suits/threepiece28.jpg';
+import ThreePiece29 from '../Assets/Suits/threepiece29.jpg';
+import ThreePiece30 from '../Assets/Suits/threepiece30.jpg';
+import ThreePiece31 from '../Assets/Suits/threepiece31.jpg';
+import ThreePiece33 from '../Assets/Suits/threepiece33.jpg';
+import ThreePiece32 from '../Assets/Suits/threepiece32.jpg';
+import DoubleBreast1 from '../Assets/Suits/doubleBreast1.jpg';
+import DoubleBreast2 from '../Assets/Suits/doubleBreast2.jpg';
 
 import TwoPiece1 from '../Assets/Suits/twopiece1.jpg';
 import TwoPiece2 from '../Assets/Suits/twopiece2.jpg';
@@ -69,13 +99,12 @@ import Belt7 from '../Assets/Accessories/belt7.jpg';
 import Belt8 from '../Assets/Accessories/belt8.jpg';
 
 const Home = () => {
-  // State variables
   const [cartCount, setCartCount] = useState(0);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [paymentImmediate, setPaymentImmediate] = useState(false);
   const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
-  const [hoveredItemId, setHoveredItemId] = useState(null); // Track which item is hovered
+  const [hoveredItemId, setHoveredItemId] = useState(null);
 
   const Sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
 
@@ -90,6 +119,16 @@ const Home = () => {
     localStorage.setItem('cart', JSON.stringify([...storedCart, newItem]));
     window.dispatchEvent(new Event('storage'));
     alert(`${item.name} added to cart`);
+    
+    // Reset the size for this specific item
+    setSelectedSizeForSuit(prev => ({ ...prev, [item.id]: undefined }));
+  };
+
+  // Handle purchase click
+  const handlePurchaseClick = (item) => {
+    setSelectedItem(item);
+    setPaymentImmediate(true);
+    setShowModal(true);
   };
 
   // Update cart count
@@ -105,130 +144,123 @@ const Home = () => {
 
   // Data arrays for products
   const threePieceSuits = [
-    { id: 1, name: 'Executive Three-Piece Suit', image: Photo1, price: 13000 },
-    { id: 2, name: 'Classic Fading Free Three-Piece Suit', image: Photo2, price: 13000 },
-    { id: 3, name: 'Premium Linen Three-Piece Suit', image: Photo3, price: 13000 },
-    { id: 4, name: 'Classic Pinstripe Ensemble', image: Photo4, price: 13000 },
-    { id: 5, name: 'Modern-Fit Three-Piece Suit', image: ThreePiece1, price: 13000 },
-    { id: 6, name: 'Royal Navy Three-Piece Suit', image: ThreePiece2, price: 13000 },
-    { id: 7, name: 'Luxury Three-Piece Suit', image: ThreePiece3, price: 13000 },
-    { id: 8, name: 'Modern Three-Piece Suit', image: ThreePiece4, price: 13000 },
+    { id: 1, name: 'Executive Three-Piece Suit ⭐⭐⭐⭐⭐', image: Photo1, price: 13000, category: 'three-piece' },
+    { id: 2, name: 'Elegance Three-Piece Suit ⭐⭐⭐⭐⭐', image: Photo2, price: 13000, category: 'three-piece' },
+    { id: 3, name: 'Premium Three-Piece Suit ⭐⭐⭐⭐⭐', image: Photo3, price: 13000, category: 'three-piece' },
+    { id: 4, name: 'Classic Pinstripe Ensemble ⭐⭐⭐⭐⭐', image: Photo4, price: 13000, category: 'three-piece' },
+    { id: 5, name: 'Modern-Fit Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece1, price: 13000, category: 'three-piece' },
+    { id: 6, name: 'Royal Navy Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece2, price: 13000, category: 'three-piece' },
+    { id: 7, name: 'Luxury Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece3, price: 13000, category: 'three-piece' },
+    { id: 8, name: 'Modern Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece4, price: 13000, category: 'three-piece' },
+    { id: 9, name: 'Elite Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece5, price: 13000, category: 'three-piece' },
+    { id: 10, name: 'Prestige Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece6, price: 13000, category: 'three-piece' },
+    { id: 11, name: 'Imperial Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece7, price: 13000, category: 'three-piece' },
+    { id: 12, name: 'LuxeLine Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece9, price: 13000, category: 'three-piece' },
+    { id: 13, name: 'Sovereign Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece10, price: 13000, category: 'three-piece' },
+    { id: 14, name: 'Heritage Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece11, price: 13000, category: 'three-piece' },
+    { id: 15, name: 'Legacy Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece12, price: 13000, category: 'three-piece' },
+    { id: 16, name: 'Opulence Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece14, price: 13000, category: 'three-piece' },
+    { id: 17, name: 'Sophistication Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece15, price: 13000, category: 'three-piece' },
+    { id: 18, name: 'Couture ClassicsThree-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece16, price: 13000, category: 'three-piece' },
+    { id: 20, name: 'Dignity Collection Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece17, price: 13000, category: 'three-piece' },
+    { id: 21, name: 'Vanguard Elite Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece18, price: 13000, category: 'three-piece' },
+    { id: 22, name: 'Summit Suits Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece19, price: 13000, category: 'three-piece' },
+    { id: 23, name: 'Executive Edge Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece33, price: 13000, category: 'three-piece' },
+    { id: 24, name: 'Eminence Collection Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece21, price: 13000, category: 'three-piece' },
+    { id: 25, name: 'Refined Royalty Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece22, price: 13000, category: 'three-piece' },
+    { id: 26, name: 'Pinnacle Series Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece23, price: 13000, category: 'three-piece' },
+    { id: 27, name: 'Urban Aristocrat Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece24, price: 13000, category: 'three-piece' },
+    { id: 28, name: 'Noble AttireThree-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece25, price: 13000, category: 'three-piece' },
+    { id: 29, name: 'Legacy Luxe Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece26, price: 13000, category: 'three-piece' },
+    { id: 30, name: 'Signature Sovereign Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece27, price: 13000, category: 'three-piece' },
+    { id: 31, name: 'Majesty Mode Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece28, price: 13000, category: 'three-piece' },
+    { id: 32, name: 'Imperial Attire Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece29, price: 13000, category: 'three-piece' },
+    { id: 33, name: 'Monarch Line Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece30, price: 13000, category: 'three-piece' },
+    { id: 34, name: 'Crown & Confidence Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece31, price: 13000, category: 'three-piece' },
+    { id: 35, name: 'Virtue Vogue Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece32, price: 13000, category: 'three-piece' },
+    { id: 36, name: 'Premium Double Breast Suit⭐⭐⭐⭐⭐', image: DoubleBreast1, price: 13500, category: 'double-breast' },
+    { id: 37, name: 'Elegant Double Breast Suit⭐⭐⭐⭐⭐', image: DoubleBreast2, price: 13500, category: 'double-breast' },
   ];
 
   const twoPieceSuits = [
-    { id: 1, name: 'Executive Two-Piece Suit', image: TwoPiece1, price: 11000 },
-    { id: 2, name: 'Modern Classic Two-Piece Suit', image: TwoPiece2, price: 11000 },
-    { id: 3, name: 'Premium Two-Piece Suit', image: TwoPiece3, price: 11000 },
-    { id: 4, name: 'Business Two-Piece Suit', image: TwoPiece4, price: 11000 },
-    { id: 5, name: '💯 Super Classic Two-Piece Suit', image: TwoPiece5, price: 11000 },
-    { id: 7, name: 'Modern Two-Piece Suit', image: TwoPiece7, price: 11000 },
-    { id: 8, name: 'Premium Two-Piece Suit', image: TwoPiece8, price: 11000 },
-    { id: 9, name: 'Elegant Two-Piece Suit', image: TwoPiece9, price: 11000 },
+    { id: 38, name: 'Executive Two-Piece Suit 💯', image: TwoPiece1, price: 11000, category: 'two-piece' },
+    { id: 39, name: 'Modern Classic Two-Piece Suit💯', image: TwoPiece2, price: 11000, category: 'two-piece' },
+    { id: 40, name: 'Premium Two-Piece Suit💯', image: TwoPiece3, price: 11000, category: 'two-piece' },
+    { id: 41, name: 'Business Two-Piece Suit💯', image: TwoPiece4, price: 11000, category: 'two-piece' },
+    { id: 42, name: 'Super Classic Two-Piece Suit💯', image: TwoPiece5, price: 11000, category: 'two-piece' },
+    { id: 43, name: 'Modern Two-Piece Suit💯', image: TwoPiece7, price: 11000, category: 'two-piece' },
+    { id: 44, name: 'Premium Two-Piece Suit💯', image: TwoPiece8, price: 11000, category: 'two-piece' },
+    { id: 45, name: 'Elegant Two-Piece Suit💯', image: TwoPiece9, price: 11000, category: 'two-piece' },
   ];
 
   const tuxedoSuits = [
-    { id: 1, name: 'Velvet Tuxedo Suit', image: Tuxedo1, price: 15000 },
-    { id: 2, name: 'Midnight Tuxedo Suit', image: Tuxedo2, price: 15000 },
-    { id: 3, name: 'Ensemble Tuxedo Suit', image: Tuxedo3, price: 15000 },
-    { id: 4, name: 'Classic Tuxedo Suit', image: Tuxedo4, price: 15000 },
-    { id: 5, name: 'Slim Tuxedo Suit', image: Tuxedo5, price: 15000 },
-    { id: 6, name: 'Designer Tuxedo Set', image: Tuxedo6, price: 15000 },
-    { id: 7, name: 'Royal Dinner Suit', image: Tuxedo7, price: 15000 },
-    { id: 8, name: 'Premium Tuxedo Suit', image: Tuxedo8, price: 15000 },
+    { id: 46, name: 'Velvet Tuxedo Suit⭐⭐⭐⭐⭐', image: Tuxedo1, price: 15000, category: 'tuxedo' },
+    { id: 47, name: 'Midnight Tuxedo Suit⭐⭐⭐⭐⭐', image: Tuxedo2, price: 15000, category: 'tuxedo' },
+    { id: 48, name: 'Ensemble Tuxedo Suit⭐⭐⭐⭐⭐', image: Tuxedo3, price: 15000, category: 'tuxedo' },
+    { id: 49, name: 'Classic Tuxedo Suit⭐⭐⭐⭐⭐', image: Tuxedo4, price: 15000, category: 'tuxedo' },
+    { id: 50, name: 'Slim Tuxedo Suit⭐⭐⭐⭐⭐', image: Tuxedo5, price: 15000, category: 'tuxedo' },
+    { id: 51, name: 'Designer Tuxedo Set⭐⭐⭐⭐⭐', image: Tuxedo6, price: 15000, category: 'tuxedo' },
+    { id: 52, name: 'Royal Dinner Suit⭐⭐⭐⭐⭐', image: Tuxedo7, price: 15000, category: 'tuxedo' },
+    { id: 53, name: 'Premium Tuxedo Suit⭐⭐⭐⭐⭐', image: Tuxedo8, price: 15000, category: 'tuxedo' },
   ];
 
   const kaundaSuits = [
-    { id: 1, name: 'Classic Kaunda Suit', image: Kaunda1, price: 14000 },
-    { id: 2, name: 'Royal Kaunda Suit', image: Kaunda2, price: 14000 },
-    { id: 3, name: 'Modern Kaunda Suit', image: Kaunda3, price:14000 },
-    { id: 4, name: 'Elegent Kaunda Suit', image: Kaunda4, price: 14000 },
+    { id: 54, name: 'Classic Kaunda Suit⭐⭐⭐⭐⭐', image: Kaunda1, price: 14000, category: 'kaunda' },
+    { id: 55, name: 'Royal Kaunda Suit⭐⭐⭐⭐⭐', image: Kaunda2, price: 14000, category: 'kaunda' },
+    { id: 56, name: 'Modern Kaunda Suit⭐⭐⭐⭐⭐', image: Kaunda3, price: 14000, category: 'kaunda' },
+    { id: 57, name: 'Elegant Kaunda Suit⭐⭐⭐⭐⭐', image: Kaunda4, price: 14000, category: 'kaunda' },
   ];
 
   const officialShirts = [
-    { id: 1, name: 'Presidential Shirt', image: Official1, price: 3000},
-    { id: 2, name: 'Presidential Shirt', image: Official2, price: 3000},
-    { id: 3, name: 'Presidential Shirt', image: Official3, price: 3000},
-    { id: 4, name: 'Presidential Shirt', image: Official4, price: 3000 },
-    { id: 5, name: 'French Cuff Formal', image: Official5, price: 1800 },
-    { id: 6, name: 'Slim Fit Office Shirt', image: Official6, price: 1800 },
-    { id: 7, name: 'Double Cuff Business', image: Official7, price: 1800 },
-    { id: 8, name: 'Designer Collar Shirt', image: Official8, price: 1800 },
+    { id: 58, name: 'Presidential Shirt⭐⭐⭐⭐⭐', image: Official1, price: 3000, category: 'shirt' },
+    { id: 59, name: 'Presidential Shirt⭐⭐⭐⭐⭐', image: Official2, price: 3000, category: 'shirt' },
+    { id: 60, name: 'Presidential Shirt⭐⭐⭐⭐⭐', image: Official3, price: 3000, category: 'shirt' },
+    { id: 61, name: 'Presidential Shirt⭐⭐⭐⭐⭐', image: Official4, price: 3000, category: 'shirt' },
+    { id: 62, name: 'French Cuff Formal⭐⭐⭐⭐⭐', image: Official5, price: 1800, category: 'shirt' },
+    { id: 63, name: 'Slim Fit Office Shirt⭐⭐⭐⭐⭐', image: Official6, price: 1800, category: 'shirt' },
+    { id: 64, name: 'Double Cuff Business⭐⭐⭐⭐⭐', image: Official7, price: 1800, category: 'shirt' },
+    { id: 65, name: 'Designer Collar Shirt⭐⭐⭐⭐⭐', image: Official8, price: 1800, category: 'shirt' },
   ];
 
-  // Adding Jeans products
   const jeans = [
-    { id: 1, name: 'Slim Fit jean', image: Jean1, price: 2000 },
-    { id: 2, name: 'Vintage Jean', image: Jean2, price: 2000 },
-    { id: 3, name: 'Ripped Skinny Jean', image: Jean3, price: 2000 },
-    { id: 4, name: 'Classic Straight Leg', image: Jean4, price: 2000 },
-    { id: 5, name: 'High Super Jean', image: Jean5, price: 2000 },
-    { id: 6, name: 'Black Stretch jean', image: Jean6, price: 2000 },
-    { id: 7, name: 'Classic Jean', image: Jean7, price: 2000 },
-    { id: 8, name: 'Tapered Cargo Jeans', image: Jean8, price: 2000 },
-    { id: 9, name: '💯Flare Jeans', image: Jean9, price: 2000 },
-    { id: 10, name: 'Selvedge Denim', image: jean10, price: 2000 },
-    { id: 11, name: '💯 Super Jean', image: Jean11, price: 2000 },
-    { id: 12, name: 'Stretch Skinny Fit', image: Jean12, price: 2000 },
+    { id: 66, name: 'Slim Fit jean 👖', image: Jean1, price: 2000, category: 'jeans' },
+    { id: 67, name: 'Vintage Jean👖', image: Jean2, price: 2000, category: 'jeans' },
+    { id: 68, name: 'Ripped Skinny Jean👖', image: Jean3, price: 2000, category: 'jeans' },
+    { id: 69, name: 'Classic Straight Leg👖', image: Jean4, price: 2000, category: 'jeans' },
+    { id: 70, name: 'High Super Jean👖', image: Jean5, price: 2000, category: 'jeans' },
+    { id: 71, name: 'Black Stretch jean👖', image: Jean6, price: 2000, category: 'jeans' },
+    { id: 72, name: 'Classic Jean👖', image: Jean7, price: 2000, category: 'jeans' },
+    { id: 73, name: 'Tapered Cargo Jeans👖', image: Jean8, price: 2000, category: 'jeans' },
+    { id: 74, name: '💯Flare Jeans👖', image: Jean9, price: 2000, category: 'jeans' },
+    { id: 75, name: 'Selvedge Denim👖', image: jean10, price: 2000, category: 'jeans' },
+    { id: 76, name: '💯 Super Jean👖', image: Jean11, price: 2000, category: 'jeans' },
+    { id: 77, name: 'Stretch Skinny Fit👖', image: Jean12, price: 2000, category: 'jeans' },
   ];
 
-  // Leather Jackets data
   const leatherJackets = [
-    { id: 1, name: 'Leather Jacket - Classic', image: Jacket1, price: 3500 },
-    { id: 2, name: 'Leather Jacket - Premium', image: Jacket2, price: 3500 },
-    { id: 3, name: 'Leather Jacket - Modern Fit', image: Jacket3, price: 3500 },
-    { id: 4, name: 'Leather Jacket - Elegant Fit', image: Jacket4, price: 3500 },
+    { id: 78, name: '🔥Leather Jacket - Classic', image: Jacket1, price: 3500, category: 'jacket' },
+    { id: 79, name: '🔥Leather Jacket - Premium', image: Jacket2, price: 3500, category: 'jacket' },
+    { id: 80, name: '🔥Leather Jacket - Modern Fit', image: Jacket3, price: 3500, category: 'jacket' },
+    { id: 81, name: '🔥Leather Jacket - Elegant Fit', image: Jacket4, price: 3500, category: 'jacket' },
   ];
 
-  // Belts data
   const belts = [
-    { id: 1, name: 'Premium Leather Belt', image: Belt5, price: 2000 },
-    { id: 2, name: 'Premium Leather Belt', image: Belt6, price: 2000 },
-    { id: 3, name: 'Stylish Brown Belt', image: Belt7, price: 2000 },
-    { id: 4, name: 'Elegant Black Belt', image: Belt8, price: 2000 },
+    { id: 82, name: '💯Premium Leather Belt', image: Belt5, price: 2000, category: 'belt' },
+    { id: 83, name: '💯Premium Leather Belt', image: Belt6, price: 2000, category: 'belt' },
+    { id: 84, name: '💯Stylish Brown Belt', image: Belt7, price: 2000, category: 'belt' },
+    { id: 85, name: '💯Elegant Black Belt', image: Belt8, price: 2000, category: 'belt' },
   ];
 
   // Categories for display
   const categories = [
-    {
-      title: 'Three-Piece Suits',
-      items: threePieceSuits,
-      link: '/suits/3piecesuits',
-    },
-    {
-      title: 'Two-Piece Suits',
-      items: twoPieceSuits,
-      link: '/suits/2piecesuits',
-    },
-    {
-      title: 'Tuxedo Dinner Suits',
-      items: tuxedoSuits,
-      link: '/suits/tuxedo',
-    },
-    {
-      title: 'Kaunda Suits',
-      items: kaundaSuits,
-      link: '/suits/kaunda',
-    },
-    {
-      title: 'Official Shirts',
-      items: officialShirts,
-      link: '/shirts/official',
-    },
-    {
-      title: 'Jeans',
-      items: jeans,
-      link: '/jeans',
-    },
-    {
-      title: 'Leather Jackets',
-      items: leatherJackets,
-      link: '/jackets/leather',
-    },
-    {
-      title: 'Belts',
-      items: belts,
-      link: '/accessories/belt', // Link for Belt category
-    },
+    { title: 'Three-Piece Suits', items: threePieceSuits, link: '/suits/3piecesuits' },
+    { title: 'Two-Piece Suits', items: twoPieceSuits, link: '/suits/2piecesuits' },
+    { title: 'Tuxedo Dinner Suits', items: tuxedoSuits, link: '/suits/tuxedo' },
+    { title: 'Kaunda Suits', items: kaundaSuits, link: '/suits/kaunda' },
+    { title: 'Official Shirts', items: officialShirts, link: '/shirts/official' },
+    { title: 'Jeans', items: jeans, link: '/jeans' },
+    { title: 'Leather Jackets', items: leatherJackets, link: '/jackets/leather' },
+    { title: 'Belts', items: belts, link: '/accessories/belt' },
   ];
 
   // Handle mouse hover to zoom item
@@ -241,67 +273,51 @@ const Home = () => {
     setHoveredItemId(null);
   };
 
-  // Function to open modal for purchase
-  const handlePurchaseClick = (item) => {
-    setSelectedItem(item);
-    setPaymentImmediate(true);
-    setShowModal(true);
-  };
-
   // Function to close modal
   const handleCloseModal = () => {
     setShowModal(false);
     setSelectedItem(null);
     setPaymentImmediate(false);
+    
+    // Reset the size for the selected item when modal closes
+    if (selectedItem) {
+      setSelectedSizeForSuit(prev => ({ ...prev, [selectedItem.id]: undefined }));
+    }
   };
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
-      {/* Banner */}
-      {/* <div className="mb-4 p-4 bg-yellow-100 rounded-lg shadow-md flex items-center justify-between">
-        <div className="text-gray-800 font-semibold">
-          🚀 Special Offer! Free shipping on orders over Ksh 10,000! Limited time only!
-        </div> */}
-        {/* <Link
-          to="/special-offer"
-          className="bg-yellow-300 px-3 py-1 rounded-lg font-semibold hover:bg-yellow-400"
-        >
-          View Details
-        </Link> */}
-      {/* </div> */}
-
       {/* Categories */}
       {categories.map((category) => (
         <div key={category.title}>
           <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-xl p-6 text-center font-bold rounded-xl mb-8 animate-blink mt-16 mx-4">
-            <p>{category.title} – Hurry Up!! 🚀 Limited Time Offer! Get Yours Today! Get Supper Wool💯 Free
-              Fading Products 
-            </p>
+            <p>{category.title} – 🔥 Hurry Up!! 🚀 Limited Time Offer!</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
             {category.items.map((item) => (
               <div
                 key={item.id}
                 className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden relative"
-                onMouseEnter={() => handleMouseEnter(item.id)} // Zoom on hover
-                onMouseLeave={handleMouseLeave} // Remove zoom on mouse leave
+                onMouseEnter={() => handleMouseEnter(item.id)}
+                onMouseLeave={handleMouseLeave}
               >
-                <div
-                  className={`h-64 w-full bg-gray-100 p-4 flex items-center justify-center ${hoveredItemId === item.id ? 'transform scale-150 transition-all duration-300' : ''}`}
-                >
-                  <img
-                    src={item.image}
-                    alt={item.name}
-                    className="w-full h-full object-contain rounded-lg"
-                    loading="lazy"
-                  />
+                <div className={`w-full bg-gray-100 p-4 flex items-center justify-center transition-all duration-300 ${hoveredItemId === item.id ? 'transform scale-110' : ''}`}>
+                  <Link to={`/product/${item.id}`}>
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full sm:w-3/4 md:w-3/4 lg:w-full h-52 object-contain rounded-lg transition-all duration-300"
+                      loading="lazy"
+                    />
+                  </Link>
                 </div>
 
                 {/* View More Button (visible on hover) */}
                 {hoveredItemId === item.id && (
                   <div className="absolute top-4 right-4">
                     <Link
-                      to={category.link} // Correct link for the category
+                      to={category.link}
                       className="bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-all"
                     >
                       View More
@@ -310,9 +326,9 @@ const Home = () => {
                 )}
 
                 <div className="p-5 text-center space-y-4">
-                  <h3 className="text-xl font-bold">{item.name}</h3>
+                  <h3 className="text-lg sm:text-base font-bold">{item.name}</h3>
                   <div className="flex justify-center mb-2">
-                    <span className="text-blue-600 font-bold text-xl">Ksh {item.price}</span>
+                    <span className="text-blue-600 font-bold text-xl sm:text-lg">Ksh {item.price}</span>
                   </div>
 
                   {/* Sizes */}
@@ -323,7 +339,7 @@ const Home = () => {
                         {Sizes.map((size) => (
                           <button
                             key={size}
-                            onClick={() => setSelectedSizeForSuit((prev) => ({ ...prev, [item.id]: prev[item.id] === size ? undefined : size }))} 
+                            onClick={() => setSelectedSizeForSuit((prev) => ({ ...prev, [item.id]: prev[item.id] === size ? undefined : size }))}
                             className={`px-3 sm:px-4 md:px-5 py-1 sm:py-2 rounded-lg border-2 text-xs sm:text-sm md:text-base ${selectedSizeForSuit[item.id] === size ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300'}`}
                           >
                             {size}
@@ -337,13 +353,13 @@ const Home = () => {
                   <div className="space-y-2 mt-4">
                     <button
                       onClick={() => handlePurchaseClick(item)}
-                      className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition"
+                      className="w-full bg-green-800 hover:bg-green-800 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition"
                     >
                       <CheckCircle className="w-5 h-5" /> Purchase
                     </button>
                     <button
                       onClick={() => handleAddToCart(item)}
-                      className="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition"
+                      className="w-full bg-blue-600 hover:bg-gray-800 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition"
                     >
                       <ShoppingCart className="w-5 h-5" /> Add to Cart
                     </button>
@@ -355,7 +371,7 @@ const Home = () => {
 
           <div className="flex justify-end mt-6 mb-8">
             <Link
-              to={category.link} // Correct link for View More for the category
+              to={category.link}
               className="text-xl font-bold text-blue-600 hover:text-blue-800 flex items-center space-x-2"
             >
               <span>View More</span> <ChevronRight className="w-6 h-6" />
@@ -366,7 +382,11 @@ const Home = () => {
 
       {/* Payment Popup Modal */}
       {showModal && selectedItem && (
-        <PaymentPopup item={selectedItem} selectedSize={selectedSizeForSuit[selectedItem.id]} onClose={handleCloseModal} />
+        <PaymentPopup 
+          item={selectedItem} 
+          selectedSize={selectedSizeForSuit[selectedItem.id]} 
+          onClose={handleCloseModal} 
+        />
       )}
     </section>
   );
@@ -382,7 +402,7 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
   };
 
   const handlePaymentConfirmation = () => {
-    const content = `CASUAL WEAR PURCHASE\n-------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nSize: ${selectedSize}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${item?.price?.toLocaleString()}`;
+    const content = `CASUAL WEAR PURCHASE\n-------------------\nItem: ${item?.name}\nProduct ID: ${item?.id}\nSize: ${selectedSize || 'Not Selected'}\nPaybill: ${paymentDetails.paybill}\nAccount: ${paymentDetails.account}\nAmount Paid: Ksh ${amount || '________'}\nStandard Price: Ksh ${item?.price?.toLocaleString()}`;
     
     const blob = new Blob([content], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
@@ -430,7 +450,6 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
                   <span className="font-mono text-green-600 font-bold">Ksh {item?.price?.toLocaleString()}</span>
                 </div>
               </div>
-              
 
               <input
                 type="number"
@@ -471,4 +490,3 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
 };
 
 export default Home;
-

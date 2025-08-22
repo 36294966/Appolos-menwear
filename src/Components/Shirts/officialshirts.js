@@ -133,22 +133,22 @@ const Official = () => {
   }, []);
 
   const shirts = [
-    { id: 1, image: Official1, name: 'Presidential Shirt', price: 3000 },
-    { id: 2, image: Official2, name: 'Presidential Shirt', price: 3000 },
-    { id: 3, image: Official3, name: 'Presidential Shirt', price: 3000 },
-    { id: 4, image: Official4, name: 'Presidential Shirt', price: 3000 },
-    { id: 5, image: Official5, name: 'French Cuff Formal', price: 1800 },
-    { id: 6, image: Official6, name: 'Slim Fit Office Shirt', price: 1800 },
-    { id: 7, image: Official7, name: 'Double Cuff Business', price: 1800 },
-    { id: 8, image: Official8, name: 'Designer Collar Shirt', price: 1800 },
-    { id: 9, image: Official9, name: 'Executive Checkered', price: 1800 },
-    { id: 10, image: Official10, name: 'Silk Blend Formal', price: 1800 },
-    { id: 11, image: Official11, name: 'Premium Twill Shirt', price: 1800 },
-    { id: 12, image: Official12, name: 'Classic Spread Collar', price: 1800 },
-    { id: 13, image: Official13, name: 'Luxury Official Shirt', price: 1800 },
-    { id: 14, image: Official14, name: 'Sophistic Official Shirt', price: 1800 },
-    { id: 15, image: Official15, name: 'Classic Official Shirt', price: 1800},
-    { id: 16, image: Official16, name: 'Exclusive Official Shirt', price: 1800}
+    { id: 1, image: Official1, name: 'Presidential Shirt ⭐⭐⭐⭐⭐', price: 3000 },
+    { id: 2, image: Official2, name: 'Presidential Shirt ⭐⭐⭐⭐⭐', price: 3000 },
+    { id: 3, image: Official3, name: 'Presidential Shirt ⭐⭐⭐⭐⭐', price: 3000 },
+    { id: 4, image: Official4, name: 'Presidential Shirt ⭐⭐⭐⭐⭐', price: 3000 },
+    { id: 5, image: Official5, name: 'French Cuff Formal ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 6, image: Official6, name: 'Slim Fit Office Shirt ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 7, image: Official7, name: 'Double Cuff Business ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 8, image: Official8, name: 'Designer Collar Shirt ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 9, image: Official9, name: 'Executive Checkered ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 10, image: Official10, name: 'Silk Blend Formal ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 11, image: Official11, name: 'Premium Twill Shirt ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 12, image: Official12, name: 'Classic Spread Collar ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 13, image: Official13, name: 'Luxury Official Shirt ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 14, image: Official14, name: 'Sophistic Official Shirt ⭐⭐⭐⭐⭐', price: 1800 },
+    { id: 15, image: Official15, name: 'Classic Official Shirt ⭐⭐⭐⭐⭐', price: 1800},
+    { id: 16, image: Official16, name: 'Exclusive Official Shirt ⭐⭐⭐⭐⭐', price: 1800}
   ];
 
   const handleAddToCart = (item) => {

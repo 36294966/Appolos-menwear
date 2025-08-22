@@ -122,19 +122,19 @@ const Cassual = () => {
   const casualShirts = [
     {
       id: 1,
-      name: 'Urban Streetwear Shirt',
+      name: 'Urban Streetwear Shirt ⭐⭐⭐⭐⭐',
       image: Cassual1,
       price: 1700
     },
     {
       id: 2,
-      name: 'Designer Denim Casual',
+      name: 'Designer Denim Casual ⭐⭐⭐⭐⭐',
       image: Cassual2,
       price: 1700
     },
     {
       id: 3,
-      name: 'Premium Linen Blend',
+      name: 'Premium Linen Blend ⭐⭐⭐⭐⭐',
       image: Cassual3,
       price: 1700
     }
