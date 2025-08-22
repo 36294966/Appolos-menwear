@@ -1,32 +1,20 @@
-import {
-  ChevronDown,
-  Menu,
-  X,
-  ShoppingCart
-} from 'lucide-react';
+import { ChevronDown, Menu, X, ShoppingCart } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faUserTie,
-  faShirt,
-  faGem,
-  faVest,
-  faHouse
-} from '@fortawesome/free-solid-svg-icons';
+import { faUserTie, faShirt, faGem, faVest, faHouse } from '@fortawesome/free-solid-svg-icons';
 import CheckroomIcon from '@mui/icons-material/Checkroom';
-
 import Logo from '../Assets/logo.jpg';
 
 const Navbar = ({ onFilterSelect }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null);
-  const [leaveTimeout, setLeaveTimeout] = useState(null);
-  const [cartCount, setCartCount] = useState(0);
+  const [isOpen, setIsOpen] = useState(false); // Mobile menu state
+  const [openDropdown, setOpenDropdown] = useState(null); // Dropdown state
+  const [leaveTimeout, setLeaveTimeout] = useState(null); // Timeout for dropdown
+  const [cartCount, setCartCount] = useState(0); // Cart count state
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Update cart count when there is a change in cart
     const updateCartCount = () => {
       const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
       setCartCount(storedCart.length);
@@ -37,8 +25,9 @@ const Navbar = ({ onFilterSelect }) => {
   }, []);
 
   const handleFilter = (category, value) => {
+    // Handle category filtering and navigation
     onFilterSelect?.(category, value);
-    setIsOpen(false);
+    setIsOpen(false); // Close the mobile menu when an item is selected
     setOpenDropdown(null);
 
     const routeMap = {
@@ -46,23 +35,23 @@ const Navbar = ({ onFilterSelect }) => {
         '2 Piece Suits': '/suits/2piecesuits',
         '3 Piece Suits': '/suits/3piecesuits',
         'Tuxedo & Dinner': '/suits/tuxedo',
-        'Kaunda Suits': '/suits/kaunda' // New Kaunda Suits category
+        'Kaunda Suits': '/suits/kaunda',
       },
       Accessories: {
         'Belt': '/accessories/belt',
         'Ties': '/accessories/ties',
-        'Socks': '/accessories/socks'
+        'Socks': '/accessories/socks',
       },
       Shirts: {
         'Official Shirts': '/shirts/official',
-        'Cassual Shirts': '/shirts/cassual'
+        'Cassual Shirts': '/shirts/cassual',
       },
       'Blazers & Jackets': {
-        'Leather Jacket': '/jackets/leather'
+        'Leather Jacket': '/jackets/leather',
       },
       Jeans: {
-        'Jeans': '/jeans'
-      }
+        'Jeans': '/jeans',
+      },
     };
 
     const path = routeMap[category]?.[value];
@@ -74,35 +63,30 @@ const Navbar = ({ onFilterSelect }) => {
       title: 'Suits',
       icon: <FontAwesomeIcon icon={faUserTie} className="text-xl" />,
       dropdown: {
-        Style: [
-          '2 Piece Suits', 
-          '3 Piece Suits', 
-          'Tuxedo & Dinner', 
-          'Kaunda Suits'  // Added Kaunda Suits
-        ]
-      }
+        Style: ['2 Piece Suits', '3 Piece Suits', 'Tuxedo & Dinner', 'Kaunda Suits'],
+      },
     },
     {
       title: 'Shirts',
       icon: <FontAwesomeIcon icon={faShirt} className="text-xl" />,
-      dropdown: { Style: ['Official Shirts', 'Cassual Shirts'] }
+      dropdown: { Style: ['Official Shirts', 'Cassual Shirts'] },
     },
     {
       title: 'Jeans',
       icon: <CheckroomIcon className="text-white" fontSize="large" />,
       dropdown: { Type: ['Jeans'] },
-      page: '/jeans'
+      page: '/jeans',
     },
     {
       title: 'Accessories',
       icon: <FontAwesomeIcon icon={faGem} className="text-xl" />,
-      dropdown: { Items: ['Socks', 'Ties', 'Belt'] }
+      dropdown: { Items: ['Socks', 'Ties', 'Belt'] },
     },
     {
       title: 'Blazers & Jackets',
       icon: <FontAwesomeIcon icon={faVest} className="text-xl" />,
-      dropdown: { Jackets: ['Leather Jacket'] }
-    }
+      dropdown: { Jackets: ['Leather Jacket'] },
+    },
   ];
 
   return (
@@ -119,7 +103,10 @@ const Navbar = ({ onFilterSelect }) => {
         {/* Desktop Menu */}
         <div className="hidden md:flex items-center space-x-6 font-semibold text-base">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => {
+              navigate('/');
+              setIsOpen(false); // Close menu on Home click
+            }}
             className="flex items-center group hover:text-yellow-200 transition"
           >
             <FontAwesomeIcon icon={faHouse} className="ml-1 group-hover:-translate-x-1 transition-all text-xl" />
@@ -140,7 +127,14 @@ const Navbar = ({ onFilterSelect }) => {
             >
               <button
                 className="flex items-center space-x-1 hover:text-yellow-200 transition"
-                onClick={() => item.page && navigate(item.page)}
+                onClick={() => {
+                  if (item.page) {
+                    navigate(item.page);
+                    setIsOpen(false); // Close the menu on item click
+                  } else {
+                    setOpenDropdown(openDropdown === item.title ? null : item.title);
+                  }
+                }}
               >
                 {item.icon}
                 <span className="text-lg">{item.title}</span>
@@ -171,7 +165,10 @@ const Navbar = ({ onFilterSelect }) => {
           {/* Cart */}
           <div
             className="flex items-center space-x-1 hover:text-yellow-200 cursor-pointer relative"
-            onClick={() => navigate('/cart')}
+            onClick={() => {
+              navigate('/cart');
+              setIsOpen(false); // Close menu when clicking cart
+            }}
           >
             <ShoppingCart size={24} />
             <span className="text-lg">Cart</span>
@@ -187,7 +184,10 @@ const Navbar = ({ onFilterSelect }) => {
         <div className="md:hidden flex items-center space-x-4">
           <div
             className="relative cursor-pointer hover:text-yellow-200"
-            onClick={() => navigate('/cart')}
+            onClick={() => {
+              navigate('/cart');
+              setIsOpen(false); // Close menu when clicking cart
+            }}
           >
             <ShoppingCart size={24} />
             {cartCount > 0 && (
@@ -210,7 +210,10 @@ const Navbar = ({ onFilterSelect }) => {
       {isOpen && (
         <div className="md:hidden px-4 pb-4 bg-blue-600 space-y-2 text-lg">
           <button
-            onClick={() => navigate('/')}
+            onClick={() => {
+              navigate('/');
+              setIsOpen(false); // Close menu on Home click
+            }}
             className="flex items-center space-x-2 py-2 w-full hover:bg-blue-700 rounded"
           >
             <FontAwesomeIcon icon={faHouse} />
@@ -224,7 +227,7 @@ const Navbar = ({ onFilterSelect }) => {
                 onClick={() => {
                   if (item.page) {
                     navigate(item.page);
-                    setIsOpen(false);
+                    setIsOpen(false); // Close the menu after navigation
                   } else {
                     setOpenDropdown(openDropdown === item.title ? null : item.title);
                   }
@@ -252,7 +255,7 @@ const Navbar = ({ onFilterSelect }) => {
                           key={val}
                           onClick={() => {
                             handleFilter(item.title, val);
-                            setIsOpen(false);
+                            setIsOpen(false); // Close menu after selecting a filter
                           }}
                           className="w-full text-left px-2 py-1 hover:bg-blue-700 rounded"
                         >
@@ -272,3 +275,5 @@ const Navbar = ({ onFilterSelect }) => {
 };
 
 export default Navbar;
+
+

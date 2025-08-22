@@ -109,7 +109,8 @@ const Home = () => {
   const Sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
 
   // Handle adding to cart
-  const handleAddToCart = (item) => {
+  const handleAddToCart = (item, event) => {
+    if (event) event.preventDefault();
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
@@ -123,22 +124,17 @@ const Home = () => {
     // Reset the size for this specific item
     setSelectedSizeForSuit(prev => ({ ...prev, [item.id]: undefined }));
   };
-  
 
   // Handle purchase click
-  const handlePurchaseClick = (item) => {
+  const handlePurchaseClick = (item, event) => {
+    if (event) event.preventDefault();
     setSelectedItem(item);
     setPaymentImmediate(true);
     setShowModal(true);
     
-     handlePurchaseClick = (event, item) => {
-    event.preventDefault();  // Prevent page scroll
-    setSelectedItem(item);
-    setPaymentImmediate(true);
-    setShowModal(true);
+    // Reset the size for this specific item
+    setSelectedSizeForSuit(prev => ({ ...prev, [item.id]: undefined }));
   };
-  };
-  
 
   // Update cart count
   useEffect(() => {
@@ -151,8 +147,6 @@ const Home = () => {
     return () => window.removeEventListener('storage', updateCart);
   }, []);
   
-   
-
   // Data arrays for products
   const threePieceSuits = [
     { id: 1, name: 'Executive Three-Piece Suit ⭐⭐⭐⭐⭐', image: Photo1, price: 13000, category: 'three-piece' },
@@ -350,7 +344,10 @@ const Home = () => {
                         {Sizes.map((size) => (
                           <button
                             key={size}
-                            onClick={() => setSelectedSizeForSuit((prev) => ({ ...prev, [item.id]: prev[item.id] === size ? undefined : size }))}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setSelectedSizeForSuit((prev) => ({ ...prev, [item.id]: prev[item.id] === size ? undefined : size }));
+                            }}
                             className={`px-3 sm:px-4 md:px-5 py-1 sm:py-2 rounded-lg border-2 text-xs sm:text-sm md:text-base ${selectedSizeForSuit[item.id] === size ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300'}`}
                           >
                             {size}
@@ -363,13 +360,13 @@ const Home = () => {
                   {/* Buttons */}
                   <div className="space-y-2 mt-4">
                     <button
-                      onClick={() => handlePurchaseClick(item)}
+                      onClick={(e) => handlePurchaseClick(item, e)}
                       className="w-full bg-green-800 hover:bg-green-800 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition"
                     >
                       <CheckCircle className="w-5 h-5" /> Purchase
                     </button>
                     <button
-                      onClick={() => handleAddToCart(item)}
+                      onClick={(e) => handleAddToCart(item, e)}
                       className="w-full bg-blue-600 hover:bg-gray-800 text-white py-3 rounded-lg font-semibold flex items-center justify-center gap-2 transition"
                     >
                       <ShoppingCart className="w-5 h-5" /> Add to Cart
@@ -432,7 +429,7 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
-      <div className="bg-white p-8 rounded-2xl w-[95%] max-w-md space-y-6">
+      <div className="bg-white p-8 rounded-2xl w-[95] max-w-md space-y-6">
         <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 flex items-center gap-2">
           {paymentSuccess ? (
             <>
@@ -497,8 +494,6 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
             <p className="text-sm text-gray-500 mt-2">Closing automatically...</p>
           </div>
         )}
-    
-
       </div>
     </div>
   );
