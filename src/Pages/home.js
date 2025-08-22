@@ -123,19 +123,22 @@ const Home = () => {
     // Reset the size for this specific item
     setSelectedSizeForSuit(prev => ({ ...prev, [item.id]: undefined }));
   };
+  
 
   // Handle purchase click
   const handlePurchaseClick = (item) => {
     setSelectedItem(item);
     setPaymentImmediate(true);
     setShowModal(true);
-    handlePurchaseClick = (event, item) => {
+    
+     handlePurchaseClick = (event, item) => {
     event.preventDefault();  // Prevent page scroll
     setSelectedItem(item);
     setPaymentImmediate(true);
     setShowModal(true);
   };
   };
+  
 
   // Update cart count
   useEffect(() => {
@@ -147,6 +150,7 @@ const Home = () => {
     window.addEventListener('storage', updateCart);
     return () => window.removeEventListener('storage', updateCart);
   }, []);
+  
    
 
   // Data arrays for products
