@@ -129,6 +129,12 @@ const Home = () => {
     setSelectedItem(item);
     setPaymentImmediate(true);
     setShowModal(true);
+    handlePurchaseClick = (event, item) => {
+    event.preventDefault();  // Prevent page scroll
+    setSelectedItem(item);
+    setPaymentImmediate(true);
+    setShowModal(true);
+  };
   };
 
   // Update cart count
@@ -141,6 +147,7 @@ const Home = () => {
     window.addEventListener('storage', updateCart);
     return () => window.removeEventListener('storage', updateCart);
   }, []);
+   
 
   // Data arrays for products
   const threePieceSuits = [
@@ -368,6 +375,7 @@ const Home = () => {
               </div>
             ))}
           </div>
+          
 
           <div className="flex justify-end mt-6 mb-8">
             <Link
@@ -416,6 +424,7 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
     setPaymentSuccess(true);
     setTimeout(onClose, 1500);
   };
+    
 
   return (
     <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 backdrop-blur-sm">
@@ -484,6 +493,8 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
             <p className="text-sm text-gray-500 mt-2">Closing automatically...</p>
           </div>
         )}
+    
+
       </div>
     </div>
   );
