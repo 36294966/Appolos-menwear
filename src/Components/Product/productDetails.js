@@ -325,9 +325,6 @@ const products = [
 ];
 
 /* ========================================================================
-];
-
-/* ========================================================================
    SUIT SIZE UTILS
    ====================================================================== */
 const suitCategories = ['Three-Piece Suits', 'TwoPiece Suits', 'Tuxedo Dinner Suits', 'Kaunda Suits', 'DoubleBreast Suits'];
@@ -343,6 +340,11 @@ const ProductDetail = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [sizes, setSizes] = useState({});
+
+  // Scroll to top when product changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [id]);
 
   useEffect(() => {
     const numericId = Number(id);
@@ -513,23 +515,22 @@ const ProductDetail = () => {
 
       {/* -------------------- Similar Products -------------------- */}
       <div className="mt-12 max-w-7xl mx-auto px-4">
-<h3 className="text-3xl font-bold text-center mb-6 text-black blinking-text">You Might Also Like 🛒</h3>
+        <h3 className="text-3xl font-bold text-center mb-6 text-black blinking-text">You Might Also Like 🛒</h3>
 
-<style>{`
-  @keyframes slowBlink {
-    20%, 100% { opacity: 1; }
-    80% { opacity: 0; }
-  }
-  .blinking-text {
-    animation: slowBlink 3s ease-in-out infinite;
-  }
-`}</style>
-
+        <style>{`
+          @keyframes slowBlink {
+            20%, 100% { opacity: 1; }
+            80% { opacity: 0; }
+          }
+          .blinking-text {
+            animation: slowBlink 3s ease-in-out infinite;
+          }
+        `}</style>
 
         <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6`}>
           {similarProducts.map((item) => (
             <div key={item.id} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition duration-300 overflow-hidden p-4 flex flex-col justify-between">
-              <Link to={`/product/${item.id}`}>
+              <Link to={`/product/${item.id}`} onClick={() => window.scrollTo(0, 0)}>
                 <div className="h-64 bg-gray-100 flex items-center justify-center mb-4">
                   <img src={item.image} alt={item.name} className="w-full h-full object-contain rounded-lg" />
                 </div>
@@ -585,8 +586,5 @@ const ProductDetail = () => {
 };
 
 export default ProductDetail;
-
-
-
 
 

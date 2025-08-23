@@ -165,7 +165,7 @@ const Footer = () => {
             <li><a href="/suits/tuxedo" className="quick-link">Tuxedo Dinner Suit</a></li>
             <li><a href="/suits/kaunda" className="quick-link">Kaunda Suit</a></li>
             <li><a href="/shirts/official" className="quick-link">Official Shirt</a></li>
-            <li><a href="/shirts/casual" className="quick-link">Casual Shirt</a></li>
+            <li><a href="/shirts/cassual" className="quick-link">Cassual Shirt</a></li>
             <li><a href="/jeans" className="quick-link">Jean</a></li>
             <li><a href="/accessories/ties" className="quick-link">Ties</a></li>
             <li><a href="/accessories/belt" className="quick-link">Belt</a></li>

@@ -92,11 +92,11 @@ Amount Paid: KES ${amountToPay}
 
   return (
     <div className="min-h-screen bg-gray-300 p-6 pt-16"> {/* Increased padding top */}
-      <h2 className="text-4xl font-bold mb-6 text-center">Your Cart</h2>
+      <h2 className="text-4xl font-bold mt-24 mb-6 text-center">Your Cart</h2>
       {isPurchased ? (
         // Show confirmation message when the cart is empty after purchase
         <div className="text-center text-gray-500">
-          <ShoppingCart className="mx-auto h-16 w-16 mb-4 text-gray-400" />
+          <ShoppingCart className="mx-auto h-16 w-16 mb-4 mt-6 text-gray-400" />
           <p className="text-xl">Your cart is empty</p>
           <button
             onClick={handleContinueShopping}

@@ -85,9 +85,32 @@ import official6 from '../../Assets/Official/official6.jpg';
 import official7 from '../../Assets/Official/official7.jpg';
 import official8 from '../../Assets/Official/official8.jpg';
 
-
+//jeans
 import Jean1 from '../../Assets/Jeans/jean1.jpeg';
+import Jean2 from '../../Assets/Jeans/jean2.jpeg';
+import Jean3 from '../../Assets/Jeans/jean3.jpeg';
+import Jean4 from '../../Assets/Jeans/jean4.jpg';
+import Jean5 from '../../Assets/Jeans/jean5.jpg';
+import Jean6 from '../../Assets/Jeans/jean6.jpg';
+import Jean7 from '../../Assets/Jeans/jean7.jpg';
+import Jean8 from '../../Assets/Jeans/jean8.jpg';
+import Jean9 from '../../Assets/Jeans/jean9.jpg';
+import Jean10 from '../../Assets/Jeans/jean10.jpg';   // Ensure this import is present
+import Jean11 from '../../Assets/Jeans/jean11.jpg';
+import Jean12 from '../../Assets/Jeans/jean12.jpg';
+
+//jackets
 import Jacket1 from '../../Assets/Jackets/jacket1.jpg';
+import Jacket2 from '../../Assets/Jackets/jacket2.jpg';
+import Jacket3 from '../../Assets/Jackets/jacket3.jpg';
+import Jacket4 from '../../Assets/Jackets/jacket4.webp';
+
+//Belt
+import Belt5 from '../../Assets/Accessories/belt5.jpg';
+import Belt6 from '../../Assets/Accessories/belt6.jpg';
+import Belt7 from '../../Assets/Accessories/belt7.jpg';
+import Belt8 from '../../Assets/Accessories/belt8.jpg';
+
 
 /* ========================================================================
    PAYMENT POPUP
@@ -194,62 +217,63 @@ Amount: Ksh ${amount || '[Enter amount here]'}
    ====================================================================== */
 const products = [
   // Three-Piece items (1 - 35)
-  { id: 1, name: 'Executive Three-Piece Suit', price: 13000, description: 'A beautiful three-piece suit made from premium wool.', category: 'Three-Piece Suits', image: Photo1 },
-  { id: 2, name: 'Classic Fading Free Three-Piece Suit', price: 13000, description: 'Classic suit with a modern touch.', category: 'Three-Piece Suits', image: Photo2 },
-{ id: 4, name: 'Classic Pinstripe Ensemble', price: 13000, description: 'A classic pinstripe ensemble for business meetings.', category: 'Three-Piece Suits', image: Photo4 },
-  { id: 5, name: 'Modern-Fit Three-Piece Suit', price: 13000, description: 'A modern, slim-fit three-piece suit with stylish cuts.', category: 'Three-Piece Suits', image: ThreePiece1 },
-  { id: 6, name: 'Royal Navy Three-Piece Suit', price: 14500, description: 'A navy blue three-piece suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece2 },
-  { id: 7, name: 'Luxury Three-Piece Suit', price: 13000, description: 'Luxury three-piece suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece3 },
-  { id: 8, name: 'Modern Three-Piece Suit', price: 13000, description: 'Modern three-piece suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece4 },
-  { id: 9, name: 'Elite Three-Piece Suit', price: 13000, description: 'Elite three-piece suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece5 },
-  { id: 10, name: 'Prestige Three-Piece Suit', price: 13000, description: 'Prestige Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece6 },
-  { id: 11, name: 'Imperial Three-Piece Suit', price: 13000, description: 'Imperial Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece7 },
-  { id: 12, name: 'LuxeLine Three-Piece Suit', price: 13000, description: 'LuxeLine Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece8 },
-  { id: 13, name: 'Sovereign Three-Piece Suit', price: 13000, description: 'Sovereign Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece9 },
-  { id: 14, name: 'Heritage Three-Piece Suit', price: 13000, description: 'Heritage Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece10 },
-  { id: 15, name: 'Legacy Three-Piece Suit', price: 13000, description: 'Legacy Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece11 },
-  { id: 16, name: 'Opulence Three-Piece Suit', price: 13000, description: 'Opulence Heritage Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece12 },
-  { id: 17, name: 'Sophistication Three-Piece Suit', price: 13000, description: 'Sophistication Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece13 },
-  { id: 18, name: 'Couture Classics Three-Piece Suit', price: 13000, description: 'Couture Classics Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece14 },
-  { id: 19, name: 'Dignity Collection Three-Piece Suit', price: 13000, description: 'Dignity Collection with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece15 },
-  { id: 20, name: 'Vanguard Elite Three-Piece Suit', price: 13000, description: 'Vanguard Elite with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece16 },
-  { id: 21, name: 'Summit Suits Three-Piece Suit', price: 13000, description: 'Summit Suits with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece17 },
-  { id: 22, name: 'Executive Edge Three-Piece Suit', price: 13000, description: 'Executive Edge with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece18 },
-  { id: 23, name: 'Eminence Collection Three-Piece Suit', price: 13000, description: 'Eminence Collection with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece19 },
-  { id: 24, name: 'Refined Royalty Three-Piece Suit', price: 13000, description: 'Refined Royalty with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece20 },
-  { id: 25, name: 'Pinnacle Series Three-Piece Suit', price: 13000, description: 'Pinnacle Series with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece21 },
-  { id: 26, name: 'Urban Aristocrat Three-Piece Suit', price: 13000, description: 'Urban Aristocrat with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece22 },
-  { id: 27, name: 'Noble Attire Three-Piece Suit', price: 13000, description: 'Noble Attire with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece23 },
-  { id: 28, name: 'Legacy Luxe Three-Piece Suit', price: 13000, description: 'Legacy Luxe with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece24 },
-  { id: 29, name: 'Signature Sovereign Three-Piece Suit', price: 13000, description: 'Signature Sovereign with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece25 },
-  { id: 30, name: 'Majesty Mode Three-Piece Suit', price: 13000, description: 'Majesty Mode with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece26 },
-  { id: 31, name: 'Imperial Attire Three-Piece Suit', price: 13000, description: 'Imperial Attire with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece27 },
-  { id: 32, name: 'Monarch Line Three-Piece Suit', price: 13000, description: 'Monarch Line with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece28 },
-  { id: 33, name: 'Crown & Confidence Three-Piece Suit', price: 13000, description: 'Crown & Confidence with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece29 },
-  { id: 34, name: 'Virtue Vogue Three-Piece Suit', price: 13000, description: 'Virtue Vogue with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece30 },
-  { id: 35, name: 'Couture Select Three-Piece Suit', price: 13000, description: 'Select couture three-piece.', category: 'Three-Piece Suits', image: ThreePiece31 },
+  { id: 1, name: 'Executive Three-Piece Suit ⭐⭐⭐⭐⭐', price: 13000, description: 'A beautiful three-piece suit made from premium wool.', category: 'Three-Piece Suits', image: Photo1 },
+  { id: 2, name: 'Elegance Fading Free Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Classic suit with a modern touch.', category: 'Three-Piece Suits', image: Photo2 },
+  { id: 3, name: 'Premium Fading Free Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Classic suit with a modern touch.', category: 'Three-Piece Suits', image: Photo3 },
+{ id: 4, name: 'Classic Pinstripe Ensemble⭐⭐⭐⭐⭐', price: 13000, description: 'A classic pinstripe ensemble for business meetings.', category: 'Three-Piece Suits', image: Photo4 },
+  { id: 5, name: 'Modern-Fit Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'A modern, slim-fit three-piece suit with stylish cuts.', category: 'Three-Piece Suits', image: ThreePiece1 },
+  { id: 6, name: 'Royal Navy Three-Piece Suit⭐⭐⭐⭐⭐', price: 14500, description: 'A navy blue three-piece suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece2 },
+  { id: 7, name: 'Luxury Three-Piece Suit ⭐⭐⭐⭐⭐', price: 13000, description: 'Luxury three-piece suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece3 },
+  { id: 8, name: 'Modern Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Modern three-piece suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece4 },
+  { id: 9, name: 'Elite Three-Piece Suit ⭐⭐⭐⭐⭐', price: 13000, description: 'Elite three-piece suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece5 },
+  { id: 10, name: 'Prestige Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Prestige Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece6 },
+  { id: 11, name: 'Imperial Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Imperial Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece7 },
+  { id: 12, name: 'LuxeLine Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'LuxeLine Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece9 },
+  { id: 13, name: 'Sovereign Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Sovereign Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece10 },
+  { id: 14, name: 'Heritage Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Heritage Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece11 },
+  { id: 15, name: 'Legacy Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Legacy Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece12 },
+  { id: 16, name: 'Opulence Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Opulence Heritage Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece14 },
+  { id: 17, name: 'Sophistication Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Sophistication Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece15},
+  { id: 18, name: 'Couture Classics Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Couture Classics Three-Piece Suit with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece13 },
+  { id: 19, name: 'Dignity Collection Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Dignity Collection with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece16 },
+  { id: 20, name: 'Vanguard Elite Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Vanguard Elite with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece17 },
+  { id: 21, name: 'Summit Suits Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Summit Suits with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece18 },
+  { id: 22, name: 'Executive Edge Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Executive Edge with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece19 },
+  { id: 23, name: 'Eminence Collection Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Eminence Collection with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece20 },
+  { id: 24, name: 'Refined Royalty Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Refined Royalty with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece21 },
+  { id: 25, name: 'Pinnacle Series Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Pinnacle Series with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece22 },
+  { id: 26, name: 'Urban Aristocrat Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Urban Aristocrat with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece23 },
+  { id: 27, name: 'Noble Attire Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Noble Attire with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece24 },
+  { id: 28, name: 'Legacy Luxe Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Legacy Luxe with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece25 },
+  { id: 29, name: 'Signature Sovereign Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Signature Sovereign with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece26 },
+  { id: 30, name: 'Majesty Mode Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Majesty Mode with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece27 },
+  { id: 31, name: 'Imperial Attire Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Imperial Attire with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece28 },
+  { id: 32, name: 'Monarch Line Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Monarch Line with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece29 },
+  { id: 33, name: 'Crown & Confidence Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Crown & Confidence with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece30 },
+  { id: 34, name: 'Virtue Vogue Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Virtue Vogue with an elegant finish.', category: 'Three-Piece Suits', image: ThreePiece31 },
+  { id: 35, name: 'Couture Select Three-Piece Suit⭐⭐⭐⭐⭐', price: 13000, description: 'Select couture three-piece.', category: 'Three-Piece Suits', image: ThreePiece32 },
 
-  { id: 36, name: 'Double-Breast Suit Black', price: 13500, description: 'A classic double-breast suit with a modern twist.', category: 'DoubleBreast Suits', image: DoubleBreast1 },
-  { id: 37, name: 'Double-Breast Suit Grey', price: 13500, description: 'A refined double-breast suit.', category: 'DoubleBreast Suits', image: DoubleBreast2 },
+  { id: 36, name: 'Double-Breast Suit Black⭐⭐⭐⭐⭐', price: 13500, description: 'A classic double-breast suit with a modern twist.', category: 'DoubleBreast Suits', image: DoubleBreast1 },
+  { id: 37, name: 'Double-Breast Suit Grey⭐⭐⭐⭐⭐', price: 13500, description: 'A refined double-breast suit.', category: 'DoubleBreast Suits', image: DoubleBreast2 },
   //two piece
-{ id: 38, name: 'Executive Two-Piece Suit', price: 11000, description: 'A classic two-piece suit with a modern twist.', category: 'TwoPiece Suits', image: TwoPiece1 },
-  { id: 39, name: 'Modern Classic Two-Piece Suit', price: 11000, description: 'Modern Classic Two-Piece suit.', category: 'TwoPiece Suits', image: TwoPiece2 },
-  { id: 40, name: 'Slim Two-Piece Suit', price: 12000, description: 'Slim, modern two-piece.', category: 'TwoPiece Suits', image: TwoPiece3 },
-  { id: 41, name: 'Heritage Two-Piece Suit', price: 11500, description: 'Heritage two-piece design.', category: 'TwoPiece Suits', image: TwoPiece4 },
-{ id: 42, name: '💯 Super Classic Two-Piece Suit', price: 11500, description: '💯 Super Classic two-piece design.', category: 'TwoPiece Suits', image: TwoPiece5 },
-{ id: 43, name: 'Modern Two Two-Piece Suit', price: 11500, description: 'Modern two-piece design.', category: 'TwoPiece Suits', image: TwoPiece7 },
-{ id: 44, name: 'Premium Two-Piece Suit', price: 11500, description: 'Premium two-piece design.', category: 'TwoPiece Suits', image: TwoPiece8},
-{ id: 45, name: 'Elegant Two-Piece Suit', price: 11500, description: 'Elegant two-piece design.', category: 'TwoPiece Suits', image: TwoPiece9},
+{ id: 38, name: 'Executive Two-Piece Suit⭐⭐⭐⭐⭐', price: 11000, description: 'A classic two-piece suit with a modern twist.', category: 'TwoPiece Suits', image: TwoPiece1 },
+  { id: 39, name: 'Modern Classic Two-Piece Suit⭐⭐⭐⭐⭐', price: 11000, description: 'Modern Classic Two-Piece suit.', category: 'TwoPiece Suits', image: TwoPiece2 },
+  { id: 40, name: 'Slim Two-Piece Suit⭐⭐⭐⭐⭐', price: 11000, description: 'Slim, modern two-piece.', category: 'TwoPiece Suits', image: TwoPiece3 },
+  { id: 41, name: 'Heritage Two-Piece Suit⭐⭐⭐⭐⭐', price: 11000, description: 'Heritage two-piece design.', category: 'TwoPiece Suits', image: TwoPiece4 },
+{ id: 42, name: '💯 Super Classic Two-Piece Suit⭐⭐⭐⭐⭐', price: 11000, description: '💯 Super Classic two-piece design.', category: 'TwoPiece Suits', image: TwoPiece5 },
+{ id: 43, name: 'Modern Two Two-Piece Suit⭐⭐⭐⭐⭐', price: 11000, description: 'Modern two-piece design.', category: 'TwoPiece Suits', image: TwoPiece7 },
+{ id: 44, name: 'Premium Two-Piece Suit⭐⭐⭐⭐⭐', price: 11000, description: 'Premium two-piece design.', category: 'TwoPiece Suits', image: TwoPiece8},
+{ id: 45, name: 'Elegant Two-Piece Suit⭐⭐⭐⭐⭐', price: 11000, description: 'Elegant two-piece design.', category: 'TwoPiece Suits', image: TwoPiece9},
 
 //tuxedo
-{ id: 46, name: 'Velvet Tuxedo Suit', price: 15000, description: 'Gorgeous velvet tuxedo for formal events.', category: 'Tuxedo Dinner Suits', image: Tuxedo1 },
-  { id: 47, name: 'Midnight Tuxedo Suit', price: 15000, description: 'Midnight tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo2 },
-  { id: 48, name: 'Ensemble Suit', price: 15000, description: 'Ensemble tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo3 },
-  { id: 49, name: 'Classic Tuxedo Suit', price: 15000, description: 'Classic tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo4 },
-  { id: 50, name: 'Slim  Tuxedo Suit', price: 15000, description: 'Slim and stylish tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo5 },
-  { id: 51, name: 'Designer Tuxedo Suit', price: 15000, description: 'Designer tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo6 },
-{ id:52, name: 'Royal  Tuxedo Suit', price: 15000, description: 'Royal tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo7 },
-{ id:53, name: 'Premium Tuxedo Suit', price: 15000, description: 'Slim and stylish tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo8 },
+{ id: 46, name: 'Velvet Tuxedo Suit ⭐⭐⭐⭐⭐', price: 15000, description: 'Gorgeous velvet tuxedo for formal events.', category: 'Tuxedo Dinner Suits', image: Tuxedo1 },
+  { id: 47, name: 'Midnight Tuxedo Suit⭐⭐⭐⭐⭐', price: 15000, description: 'Midnight tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo2 },
+  { id: 48, name: 'Ensemble Suit⭐⭐⭐⭐⭐', price: 15000, description: 'Ensemble tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo3 },
+  { id: 49, name: 'Classic Tuxedo Suit⭐⭐⭐⭐⭐', price: 15000, description: 'Classic tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo4 },
+  { id: 50, name: 'Slim  Tuxedo Suit⭐⭐⭐⭐⭐', price: 15000, description: 'Slim and stylish tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo5 },
+  { id: 51, name: 'Designer Tuxedo Suit⭐⭐⭐⭐⭐', price: 15000, description: 'Designer tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo6 },
+{ id:52, name: 'Royal  Tuxedo Suit⭐⭐⭐⭐⭐', price: 15000, description: 'Royal tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo7 },
+{ id:53, name: 'Premium Tuxedo Suit⭐⭐⭐⭐⭐', price: 15000, description: 'Slim and stylish tuxedo, perfect for high-profile events.', category: 'Tuxedo Dinner Suits', image: Tuxedo8 },
   
 
   // Kaunda suits (new products for Kaunda suits)
@@ -258,17 +282,49 @@ const products = [
   { id: 56, name: 'Modern Kaunda Suit', price: 14000, description: 'A stylish Kaunda suit perfect for formal African occasions.', category: 'Kaunda Suits', image: Kaunda3 },
   { id: 57, name: 'Elegant Kaunda Suit', price: 14000, description: 'A stylish Kaunda suit perfect for formal African occasions.', category: 'Kaunda Suits', image: Kaunda4 },
 
-  //official shirts 
+  
   // Official Shirts
-{ id: 58, name: 'Presidential Shirt', price: 3000, description: 'A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official1 },
-{ id: 59, name: 'Presidential Shirt', price: 3000, description: 'A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official2 },
-{ id: 60, name: 'Presidential Shirt', price: 3000, description: 'A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official3 },
-{ id: 61, name: 'Presidential Shirt', price: 3000, description: 'A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official4 },
-{ id: 62, name: 'Presidential Shirt', price: 3000, description: 'A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official5 },
-{ id: 63, name: 'Presidential Shirt', price: 3000, description: 'A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official6 },
-{ id: 64, name: 'Presidential Shirt', price: 3000, description: 'A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official7 },
-{ id: 65, name: 'Presidential Shirt', price: 3000, description: 'A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official8 },
+{ id: 58, name: 'Presidential Shirt', price: 3000, description: '💥A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official1 },
+{ id: 59, name: 'Presidential Shirt', price: 3000, description: '💥A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official2 },
+{ id: 60, name: 'Presidential Shirt', price: 3000, description: '💥A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official3 },
+{ id: 61, name: 'Presidential Shirt', price: 3000, description: '💥A Presidential Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official4 },
+{ id: 62, name: 'Presidential Shirt', price: 3000, description: '💥Official Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official5 },
+{ id: 63, name: 'Presidential Shirt', price: 3000, description: '💥Official Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official6 },
+{ id: 64, name: 'Presidential Shirt', price: 3000, description: '💥Official Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official7 },
+{ id: 65, name: 'Presidential Shirt', price: 3000, description: '💥Official Shirt perfect for formal African occasions.', category: 'Official Shirt', image: official8 },
  
+//jeans
+{ id: 66, name: 'Slim Fit Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean1 },
+{ id: 67, name: 'Vintage Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean2 },
+{ id: 68, name: 'Ripped Skinny Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean3},
+{ id: 69, name: 'Classic Straight Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean4 },
+{ id: 70, name: 'High Super Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean5 },
+{ id: 71, name: 'Black Stretch Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean6 },
+{ id: 72, name: 'Classic Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean7 },
+{ id: 73, name: 'Tapered Cargo Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean8 },
+{ id: 74, name: '💯Flare Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean9 },
+{ id: 75, name: 'Selvedge Denim Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean10 },
+{ id: 76, name: '💯 Super Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean11 },
+{ id: 77, name: 'Stretch Skinny Fit Jean', price: 2000, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jeans', image: Jean12 },
+
+
+//jacket
+{ id: 78, name: '🔥Leather Jacket - Classic', price: 3500, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jacket', image: Jacket1 },
+{ id: 79, name: '🔥Leather Jacket - Premium', price: 3500, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jacket', image: Jacket2 },
+{ id: 80, name: '🔥Leather Jacket - Modern Fit', price: 3500, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jacket', image: Jacket3 },
+{ id: 81, name: '🔥Leather Jacket - Elegant Fit', price: 3500, description: '🔥 Versatile: Ideal for any occasion—whether it’s a casual day out or a night on the town.', category: 'Jacket', image: Jacket4},
+
+
+//suits
+{ id: 82, name: '🔥Belt - Elegant Fit', price: 2000, description: '🌟 Adjustable Fit: Perfect for all waist sizes with a reliable, sturdy buckle that ensures comfort and security.', category: 'Belt', image: Belt5},
+{ id: 83, name: '🔥Belt - Elegant Fit', price: 2000, description: '🌟 Adjustable Fit: Perfect for all waist sizes with a reliable, sturdy buckle that ensures comfort and security.', category: 'Belt', image: Belt6},
+{ id: 84, name: '🔥Belt - Elegant Fit', price: 2000, description: '🌟 Adjustable Fit: Perfect for all waist sizes with a reliable, sturdy buckle that ensures comfort and security.', category: 'Belt', image: Belt7},
+{ id: 85, name: '🔥Belt - Elegant Fit', price: 2000, description: '🌟 Adjustable Fit: Perfect for all waist sizes with a reliable, sturdy buckle that ensures comfort and security.', category: 'Belt', image: Belt8},
+
+
+];
+
+/* ========================================================================
 ];
 
 /* ========================================================================
@@ -321,6 +377,40 @@ const ProductDetail = () => {
 
   const similarProducts = (() => {
     const excludeId = product.id;
+     if (product.category === 'Belt') {
+      let primary = products.filter((p) => p.category === 'Belt' && p.id !== excludeId).slice(0, 8);
+      if (primary.length < 8) {
+        const filler = products.filter((p) => p.category !== 'Belt' && p.id !== excludeId).slice(0, 8 - primary.length);
+        primary = [...primary, ...filler];
+      }
+      return primary.slice(0, 8);
+    }
+
+    if (product.category === 'Jacket') {
+      let primary = products.filter((p) => p.category === 'Jacket' && p.id !== excludeId).slice(0, 8);
+      if (primary.length < 8) {
+        const filler = products.filter((p) => p.category !== 'Jacket' && p.id !== excludeId).slice(0, 8 - primary.length);
+        primary = [...primary, ...filler];
+      }
+      return primary.slice(0, 8);
+    }
+      if (product.category === 'Jeans') {
+      let primary = products.filter((p) => p.category === 'Jeans' && p.id !== excludeId).slice(0, 8);
+      if (primary.length < 8) {
+        const filler = products.filter((p) => p.category !== 'Jeans' && p.id !== excludeId).slice(0, 8 - primary.length);
+        primary = [...primary, ...filler];
+      }
+      return primary.slice(0, 8);
+    }
+
+    if (product.category === 'Official Shirt') {
+      let primary = products.filter((p) => p.category === 'Official Shirt' && p.id !== excludeId).slice(0, 8);
+      if (primary.length < 8) {
+        const filler = products.filter((p) => p.category !== 'Official Shirt' && p.id !== excludeId).slice(0, 8 - primary.length);
+        primary = [...primary, ...filler];
+      }
+      return primary.slice(0, 8);
+    }
 
     if (product.category === 'Tuxedo Dinner Suits') {
       let primary = products.filter((p) => p.category === 'Tuxedo Dinner Suits' && p.id !== excludeId).slice(0, 8);
@@ -369,7 +459,7 @@ const ProductDetail = () => {
         <Link to="/cart" className="relative flex items-center space-x-2 text-blue-600 hover:text-blue-800 font-semibold text-xl px-4 py-2 rounded-lg bg-white shadow hover:shadow-lg transition">
           <ShoppingCart className="w-6 h-6" />
           <span>Cart</span>
-          <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 text-xs font-semibold">
+          <div className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full px-2 text-xs  font-bold">
             {JSON.parse(localStorage.getItem('cart'))?.length || 0}
           </div>
         </Link>
@@ -381,10 +471,10 @@ const ProductDetail = () => {
           <img src={product.image} alt={product.name} className="w-full max-h-[520px] object-contain rounded-lg transition-transform hover:scale-105" />
         </div>
 
-        <div className="w-full md:w-1/2 p-6 space-y-4">
+        <div className="w-full md:w-1/2 p-6 mt-8 space-y-4">
           <h2 className="text-3xl font-bold text-gray-800">{product.name}</h2>
-          <p className="text-xl text-blue-600 font-semibold">Ksh {product.price}</p>
-          <p className="text-sm sm:text-base text-gray-700">{product.description}</p>
+          <p className="text-xl text-blue-600 font-bold">Ksh {product.price}</p>
+          <p className="text-md sm:text-base text-gray-700">{product.description}</p>
 
           {/* -------------------- Sizes for Suits Only -------------------- */}
           {suitCategories.includes(product.category) && (
@@ -423,7 +513,18 @@ const ProductDetail = () => {
 
       {/* -------------------- Similar Products -------------------- */}
       <div className="mt-12 max-w-7xl mx-auto px-4">
-        <h3 className="text-2xl font-bold text-center mb-6 text-gray-800">You Might Also Like</h3>
+<h3 className="text-3xl font-bold text-center mb-6 text-black blinking-text">You Might Also Like 🛒</h3>
+
+<style>{`
+  @keyframes slowBlink {
+    20%, 100% { opacity: 1; }
+    80% { opacity: 0; }
+  }
+  .blinking-text {
+    animation: slowBlink 3s ease-in-out infinite;
+  }
+`}</style>
+
 
         <div className={`grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6`}>
           {similarProducts.map((item) => (
