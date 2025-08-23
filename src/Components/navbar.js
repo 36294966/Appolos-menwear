@@ -61,30 +61,30 @@ const Navbar = ({ onFilterSelect }) => {
   const menuItems = [
     {
       title: 'Suits',
-      icon: <FontAwesomeIcon icon={faUserTie} className="text-xl" />,
+      icon: <FontAwesomeIcon icon={faUserTie} className="text-xl group-hover:text-yellow-200 transition-colors" />,
       dropdown: {
         Style: ['2 Piece Suits', '3 Piece Suits', 'Tuxedo & Dinner', 'Kaunda Suits'],
       },
     },
     {
       title: 'Shirts',
-      icon: <FontAwesomeIcon icon={faShirt} className="text-xl" />,
+      icon: <FontAwesomeIcon icon={faShirt} className="text-xl group-hover:text-yellow-200 transition-colors" />,
       dropdown: { Style: ['Official Shirts', 'Cassual Shirts'] },
     },
     {
       title: 'Jeans',
-      icon: <CheckroomIcon className="text-white" fontSize="large" />,
+      icon: <CheckroomIcon className="text-white group-hover:text-yellow-200 transition-colors" fontSize="large" />,
       dropdown: { Type: ['Jeans'] },
       page: '/jeans',
     },
     {
       title: 'Accessories',
-      icon: <FontAwesomeIcon icon={faGem} className="text-xl" />,
+      icon: <FontAwesomeIcon icon={faGem} className="text-xl group-hover:text-yellow-200 transition-colors" />,
       dropdown: { Items: ['Socks', 'Ties', 'Belt'] },
     },
     {
       title: 'Blazers & Jackets',
-      icon: <FontAwesomeIcon icon={faVest} className="text-xl" />,
+      icon: <FontAwesomeIcon icon={faVest} className="text-xl group-hover:text-yellow-200 transition-colors" />,
       dropdown: { Jackets: ['Leather Jacket'] },
     },
   ];
@@ -126,7 +126,7 @@ const Navbar = ({ onFilterSelect }) => {
               }}
             >
               <button
-                className="flex items-center space-x-1 hover:text-yellow-200 transition"
+                className="flex items-center space-x-2 group hover:text-yellow-200 transition px-3 py-2 rounded-lg hover:bg-blue-700"
                 onClick={() => {
                   if (item.page) {
                     navigate(item.page);
@@ -136,25 +136,43 @@ const Navbar = ({ onFilterSelect }) => {
                   }
                 }}
               >
-                {item.icon}
+                <div className="transition-transform group-hover:scale-110">
+                  {item.icon}
+                </div>
                 <span className="text-lg">{item.title}</span>
-                {item.dropdown && <ChevronDown size={16} />}
+                {item.dropdown && (
+                  <ChevronDown 
+                    size={16} 
+                    className={`transition-transform ${openDropdown === item.title ? 'rotate-180' : ''}`} 
+                  />
+                )}
               </button>
 
               {item.dropdown && openDropdown === item.title && (
-                <div className="absolute top-10 left-0 bg-white text-black shadow-xl rounded-md p-3 grid gap-1 w-52 z-50">
+                <div className="absolute top-12 left-0 bg-white text-black shadow-xl rounded-md p-4 grid gap-2 w-56 z-50 border border-blue-100">
                   {Object.entries(item.dropdown).map(([section, values]) => (
                     <div key={section}>
-                      <p className="text-blue-700 font-bold text-lg mb-1">{section}</p>
-                      {values.map((val) => (
-                        <button
-                          key={val}
-                          onClick={() => handleFilter(item.title, val)}
-                          className="w-full text-left px-2 py-1 text-base rounded hover:bg-blue-50"
-                        >
-                          {val}
-                        </button>
-                      ))}
+                      <p className="text-blue-700 font-bold text-lg mb-2 border-b border-blue-100 pb-1">{section}</p>
+                      <div className="space-y-1">
+                        {values.map((val) => (
+                          <button
+                            key={val}
+                            onClick={() => handleFilter(item.title, val)}
+                            className="w-full text-left px-3 py-2 text-base rounded-lg hover:bg-blue-50 transition-all flex items-center group/item"
+                          >
+                            <span className="group-hover/item:translate-x-1 transition-transform">{val}</span>
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              className="h-4 w-4 ml-2 opacity-0 group-hover/item:opacity-100 transition-opacity" 
+                              fill="none" 
+                              viewBox="0 0 24 24" 
+                              stroke="currentColor"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -164,16 +182,18 @@ const Navbar = ({ onFilterSelect }) => {
 
           {/* Cart */}
           <div
-            className="flex items-center space-x-1 hover:text-yellow-200 cursor-pointer relative"
+            className="flex items-center space-x-1 hover:text-yellow-200 cursor-pointer relative group px-3 py-2 rounded-lg hover:bg-blue-700"
             onClick={() => {
               navigate('/cart');
               setIsOpen(false); // Close menu when clicking cart
             }}
           >
-            <ShoppingCart size={24} />
+            <div className="transition-transform group-hover:scale-110">
+              <ShoppingCart size={24} />
+            </div>
             <span className="text-lg">Cart</span>
             {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs group-hover:animate-pulse">
                 {cartCount}
               </span>
             )}
@@ -183,7 +203,7 @@ const Navbar = ({ onFilterSelect }) => {
         {/* Mobile Menu & Cart */}
         <div className="md:hidden flex items-center space-x-4">
           <div
-            className="relative cursor-pointer hover:text-yellow-200"
+            className="relative cursor-pointer hover:text-yellow-200 p-2 rounded-lg hover:bg-blue-700"
             onClick={() => {
               navigate('/cart');
               setIsOpen(false); // Close menu when clicking cart
@@ -199,7 +219,7 @@ const Navbar = ({ onFilterSelect }) => {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 hover:bg-blue-700 rounded"
+            className="p-2 hover:bg-blue-700 rounded-lg transition-colors"
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -214,7 +234,7 @@ const Navbar = ({ onFilterSelect }) => {
               navigate('/');
               setIsOpen(false); // Close menu on Home click
             }}
-            className="flex items-center space-x-2 py-2 w-full hover:bg-blue-700 rounded"
+            className="flex items-center space-x-2 py-2 w-full hover:bg-blue-700 rounded-lg px-2 transition-colors"
           >
             <FontAwesomeIcon icon={faHouse} />
             <span>Home</span>
@@ -223,7 +243,7 @@ const Navbar = ({ onFilterSelect }) => {
           {menuItems.map((item) => (
             <div key={item.title} className="space-y-1">
               <button
-                className="flex justify-between items-center w-full py-2 hover:bg-blue-700 rounded"
+                className="flex justify-between items-center w-full py-2 px-2 hover:bg-blue-700 rounded-lg transition-colors"
                 onClick={() => {
                   if (item.page) {
                     navigate(item.page);
@@ -234,7 +254,9 @@ const Navbar = ({ onFilterSelect }) => {
                 }}
               >
                 <div className="flex items-center space-x-2">
-                  {item.icon}
+                  <div className="transition-transform hover:scale-110">
+                    {item.icon}
+                  </div>
                   <span>{item.title}</span>
                 </div>
                 {item.dropdown && (
@@ -246,22 +268,33 @@ const Navbar = ({ onFilterSelect }) => {
               </button>
 
               {item.dropdown && openDropdown === item.title && (
-                <div className="ml-4 space-y-1">
+                <div className="ml-6 space-y-1 mt-1 border-l-2 border-blue-500 pl-3">
                   {Object.entries(item.dropdown).map(([section, values]) => (
                     <div key={section}>
                       <p className="text-yellow-200 font-bold text-lg">{section}</p>
-                      {values.map((val) => (
-                        <button
-                          key={val}
-                          onClick={() => {
-                            handleFilter(item.title, val);
-                            setIsOpen(false); // Close menu after selecting a filter
-                          }}
-                          className="w-full text-left px-2 py-1 hover:bg-blue-700 rounded"
-                        >
-                          {val}
-                        </button>
-                      ))}
+                      <div className="space-y-1 mt-1">
+                        {values.map((val) => (
+                          <button
+                            key={val}
+                            onClick={() => {
+                              handleFilter(item.title, val);
+                              setIsOpen(false); // Close menu after selecting a filter
+                            }}
+                            className="w-full text-left px-3 py-2 hover:bg-blue-700 rounded-lg flex items-center transition-colors group/item"
+                          >
+                            <span className="group-hover/item:translate-x-1 transition-transform">{val}</span>
+                            <svg 
+                              xmlns="http://www.w3.org/2000/svg" 
+                              className="h-4 w-4 ml-2 opacity-0 group-hover/item:opacity-100 transition-opacity" 
+                              fill="none" 
+                              viewBox="0 0 24 24" 
+                              stroke="currentColor"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
+                        ))}
+                      </div>
                     </div>
                   ))}
                 </div>
