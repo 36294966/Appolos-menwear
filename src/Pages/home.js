@@ -295,8 +295,8 @@ const Home = () => {
       {/* Categories */}
       {categories.map((category) => (
         <div key={category.title} className="mb-12">
-          <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-lg sm:text-xl p-4 sm:p-6 text-center font-bold rounded-xl mb-6 mt-10 mx-2 sm:mx-4 animate-pulse">
-            <p>{category.title} – 🔥 Hurry Up!! 🚀 Limited Time Offer!</p>
+          <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-lg sm:text-xl p-4 sm:p-6 text-center font-bold rounded-xl mb-6 mt-16 mx-2 sm:mx-4 animate-pulse">
+            <p>{category.title} – 🔥 Hurry Up!! 🚀 Limited Time Offers! 💯 Wool Fading Free </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 px-2 sm:px-0">
