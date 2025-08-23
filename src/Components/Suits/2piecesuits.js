@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { CheckCircle, XCircle, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react'; // Added the missing imports
+import React, { useState, useEffect, useRef } from 'react';
+import { CheckCircle, XCircle, ShoppingCart, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
 
 import TwoPiece1 from '../../Assets/Suits/twopiece1.jpg';
 import TwoPiece2 from '../../Assets/Suits/twopiece2.jpg';
@@ -8,7 +8,7 @@ import TwoPiece4 from '../../Assets/Suits/twopiece4.jpg';
 import TwoPiece5 from '../../Assets/Suits/twopiece5.jpg';
 import TwoPiece7 from '../../Assets/Suits/twopiece7.jpg';
 import TwoPiece8 from '../../Assets/Suits/twopiece8.jpg';
-import TwoPiece9 from '../../Assets/Suits/twopiece9.jpg'; // Added TwoPiece9
+import TwoPiece9 from '../../Assets/Suits/twopiece9.jpg';
 
 const PaymentPopup = ({ item, selectedSize, onClose }) => {
   const [amount, setAmount] = useState('');
@@ -62,7 +62,7 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
               <div className="bg-green-50 p-4 rounded-lg">
                 <div className="flex justify-between items-center">
                   <span className="font-medium text-lg">Standard Price:</span>
-                  <span className="font-mono text-green-600 font-bold text-lg">Ksh {item?.price?.toLocaleString()}</span>
+                  <span className="font-mono text-green-600 font-bold text-lg">Ksh ${item?.price?.toLocaleString()}</span>
                 </div>
               </div>
               <input
@@ -109,6 +109,10 @@ const TwoPieceSuits = () => {
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
+  const [showSizeError, setShowSizeError] = useState(false);
+  const [errorSuitId, setErrorSuitId] = useState(null);
+  const [lastSelectedSuit, setLastSelectedSuit] = useState(null);
+  const timeoutRef = useRef(null);
 
   const twoPieceSuits = [
     { id: 1, name: 'Executive Two-Piece Suit ⭐⭐⭐⭐⭐', image: TwoPiece1, price: 11000 },
@@ -134,17 +138,103 @@ const TwoPieceSuits = () => {
     return () => window.removeEventListener('storage', updateCart);
   }, []);
 
+  // Auto-uncheck after 30 seconds of inactivity
+  useEffect(() => {
+    if (lastSelectedSuit) {
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
+      // Set new timeout to uncheck after 30 seconds
+      timeoutRef.current = setTimeout(() => {
+        setSelectedSizeForSuit(prev => {
+          const newState = {...prev};
+          delete newState[lastSelectedSuit];
+          return newState;
+        });
+        setLastSelectedSuit(null);
+      }, 30000); // 30 seconds
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [lastSelectedSuit]);
+
+  const handleSizeSelection = (suitId, size) => {
+    // If a different suit was previously selected, uncheck it
+    if (lastSelectedSuit && lastSelectedSuit !== suitId) {
+      setSelectedSizeForSuit(prev => {
+        const newState = {...prev};
+        delete newState[lastSelectedSuit];
+        return {...newState, [suitId]: size};
+      });
+    } else {
+      setSelectedSizeForSuit(prev => ({...prev, [suitId]: size}));
+    }
+    
+    setLastSelectedSuit(suitId);
+    setErrorSuitId(null); // clear error state on size selection
+    
+    // Reset the timeout for auto-uncheck
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setSelectedSizeForSuit(prev => {
+        const newState = {...prev};
+        delete newState[suitId];
+        return newState;
+      });
+      setLastSelectedSuit(null);
+    }, 30000);
+  };
+
   const handleAddToCart = (item) => {
+    if (!selectedSizeForSuit[item.id]) {
+      setErrorSuitId(item.id);
+      setShowSizeError(true);
+      setTimeout(() => {
+        setShowSizeError(false);
+        setErrorSuitId(null);
+      }, 3000);
+      return;
+    }
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
-      size: selectedSizeForSuit[item.id] || 'Not Selected',
+      size: selectedSizeForSuit[item.id],
       addedAt: new Date().toISOString()
     };
     const updatedCart = [...storedCart, newItem];
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     window.dispatchEvent(new Event('storage'));
-    alert(`${item.name} added to cart`);
+    // Reset size selection for this suit
+    setSelectedSizeForSuit(prev => ({ ...prev, [item.id]: null }));
+    setLastSelectedSuit(null);
+    alert(`${item.name} (Size: ${selectedSizeForSuit[item.id]}) added to cart`);
+  };
+
+  const handlePurchase = (item) => {
+    if (!selectedSizeForSuit[item.id]) {
+      setErrorSuitId(item.id);
+      setShowSizeError(true);
+      setTimeout(() => {
+        setShowSizeError(false);
+        setErrorSuitId(null);
+      }, 3000);
+      return;
+    }
+    setSelectedSuit(item);
+    setShowPayment(true);
+    
+    // Clear the timeout when proceeding to purchase
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
   };
 
   const cartTotal = () => {
@@ -154,12 +244,12 @@ const TwoPieceSuits = () => {
 
   const handlePrevClick = (id) => {
     const sizeSelector = document.getElementById(`size-selector-${id}`);
-    sizeSelector.scrollBy({ left: -100, behavior: 'smooth' });
+    if (sizeSelector) sizeSelector.scrollBy({ left: -100, behavior: 'smooth' });
   };
 
   const handleNextClick = (id) => {
     const sizeSelector = document.getElementById(`size-selector-${id}`);
-    sizeSelector.scrollBy({ left: 100, behavior: 'smooth' });
+    if (sizeSelector) sizeSelector.scrollBy({ left: 100, behavior: 'smooth' });
   };
 
   return (
@@ -168,6 +258,14 @@ const TwoPieceSuits = () => {
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center text-xl font-bold p-6 rounded-xl mb-8 animate-pulse mt-24 mx-4">
         <p>Hurry up! Limited time offer! Get your premium two-piece suits today! 💯 super wool fading free</p>
       </div>
+
+      {/* Size Error Popup */}
+      {showSizeError && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg flex items-center gap-2">
+          <AlertCircle className="w-5 h-5" />
+          <span>Please select a size before proceeding!</span>
+        </div>
+      )}
 
       {/* Cart Button */}
       <div className="fixed top-16 right-4 z-40">
@@ -247,7 +345,7 @@ const TwoPieceSuits = () => {
         {twoPieceSuits.map((suit) => (
           <article
             key={suit.id}
-            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
+            className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 group relative"
           >
             <div className="aspect-square bg-gray-100 p-5 flex items-center justify-center">
               <img
@@ -258,8 +356,9 @@ const TwoPieceSuits = () => {
               />
             </div>
             <div className="p-5 text-center space-y-4">
-              <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-gray-900">{suit.name}</h3>
-              <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-blue-600 font-bold">Ksh {suit.price}</p>
+              <h3 className="text-base sm:text-lg md:text-xl lg:text-xl font-bold text-gray-900">{suit.name}</h3>
+              <p className="text-base sm:text-lg md:text-xl lg:text-xl text-blue-600 font-bold">Ksh {suit.price}</p>
+              
               {/* Size Selection */}
               <div className="text-sm sm:text-base md:text-lg lg:text-xl font-semibold mb-2">Select Size:</div>
               <div className="flex justify-center items-center mb-2">
@@ -271,13 +370,19 @@ const TwoPieceSuits = () => {
                 </button>
                 <div
                   id={`size-selector-${suit.id}`}
-                  className="size-selector flex gap-2 overflow-x-auto py-2"
+                  className="size-selector flex gap-2 overflow-x-auto py-2 max-w-[180px] scrollbar-hide"
                 >
                   {sizes.map((size) => (
                     <button
                       key={size}
-                      onClick={() => setSelectedSizeForSuit({ ...selectedSizeForSuit, [suit.id]: size })}
-                      className={`px-4 py-2 rounded-lg border-2 ${selectedSizeForSuit[suit.id] === size ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                      onClick={() => handleSizeSelection(suit.id, size)}
+                      className={`px-4 py-2 rounded-lg border-2 min-w-[44px] transition-all ${
+                        selectedSizeForSuit[suit.id] === size 
+                          ? 'bg-blue-600 text-white border-blue-600' 
+                          : errorSuitId === suit.id 
+                            ? 'border-red-500 bg-red-50 animate-pulse' 
+                            : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'
+                      }`}
                     >
                       {size}
                     </button>
@@ -290,12 +395,10 @@ const TwoPieceSuits = () => {
                   <ChevronRight />
                 </button>
               </div>
+              
               <div className="space-y-2">
                 <button
-                  onClick={() => {
-                    setSelectedSuit(suit);
-                    setShowPayment(true);
-                  }}
+                  onClick={() => handlePurchase(suit)}
                   className="w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg font-semibold transition-colors flex items-center justify-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
@@ -321,6 +424,9 @@ const TwoPieceSuits = () => {
           onClose={() => {
             setShowPayment(false);
             setSelectedSuit(null);
+            // Reset size selection after purchase
+            setSelectedSizeForSuit(prev => ({ ...prev, [selectedSuit.id]: null }));
+            setLastSelectedSuit(null);
           }}
         />
       )}

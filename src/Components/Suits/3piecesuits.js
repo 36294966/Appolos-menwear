@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { CheckCircle, XCircle, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { CheckCircle, XCircle, ShoppingCart, ChevronLeft, ChevronRight, AlertCircle } from 'lucide-react';
 
 // Import suit images
 import Photo1 from '../../Assets/Appolo/photo1.jpeg';
@@ -139,7 +139,12 @@ const ThreePieceSuits = () => {
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
-  const sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60']; // Corrected size list
+  const [showSizeError, setShowSizeError] = useState(false);
+  const [errorSuitId, setErrorSuitId] = useState(null);
+  const [checkedItem, setCheckedItem] = useState(null);
+  const timeoutRef = useRef(null);
+  
+  const sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
 
   useEffect(() => {
     const updateCart = () => {
@@ -151,6 +156,32 @@ const ThreePieceSuits = () => {
     window.addEventListener('storage', updateCart);
     return () => window.removeEventListener('storage', updateCart);
   }, []);
+
+  // Effect to automatically uncheck after 5 seconds of inactivity
+  useEffect(() => {
+    if (checkedItem) {
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
+      // Set new timeout to uncheck after 5 seconds
+      timeoutRef.current = setTimeout(() => {
+        setCheckedItem(null);
+        setSelectedSizeForSuit(prev => {
+          const newState = {...prev};
+          delete newState[checkedItem];
+          return newState;
+        });
+      }, 5000);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [checkedItem]);
 
   const threePieceSuits = [
     { id: 1, name: 'Executive Three-Piece Suit ⭐⭐⭐⭐⭐', image: Photo1, price: 13000 },
@@ -169,19 +200,18 @@ const ThreePieceSuits = () => {
     { id: 14, name: 'Sleek Business Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece10, price: 13000 },
     { id: 15, name: 'super wool fading Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece11, price: 13000 },
     { id: 16, name: ' Fashion Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece12, price: 13000 },
-  
-    { id: 16, name: 'Opulence Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece14, price: 13000 },
-           { id: 17, name: 'Sophistication Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece15, price: 13000 },
-       { id: 18, name: 'Couture ClassicsThree-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece16, price: 13000 },
-       { id: 20, name: 'Dignity Collection Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece17, price: 13000 },
-       { id: 21, name: 'Vanguard Elite Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece18, price: 13000 },
-       { id: 22, name: 'Summit Suits Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece19, price: 13000 },
-       { id: 23, name: 'Executive Edge Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece20, price: 13000 },
-       { id: 24, name: 'Eminence Collection Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece21, price: 13000 },
-       { id: 25, name: 'Refined Royalty Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece22, price: 13000 },
+    { id: 17, name: 'Opulence Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece14, price: 13000 },
+    { id: 18, name: 'Sophistication Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece15, price: 13000 },
+    { id: 19, name: 'Couture ClassicsThree-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece16, price: 13000 },
+    { id: 20, name: 'Dignity Collection Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece17, price: 13000 },
+    { id: 21, name: 'Vanguard Elite Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece18, price: 13000 },
+    { id: 22, name: 'Summit Suits Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece19, price: 13000 },
+    { id: 23, name: 'Executive Edge Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece20, price: 13000 },
+    { id: 24, name: 'Eminence Collection Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece21, price: 13000 },
+    { id: 25, name: 'Refined Royalty Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece22, price: 13000 },
     { id: 26, name: 'Pinnacle Series Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece23, price: 13000 },
     { id: 27, name: 'Urban Aristocrat Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece24, price: 13000 },
-    { id: 27, name: 'Noble AttireThree-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece25, price: 13000 },
+    { id: 28, name: 'Noble AttireThree-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece25, price: 13000 },
     { id: 29, name: 'Legacy Luxe Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece26, price: 13000 },
     { id: 30, name: 'Signature Sovereign Three-Piece Suit⭐⭐⭐⭐⭐', image: ThreePiece27, price: 13000 },
     { id: 31, name: 'Majesty Mode Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece28, price: 13000 },
@@ -192,17 +222,80 @@ const ThreePieceSuits = () => {
     { id: 36, name: 'Fashion Three-Piece Suit ⭐⭐⭐⭐⭐', image: ThreePiece13, price: 13000 },
   ];
 
+  const handleSizeSelect = (itemId, size) => {
+    // If a different item was previously checked, uncheck it
+    if (checkedItem && checkedItem !== itemId) {
+      setSelectedSizeForSuit(prev => {
+        const newState = {...prev};
+        delete newState[checkedItem];
+        return newState;
+      });
+    }
+    
+    // Set the new checked item
+    setCheckedItem(itemId);
+    setSelectedSizeForSuit(prev => ({ ...prev, [itemId]: size }));
+    
+    // Reset the timeout for auto-uncheck
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setCheckedItem(null);
+      setSelectedSizeForSuit(prev => {
+        const newState = {...prev};
+        delete newState[itemId];
+        return newState;
+      });
+    }, 5000);
+  };
+
   const handleAddToCart = (item) => {
+    if (!selectedSizeForSuit[item.id]) {
+      setErrorSuitId(item.id);
+      setShowSizeError(true);
+      setTimeout(() => {
+        setShowSizeError(false);
+        setErrorSuitId(null);
+      }, 3000);
+      return;
+    }
+    
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
-      addedAt: new Date().toISOString(),
-      size: selectedSizeForSuit[item.id] || ''
+      size: selectedSizeForSuit[item.id],
+      addedAt: new Date().toISOString()
     };
     const updatedCart = [...storedCart, newItem];
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     window.dispatchEvent(new Event('storage'));
-    alert(`${item.name} added to cart`);
+    
+    // Reset size selection for this suit
+    setSelectedSizeForSuit(prev => ({...prev, [item.id]: null}));
+    
+    // Clear the checked item after adding to cart
+    setCheckedItem(null);
+    
+    alert(`${item.name} (Size: ${selectedSizeForSuit[item.id]}) added to cart`);
+  };
+
+  const handlePurchase = (item) => {
+    if (!selectedSizeForSuit[item.id]) {
+      setErrorSuitId(item.id);
+      setShowSizeError(true);
+      setTimeout(() => {
+        setShowSizeError(false);
+        setErrorSuitId(null);
+      }, 3000);
+      return;
+    }
+    
+    setSelectedSuit(item);
+    setShowPayment(true);
+    
+    // Clear the checked item after proceeding to purchase
+    setCheckedItem(null);
   };
 
   const handlePrevClick = (id) => {
@@ -217,6 +310,14 @@ const ThreePieceSuits = () => {
 
   return (
     <section className="p-6 sm:p-10 bg-gray-50 min-h-screen">
+      {/* Size Error Popup */}
+      {showSizeError && (
+        <div className="fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-lg flex items-center gap-2">
+          <AlertCircle className="w-5 h-5" />
+          <span>Please select a size before proceeding!</span>
+        </div>
+      )}
+
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center text-sm sm:text-lg font-semibold p-4 rounded-xl mb-8 animate-pulse mt-24 mx-4">
         <p>Hurry up! Limited time offer! Get your premium three-piece suits today! 💯 super wool fading free</p>
       </div>
@@ -295,6 +396,7 @@ const ThreePieceSuits = () => {
             <div className="p-4 sm:p-6 text-center space-y-4">
               <h3 className="text-lg sm:text-xl font-bold">{suit.name}</h3>
               <p className="text-md sm:text-lg font-bold text-blue-600">Ksh {suit.price}</p>
+              
               {/* Size Selection */}
               <div className="text-xs sm:text-sm font-semibold mb-2">Select Size:</div>
               <div className="flex justify-center items-center mb-2">
@@ -306,13 +408,19 @@ const ThreePieceSuits = () => {
                 </button>
                 <div
                   id={`size-selector-${suit.id}`}
-                  className="size-selector flex gap-2 overflow-x-auto py-2"
+                  className="size-selector flex gap-2 overflow-x-auto py-2 max-w-[180px] scrollbar-hide"
                 >
                   {sizes.map((size) => (
                     <button
                       key={size}
-                      onClick={() => setSelectedSizeForSuit({ ...selectedSizeForSuit, [suit.id]: size })}
-                      className={`px-4 py-2 rounded-lg border-2 ${selectedSizeForSuit[suit.id] === size ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                      onClick={() => handleSizeSelect(suit.id, size)}
+                      className={`px-4 py-2 rounded-lg border-2 min-w-[44px] transition-all ${
+                        selectedSizeForSuit[suit.id] === size 
+                          ? 'bg-blue-600 text-white border-blue-600' 
+                          : errorSuitId === suit.id 
+                            ? 'border-red-500 bg-red-50 animate-pulse' 
+                            : 'bg-white text-gray-600 border-gray-300 hover:border-blue-400'
+                      }`}
                     >
                       {size}
                     </button>
@@ -325,12 +433,10 @@ const ThreePieceSuits = () => {
                   <ChevronRight />
                 </button>
               </div>
+              
               <div className="space-y-2">
                 <button
-                  onClick={() => {
-                    setSelectedSuit(suit);
-                    setShowPayment(true);
-                  }}
+                  onClick={() => handlePurchase(suit)}
                   className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
@@ -356,7 +462,8 @@ const ThreePieceSuits = () => {
           onClose={() => {
             setShowPayment(false);
             setSelectedSuit(null);
-            setSelectedSizeForSuit({});
+            // Reset size selection after purchase
+            setSelectedSizeForSuit(prev => ({...prev, [selectedSuit.id]: null}));
           }}
         />
       )}

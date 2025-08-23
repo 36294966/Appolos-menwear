@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { CheckCircle, ChevronRight, ShoppingCart, XCircle } from 'lucide-react';
+import { CheckCircle, ChevronRight, ShoppingCart, XCircle, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Import all images as needed
@@ -105,16 +105,38 @@ const Home = () => {
   const [paymentImmediate, setPaymentImmediate] = useState(false);
   const [selectedSizeForSuit, setSelectedSizeForSuit] = useState({});
   const [hoveredItemId, setHoveredItemId] = useState(null);
+  const [sizeError, setSizeError] = useState({});
+  const [showSizeAlert, setShowSizeAlert] = useState(false);
 
   const Sizes = ['44', '46', '48', '50', '52', '54', '56', '58', '60'];
+
+  // Check if item requires size selection
+  const requiresSize = (item) => {
+    return item.category !== 'jeans' && item.category !== 'jacket' && item.category !== 'belt' && item.category !== 'shirt';
+  };
 
   // Handle adding to cart
   const handleAddToCart = (item, event) => {
     if (event) event.preventDefault();
+    
+    // Check if size is required but not selected
+    if (requiresSize(item) && !selectedSizeForSuit[item.id]) {
+      setSizeError(prev => ({ ...prev, [item.id]: true }));
+      setShowSizeAlert(true);
+      setTimeout(() => setShowSizeAlert(false), 3000);
+      
+      // Highlight the size selection container
+      // Also, automatically reset the highlight after 3 seconds
+      setTimeout(() => {
+        setSizeError(prev => ({ ...prev, [item.id]: false }));
+      }, 3000);
+      return;
+    }
+    
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
-      size: item.category !== 'jeans' && item.category !== 'jacket' && item.category !== 'belt' ? (selectedSizeForSuit[item.id] || 'Not Selected') : 'N/A',
+      size: requiresSize(item) ? (selectedSizeForSuit[item.id] || 'Not Selected') : 'N/A',
       addedAt: new Date().toISOString(),
     };
     localStorage.setItem('cart', JSON.stringify([...storedCart, newItem]));
@@ -123,17 +145,32 @@ const Home = () => {
     
     // Reset the size for this specific item
     setSelectedSizeForSuit(prev => ({ ...prev, [item.id]: undefined }));
+    setSizeError(prev => ({ ...prev, [item.id]: false }));
   };
 
   // Handle purchase click
   const handlePurchaseClick = (item, event) => {
     if (event) event.preventDefault();
+    
+    // Check if size is required but not selected
+    if (requiresSize(item) && !selectedSizeForSuit[item.id]) {
+      setSizeError(prev => ({ ...prev, [item.id]: true }));
+      setShowSizeAlert(true);
+      setTimeout(() => setShowSizeAlert(false), 3000);
+      
+      // Highlight the size selection container
+      setTimeout(() => {
+        setSizeError(prev => ({ ...prev, [item.id]: false }));
+      }, 3000);
+      return;
+    }
+    
     setSelectedItem(item);
     setPaymentImmediate(true);
     setShowModal(true);
     
-    // Reset the size for this specific item
-    setSelectedSizeForSuit(prev => ({ ...prev, [item.id]: undefined }));
+    // Reset the size error for this specific item
+    setSizeError(prev => ({ ...prev, [item.id]: false }));
   };
 
   // Update cart count
@@ -292,6 +329,14 @@ const Home = () => {
 
   return (
     <section className="p-4 sm:p-6 md:p-8 bg-gray-50 min-h-screen overflow-x-hidden">
+      {/* Size Alert */}
+      {showSizeAlert && (
+        <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg flex items-center z-50 shadow-lg">
+          <AlertCircle className="w-5 h-5 mr-2" />
+          <span>Please select a size before proceeding!</span>
+        </div>
+      )}
+
       {/* Categories */}
       {categories.map((category) => (
         <div key={category.title} className="mb-12">
@@ -337,10 +382,16 @@ const Home = () => {
                   </div>
 
                   {/* Sizes - Scrollable container */}
-                  {category.title !== 'Jeans' && category.title !== 'Official Shirts' && category.title !== 'Leather Jackets' && category.title !== 'Belts' && (
+                  {requiresSize(item) && (
                     <div className="flex flex-col items-start space-y-2">
-                      <span className="text-sm font-medium">Select Sizes</span>
-                      <div className="w-full overflow-x-auto pb-2">
+                      <span className={`text-sm font-medium ${sizeError[item.id] ? 'text-red-600' : 'text-gray-700'}`}>
+                        {sizeError[item.id] ? 'Select Size (Required)' : 'Select Size'}
+                      </span>
+                      <div
+                        className={`w-full overflow-x-auto pb-2 ${
+                          sizeError[item.id] ? 'border border-red-500 rounded-lg p-1' : ''
+                        }`}
+                      >
                         <div className="flex space-x-2 min-w-max">
                           {Sizes.map((size) => (
                             <button
@@ -348,14 +399,36 @@ const Home = () => {
                               onClick={(e) => {
                                 e.preventDefault();
                                 setSelectedSizeForSuit((prev) => ({ ...prev, [item.id]: prev[item.id] === size ? undefined : size }));
+                                setSizeError(prev => ({ ...prev, [item.id]: false }));
                               }}
-                              className={`px-3 py-1 rounded border text-sm ${selectedSizeForSuit[item.id] === size ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-600 border-gray-300'}`}
+                              className={`px-3 py-1 rounded border text-sm ${
+                                selectedSizeForSuit[item.id] === size
+                                  ? 'bg-blue-600 text-white border-blue-600'
+                                  : 'bg-white text-gray-600 border-gray-300'
+                              }`}
                             >
                               {size}
                             </button>
                           ))}
                         </div>
                       </div>
+                      {/* Highlight container if error */}
+                      {sizeError[item.id] && (
+                        <style>
+                          {`
+                            /* Highlight effect when error */
+                            .size-error-highlight {
+                              border: 2px solid red !important;
+                              animation: pulse 1s infinite;
+                            }
+                            @keyframes pulse {
+                              0% { box-shadow: 0 0 5px red; }
+                              50% { box-shadow: 0 0 15px red; }
+                              100% { box-shadow: 0 0 5px red; }
+                            }
+                          `}
+                        </style>
+                      )}
                     </div>
                   )}
 

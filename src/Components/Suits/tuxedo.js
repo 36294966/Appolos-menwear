@@ -64,7 +64,7 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
               <div className="bg-green-50 p-3 rounded-lg">
                 <div className="flex justify-between items-center">
                   <span className="font-medium text-sm">Standard Price:</span>
-                  <span className="font-mono text-green-600 font-bold">Ksh {paymentDetails.standardPrice.toLocaleString()}</span>
+                  <span className="font-mono text-green-600 font-bold">Ksh ${paymentDetails.standardPrice.toLocaleString()}</span>
                 </div>
               </div>
               <input
@@ -105,12 +105,33 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
   );
 };
 
+// Size Validation Popup
+const SizeValidationPopup = ({ onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce">
+      <p className="font-semibold">Please select a size before proceeding!</p>
+    </div>
+  );
+};
+
 const Tuxedo = () => {
   const [showPayment, setShowPayment] = useState(false);
   const [selectedTuxedo, setSelectedTuxedo] = useState(null);
   const [cartCount, setCartCount] = useState(0);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedSizeForTuxedo, setSelectedSizeForTuxedo] = useState({});
+  const [showSizeValidation, setShowSizeValidation] = useState(false);
+  const [highlightedSizes, setHighlightedSizes] = useState({});
+  const [lastSelectedItem, setLastSelectedItem] = useState(null);
+  const [deselectionTimers, setDeselectionTimers] = useState({});
 
   const tuxedoSuits = [
     { id: 1, name: ' Velvet Tuxedo Suit ⭐⭐⭐⭐⭐', image: Tuxedo1, price: 15000 },
@@ -136,7 +157,86 @@ const Tuxedo = () => {
     return () => window.removeEventListener('storage', updateCart);
   }, []);
 
+  // Auto-deselect size after 30 seconds of inactivity
+  useEffect(() => {
+    // Clear any existing timers
+    Object.values(deselectionTimers).forEach(timer => clearTimeout(timer));
+    
+    const newTimers = {};
+    
+    // Set new timers for each selected size
+    Object.keys(selectedSizeForTuxedo).forEach(itemId => {
+      if (selectedSizeForTuxedo[itemId]) {
+        newTimers[itemId] = setTimeout(() => {
+          setSelectedSizeForTuxedo(prev => {
+            const updated = {...prev};
+            delete updated[itemId];
+            return updated;
+          });
+        }, 30000); // 30 seconds
+      }
+    });
+    
+    setDeselectionTimers(newTimers);
+    
+    return () => {
+      Object.values(newTimers).forEach(timer => clearTimeout(timer));
+    };
+  }, [selectedSizeForTuxedo]);
+
+  const validateSizeSelection = (itemId) => {
+    if (!selectedSizeForTuxedo[itemId]) {
+      // Highlight the size boxes in red
+      setHighlightedSizes(prev => ({ ...prev, [itemId]: true }));
+      
+      // Show validation popup
+      setShowSizeValidation(true);
+      
+      // Reset the highlighting after 3 seconds
+      setTimeout(() => {
+        setHighlightedSizes(prev => ({ ...prev, [itemId]: false }));
+      }, 3000);
+      
+      return false;
+    }
+    return true;
+  };
+
+  const handleSizeSelection = (itemId, size) => {
+    // Clear any existing timer for this item
+    if (deselectionTimers[itemId]) {
+      clearTimeout(deselectionTimers[itemId]);
+    }
+    
+    // If selecting a size on a different item, deselect the previous item's size
+    if (lastSelectedItem && lastSelectedItem !== itemId) {
+      setSelectedSizeForTuxedo(prev => {
+        const updated = {...prev};
+        delete updated[lastSelectedItem];
+        return updated;
+      });
+    }
+    
+    // Set the new selected size
+    setSelectedSizeForTuxedo(prev => ({ ...prev, [itemId]: size }));
+    setLastSelectedItem(itemId);
+    
+    // Set a new timer for auto-deselection
+    const timerId = setTimeout(() => {
+      setSelectedSizeForTuxedo(prev => {
+        const updated = {...prev};
+        delete updated[itemId];
+        return updated;
+      });
+    }, 30000); // 30 seconds
+    
+    // Update the timers state
+    setDeselectionTimers(prev => ({ ...prev, [itemId]: timerId }));
+  };
+
   const handleAddToCart = (item) => {
+    if (!validateSizeSelection(item.id)) return;
+    
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
@@ -147,6 +247,20 @@ const Tuxedo = () => {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     window.dispatchEvent(new Event('storage'));
     alert(`${item.name} added to cart`);
+    
+    // Clear the selection after adding to cart
+    setSelectedSizeForTuxedo(prev => {
+      const updated = {...prev};
+      delete updated[item.id];
+      return updated;
+    });
+  };
+
+  const handlePurchase = (item) => {
+    if (!validateSizeSelection(item.id)) return;
+    
+    setSelectedTuxedo(item);
+    setShowPayment(true);
   };
 
   const cartTotal = () => {
@@ -166,6 +280,11 @@ const Tuxedo = () => {
 
   return (
     <section className="p-4 sm:p-6 bg-gray-50 min-h-screen">
+      {/* Size Validation Popup */}
+      {showSizeValidation && (
+        <SizeValidationPopup onClose={() => setShowSizeValidation(false)} />
+      )}
+
       {/* Blinking Banner */}
       <div className="bg-gradient-to-r from-green-400 to-blue-500 text-white text-center text-xl sm:text-2xl font-bold p-6 rounded-xl mb-8 animate-pulse mt-24 mx-4">
         <p>Hurry up! Limited time offer! Get your premium tuxedo dinner suits today 💯 super wool fading free!</p>
@@ -217,17 +336,17 @@ const Tuxedo = () => {
                         </div>
                         <div>
                           <p className="font-semibold text-sm">{item.name}</p>
-                          <p className="text-xs text-gray-500">Size: {item.size}</p>
+                          <p className="text-xs text-gray-500">Size: ${item.size}</p>
                         </div>
                       </div>
-                      <p className="text-sm font-bold">Ksh {item.price}</p>
+                      <p className="text-sm font-bold">Ksh ${item.price}</p>
                     </div>
                   ))}
                 </div>
                 <div className="mt-4 pt-4 border-t">
                   <div className="flex justify-between mb-2">
                     <span className="font-semibold">Total:</span>
-                    <span className="font-bold">Ksh {(cartTotal() + 200).toLocaleString()}</span>
+                    <span className="font-bold">Ksh ${(cartTotal() + 200).toLocaleString()}</span>
                   </div>
                   <button
                     className="mt-4 w-full bg-blue-600 hover:bg-blue-800 text-white py-2 px-4 rounded transition"
@@ -279,8 +398,14 @@ const Tuxedo = () => {
                   {sizes.map((size) => (
                     <button
                       key={size}
-                      onClick={() => setSelectedSizeForTuxedo({ ...selectedSizeForTuxedo, [suit.id]: size })}
-                      className={`px-4 py-2 rounded-lg border-2 ${selectedSizeForTuxedo[suit.id] === size ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                      onClick={() => handleSizeSelection(suit.id, size)}
+                      className={`px-4 py-2 rounded-lg border-2 transition-all duration-300 ${
+                        selectedSizeForTuxedo[suit.id] === size 
+                          ? 'bg-blue-600 text-white' 
+                          : highlightedSizes[suit.id] 
+                            ? 'bg-red-500 text-white animate-pulse' 
+                            : 'bg-white text-gray-600'
+                      }`}
                     >
                       {size}
                     </button>
@@ -295,10 +420,7 @@ const Tuxedo = () => {
               </div>
               <div className="space-y-2">
                 <button
-                  onClick={() => {
-                    setSelectedTuxedo(suit);
-                    setShowPayment(true);
-                  }}
+                  onClick={() => handlePurchase(suit)}
                   className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
@@ -329,7 +451,7 @@ const Tuxedo = () => {
         />
       )}
     </section>
-  );
+  ); 
 };
 
 export default Tuxedo;

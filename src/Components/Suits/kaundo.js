@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ShoppingCart, ChevronLeft, ChevronRight, CheckCircle, XCircle } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
@@ -103,6 +103,23 @@ const PaymentPopup = ({ item, selectedSize, onClose }) => {
   );
 };
 
+// Size Validation Popup
+const SizeValidationPopup = ({ onClose }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      onClose();
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [onClose]);
+
+  return (
+    <div className="fixed top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-bounce">
+      <p className="font-semibold">Please select a size before proceeding!</p>
+    </div>
+  );
+};
+
 const KaundaSuits = () => {
   const navigate = useNavigate();
   const [cartCount, setCartCount] = useState(0);
@@ -110,6 +127,10 @@ const KaundaSuits = () => {
   const [selectedSizeForKaunda, setSelectedSizeForKaunda] = useState({});
   const [showPayment, setShowPayment] = useState(false);
   const [selectedKaunda, setSelectedKaunda] = useState(null);
+  const [showSizeValidation, setShowSizeValidation] = useState(false);
+  const [highlightedSizes, setHighlightedSizes] = useState({});
+  const [checkedItem, setCheckedItem] = useState(null);
+  const timeoutRef = useRef(null);
 
   const kaundaSuits = [
     { id: 1, name: 'Classic Kaunda Suit ⭐⭐⭐⭐⭐', image: Kaunda1, price: 14000 },
@@ -131,7 +152,81 @@ const KaundaSuits = () => {
     return () => window.removeEventListener('storage', updateCart);
   }, []);
 
+  // Effect to automatically uncheck after 5 seconds of inactivity
+  useEffect(() => {
+    if (checkedItem) {
+      // Clear any existing timeout
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      
+      // Set new timeout to uncheck after 5 seconds
+      timeoutRef.current = setTimeout(() => {
+        setCheckedItem(null);
+        setSelectedSizeForKaunda(prev => {
+          const newState = {...prev};
+          delete newState[checkedItem];
+          return newState;
+        });
+      }, 5000);
+    }
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, [checkedItem]);
+
+  const validateSizeSelection = (itemId) => {
+    if (!selectedSizeForKaunda[itemId]) {
+      // Highlight the size boxes in red
+      setHighlightedSizes(prev => ({ ...prev, [itemId]: true }));
+      
+      // Show validation popup
+      setShowSizeValidation(true);
+      
+      // Reset the highlighting after 3 seconds
+      setTimeout(() => {
+        setHighlightedSizes(prev => ({ ...prev, [itemId]: false }));
+      }, 3000);
+      
+      return false;
+    }
+    return true;
+  };
+
+  const handleSizeSelect = (itemId, size) => {
+    // If a different item was previously checked, uncheck it
+    if (checkedItem && checkedItem !== itemId) {
+      setSelectedSizeForKaunda(prev => {
+        const newState = {...prev};
+        delete newState[checkedItem];
+        return newState;
+      });
+    }
+    
+    // Set the new checked item
+    setCheckedItem(itemId);
+    setSelectedSizeForKaunda(prev => ({ ...prev, [itemId]: size }));
+    
+    // Reset the timeout for auto-uncheck
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    timeoutRef.current = setTimeout(() => {
+      setCheckedItem(null);
+      setSelectedSizeForKaunda(prev => {
+        const newState = {...prev};
+        delete newState[itemId];
+        return newState;
+      });
+    }, 5000);
+  };
+
   const handleAddToCart = (item) => {
+    if (!validateSizeSelection(item.id)) return;
+    
     const storedCart = JSON.parse(localStorage.getItem('cart')) || [];
     const newItem = {
       ...item,
@@ -142,6 +237,19 @@ const KaundaSuits = () => {
     localStorage.setItem('cart', JSON.stringify(updatedCart));
     window.dispatchEvent(new Event('storage'));
     alert(`${item.name} added to cart`);
+    
+    // Clear the checked item after adding to cart
+    setCheckedItem(null);
+  };
+
+  const handlePurchase = (item) => {
+    if (!validateSizeSelection(item.id)) return;
+    
+    setSelectedKaunda(item);
+    setShowPayment(true);
+    
+    // Clear the checked item after proceeding to purchase
+    setCheckedItem(null);
   };
 
   const cartTotal = () => {
@@ -239,6 +347,11 @@ const KaundaSuits = () => {
         </div>
       )}
 
+      {/* Size Validation Popup */}
+      {showSizeValidation && (
+        <SizeValidationPopup onClose={() => setShowSizeValidation(false)} />
+      )}
+
       {/* Kaunda Suits Section with Smaller Ad and Blinking Effect */}
       <div className="bg-gradient-to-r from-indigo-600 to-blue-600 text-white pt-6 pb-3 text-center rounded-lg mb-12 mt-24 animate-pulse">
         <h1 className="text-lg sm:text-2xl font-bold">Kaunda Suits Collection</h1>
@@ -279,8 +392,14 @@ const KaundaSuits = () => {
                   {sizes.map((size) => (
                     <button
                       key={size}
-                      onClick={() => setSelectedSizeForKaunda({ ...selectedSizeForKaunda, [suit.id]: size })}
-                      className={`px-4 py-2 rounded-lg border-2 ${selectedSizeForKaunda[suit.id] === size ? 'bg-blue-600 text-white' : 'bg-white text-gray-600'}`}
+                      onClick={() => handleSizeSelect(suit.id, size)}
+                      className={`px-4 py-2 rounded-lg border-2 transition-all duration-300 ${
+                        selectedSizeForKaunda[suit.id] === size 
+                          ? 'bg-blue-600 text-white' 
+                          : highlightedSizes[suit.id] 
+                            ? 'bg-red-500 text-white animate-pulse' 
+                            : 'bg-white text-gray-600'
+                      }`}
                     >
                       {size}
                     </button>
@@ -295,10 +414,7 @@ const KaundaSuits = () => {
               </div>
               <div className="space-y-2">
                 <button
-                  onClick={() => {
-                    setSelectedKaunda(suit);
-                    setShowPayment(true);
-                  }}
+                  onClick={() => handlePurchase(suit)}
                   className="w-full bg-blue-600 hover:bg-blue-800 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2"
                 >
                   <CheckCircle className="w-5 h-5" />
@@ -333,7 +449,3 @@ const KaundaSuits = () => {
 };
 
 export default KaundaSuits;
-
-
-
-
